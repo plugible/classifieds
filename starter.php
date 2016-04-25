@@ -91,6 +91,9 @@ class Starter {
 		$autoload_file_path = $this->plugin_dir_path . 'vendor/autoload.php';
 		if ( file_exists( $autoload_file_path ) ) {
 			require $autoload_file_path;
+			foreach ( glob( $this->plugin_dir_path . 'inc/*.php' ) as $file_path ) {
+				include $file_path;
+			}
 		} else {
 			wp_die( sprintf( __( 'Plugin <strong>%s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%s">plugins page</a>.', $this->plugin_slug ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
 		}
