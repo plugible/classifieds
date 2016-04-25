@@ -91,6 +91,7 @@ class Starter {
 		$this->autoload();
 		$this->activate();
 		// $this->require_plugin('Piklist');
+	    $this->enqueue_public_assets();
 	}
 
 	/**
@@ -129,6 +130,34 @@ class Starter {
 				: strtolower( preg_replace( '/[^\w\d]+/', '-', $name ) );
 			$options['required'] = true;
 			tgmpa( [ $options ] );
+		});
+	}
+
+	/**
+	 * Enqueue styles as scripts
+	 *
+	 * @todo Improve documentation.
+	 */
+	protected function enqueue_public_assets() {
+		add_action('wp_enqueue_scripts', function() {
+			if ( file_exists( $this->plugin_dir_path . 'public/css/frontend-main.css' ) ) {
+				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/frontend-main.css' );
+			}
+		});
+		add_action('wp_enqueue_scripts', function() {
+			if ( file_exists( $this->plugin_dir_path . 'public/js/frontend-main.js' ) ) {
+				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/frontend-main.js', [ 'jquery' ], null, true );
+			}
+		});
+		add_action('admin_enqueue_scripts', function() {
+			if ( file_exists( $this->plugin_dir_path . 'public/css/backend-main.css' ) ) {
+				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/backend-main.css' );
+			}
+		});
+		add_action('admin_enqueue_scripts', function() {
+			if ( file_exists( $this->plugin_dir_path . 'public/js/backend-main.js' ) ) {
+				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/backend-main.js', [ 'jquery' ], null, true );
+			}
 		});
 	}
 
