@@ -33,13 +33,6 @@ class Starter {
 	protected static $instance = null;
 
 	/**
-	 * Plugin data.
-	 *
-	 * @var Array
-	 */
-	protected $plugin_data;
-
-	/**
 	 * Plugin directory path.
 	 *
 	 * @var String
@@ -73,9 +66,7 @@ class Starter {
 	public static function get_instance() {
 		if ( ! self::$instance ) {
 			self::$instance = new static;
-			add_action('init', function() {
-				self::$instance->init();
-			} );
+			self::$instance->init();
 		}
 		return self::$instance;
 	}
@@ -84,7 +75,6 @@ class Starter {
 	 * Initializes plugin
 	 */
 	protected function init() {
-		$this->plugin_data = get_plugin_data( __FILE__ );
 		$this->plugin_dir_path = plugin_dir_path( __FILE__ );
 		$this->plugin_dir_url = plugin_dir_url( __FILE__ );
 		$this->plugin_slug = self::camel_case_to_snake_case( __CLASS__ );
@@ -104,7 +94,7 @@ class Starter {
 			require $autoload_file_path;
 		} else {
 			deactivate_plugins( __FILE__ );
-			wp_die( sprintf( __( 'Plugin <strong>%s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%s">plugins page</a>.', $this->plugin_data['TextDomain'] ), $this->plugin_data['Name'], admin_url( 'plugins.php' ) ) ); // XSS OK.
+			wp_die( sprintf( __( 'Plugin <strong>%s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%s">plugins page</a>.', $this->plugin_slug ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
 		}
 	}
 
