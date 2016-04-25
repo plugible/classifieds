@@ -91,6 +91,7 @@ class Starter {
 		$this->autoload();
 		$this->activate();
 		// $this->require_plugin('Piklist');
+		$this->shortcodes();
 	    $this->enqueue_public_assets();
 	}
 
@@ -131,6 +132,19 @@ class Starter {
 			$options['required'] = true;
 			tgmpa( [ $options ] );
 		});
+	}
+
+	/**
+	 * Adds plugin shortcodes.
+	 */
+	protected function shortcodes() {
+		add_shortcode($this->plugin_slug, function( $atts ) {
+			$args = shortcode_atts( array(
+				'dummy' => 'dummy',
+			), $atts );
+			$output = Kint::dump( $args );
+			return $output;
+		} );
 	}
 
 	/**
