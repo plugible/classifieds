@@ -32,6 +32,13 @@ class Starter {
 	protected static $instance = null;
 
 	/**
+	 * Plugin version.
+	 *
+	 * @var String
+	 */
+	protected $plugin_version;
+
+	/**
 	 * Plugin directory path.
 	 *
 	 * @var String
@@ -39,7 +46,7 @@ class Starter {
 	protected $plugin_dir_path;
 
 	/**
-	 * Plugin directory ULR.
+	 * Plugin directory URL.
 	 *
 	 * @var String
 	 */
@@ -146,24 +153,24 @@ class Starter {
 	protected function enqueue_public_assets() {
 		add_action('wp_enqueue_scripts', function() {
 			if ( file_exists( $this->plugin_dir_path . 'public/css/frontend-main.css' ) ) {
-				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/frontend-main.css' );
+				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/frontend-main.css', null, $this->plugin_version );
 			}
-		});
+		} );
 		add_action('wp_enqueue_scripts', function() {
 			if ( file_exists( $this->plugin_dir_path . 'public/js/frontend-main.js' ) ) {
-				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/frontend-main.js', [ 'jquery' ], null, true );
+				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/frontend-main.js', [ 'jquery' ], $this->plugin_version, true );
 			}
-		});
+		} );
 		add_action('admin_enqueue_scripts', function() {
 			if ( file_exists( $this->plugin_dir_path . 'public/css/backend-main.css' ) ) {
-				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/backend-main.css' );
+				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/backend-main.css', null, $this->plugin_version );
 			}
-		});
+		} );
 		add_action('admin_enqueue_scripts', function() {
 			if ( file_exists( $this->plugin_dir_path . 'public/js/backend-main.js' ) ) {
-				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/backend-main.js', [ 'jquery' ], null, true );
+				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/backend-main.js', [ 'jquery' ], $this->plugin_version, true );
 			}
-		});
+		} );
 	}
 
 	/**
