@@ -7,7 +7,7 @@ The PHPCS ruleset included has the following specifications:
 - It uses the WordPress standard
 - It includes CSS, JavaScript and PHP files
 - It excludes files under `inc/external/`
-- It excludes files under and folder called `vendor`
+- It excludes files under any folder called `vendor`
 
 The command you need is:
 
