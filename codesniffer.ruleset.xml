@@ -3,8 +3,8 @@
 	<description>A custom set of code standard rules to check for WordPress plugins that are based on kadimi/starter.</description>
 	<rule ref="WordPress" />
 	<file>./</file>
-	<arg name="extensions" value="php"/>
+	<arg name="extensions" value="css,js,php"/>
 	<arg name="colors" />
-	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>inc/external/*</exclude-pattern>
 </ruleset>
