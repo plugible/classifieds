@@ -193,10 +193,10 @@ class Starter {
 	/**
 	 * Returns number of seconds to given time
 	 *
-	 * @param  string $time Time.
+	 * @param  String $time Time.
 	 * @return int          Seconds to time.
 	 */
-	static function in( string $time ) {
+	static function in( $time ) {
 		return strftime( $time ) - time();
 	}
 }
