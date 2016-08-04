@@ -256,8 +256,10 @@ class Starter {
 	 * @return Boolean True
 	 * @todo  Write method
 	 */
-	protected function watchdog( $msg, $type = 'info' ) {
-		return true;
+	protected function watchdog( $msg, $type = 'notice' ) {
+		if ( in_array( $type, [ 'deprecated', 'notice', 'warning', 'error' ], true ) ) {
+			trigger_error( $msg, constant( 'E_USER_' .  strtoupper( $type ) ) );
+		}
 	}
 }
 
