@@ -253,7 +253,6 @@ class Starter {
 	 *
 	 * @param  String $msg  A message.
 	 * @param  String $type A type.
-	 * @return Boolean True
 	 * @todo  Write method
 	 */
 	protected function watchdog( $msg, $type = 'notice' ) {
