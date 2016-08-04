@@ -14,9 +14,7 @@
 
 // Avoid direct calls to this file.
 if ( ! function_exists( 'add_action' ) ) {
-	header( 'Status: 403 Forbidden' );
-	header( 'HTTP/1.1 403 Forbidden' );
-	exit();
+	die();
 }
 
 /**
@@ -30,6 +28,13 @@ class Starter {
 	 * @var object
 	 */
 	protected static $instance = null;
+
+	/**
+	 * Plugin slug.
+	 *
+	 * @var String
+	 */
+	protected $plugin_slug;
 
 	/**
 	 * Plugin version.
@@ -87,7 +92,7 @@ class Starter {
 		$this->autoload();
 		$this->activate();
 		$this->shortcodes();
-	    $this->enqueue_public_assets();
+		$this->enqueue_public_assets();
 	}
 
 	/**
@@ -97,8 +102,11 @@ class Starter {
 		$autoload_file_path = $this->plugin_dir_path . 'vendor/autoload.php';
 		if ( file_exists( $autoload_file_path ) ) {
 			require $autoload_file_path;
-			foreach ( glob( $this->plugin_dir_path . 'inc/*.php' ) as $file_path ) {
-				include $file_path;
+			$paths = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $this->plugin_dir_path . 'inc' ), RecursiveIteratorIterator::SELF_FIRST );
+			foreach( $paths as $path => $unused ) {
+				if ( 'php' === end( explode( '.', $path ) ) ) {
+					require $path;
+				}
 			}
 		} else {
 			wp_die( sprintf( __( 'Plugin <strong>%s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%s">plugins page</a>.', $this->plugin_slug ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
@@ -150,26 +158,66 @@ class Starter {
 	 * @todo Improve documentation.
 	 */
 	protected function enqueue_public_assets() {
-		add_action('wp_enqueue_scripts', function() {
-			if ( file_exists( $this->plugin_dir_path . 'public/css/frontend-main.css' ) ) {
-				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/frontend-main.css', null, $this->plugin_version );
+		$this->enqueue_asset( 'public/css/frontend-main.css' );
+		$this->enqueue_asset( 'public/js/frontend-main.js' );
+		$this->admin_enqueue_asset( 'public/css/backend-main.css' );
+		$this->admin_enqueue_asset( 'public/js/backend-main.js' );
+	}
+
+	/**
+	 * Enqueues an asset.
+	 *
+	 * @todo Improve documentation.
+	 * @param  String $path The path relative to the plugin directory.
+	 * @param  Array  $args Same as what you would provide to wp_enqueue_script or wp_enqueue_style with the addition of is_admin which enqueue the asset on the backend.
+	 */
+	protected function enqueue_asset( $path, $args = [] ) {
+		$default_args = [
+			'is_admin' => false,
+			'handle' => $this->plugin_slug,
+			'deps' => null,
+			'ver' => $this->plugin_version,
+			'in_footer' => null,
+			'media' => null,
+		];
+
+		$args += $default_args;
+		$args['abspath'] = $this->plugin_dir_path . $path;
+		$args['src'] = $this->plugin_dir_url . $path;
+		$extension = end( explode( '.', $path ) );
+
+		if ( ! file_exists( $args['abspath'] ) ) {
+			$this->watchdog( sprintf( 'File <code>%s</code> does not exist', $path ), 'warning' );
+			return;
+		}
+
+		if ( ! in_array( $extension, [ 'css', 'js' ], true ) ) {
+			$this->watchdog( sprintf( 'File <code>%s</code> cannot be enqueued', $path ), 'warning' );
+			return;
+		}
+
+		add_action( ( $args['is_admin'] ? 'admin' : 'wp' ) . '_enqueue_scripts', function() use ( $args, $extension ) {
+			switch ( $extension ) {
+				case 'css':
+					return wp_enqueue_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
+				case 'js':
+					return wp_enqueue_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
+				default:
+					break;
 			}
 		} );
-		add_action('wp_enqueue_scripts', function() {
-			if ( file_exists( $this->plugin_dir_path . 'public/js/frontend-main.js' ) ) {
-				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/frontend-main.js', [ 'jquery' ], $this->plugin_version, true );
-			}
-		} );
-		add_action('admin_enqueue_scripts', function() {
-			if ( file_exists( $this->plugin_dir_path . 'public/css/backend-main.css' ) ) {
-				wp_enqueue_style( $this->plugin_slug, $this->plugin_dir_url . 'public/css/backend-main.css', null, $this->plugin_version );
-			}
-		} );
-		add_action('admin_enqueue_scripts', function() {
-			if ( file_exists( $this->plugin_dir_path . 'public/js/backend-main.js' ) ) {
-				wp_enqueue_script( $this->plugin_slug, $this->plugin_dir_url . 'public/js/backend-main.js', [ 'jquery' ], $this->plugin_version, true );
-			}
-		} );
+	}
+
+	/**
+	 * Enqueues an asset.
+	 *
+	 * @todo Improve documentation.
+	 * @param  String $path The path relative to the plugin directory.
+	 * @param  Array  $args Same as what you would provide to wp_enqueue_script or wp_enqueue_style with the addition of is_admin which enqueue the asset on the backend.
+	 */
+	protected function admin_enqueue_asset( $path, $args = [] ) {
+		$args['is_admin'] = true;
+		return $this->enqueue_asset( $path, $args );
 	}
 
 	/**
@@ -198,6 +246,18 @@ class Starter {
 	 */
 	static function in( $time ) {
 		return strftime( $time ) - time();
+	}
+
+	/**
+	 * Logs whatever you want
+	 *
+	 * @param  String $msg  A message.
+	 * @param  String $type A type.
+	 * @return Boolean True
+	 * @todo  Write method
+	 */
+	protected function watchdog( $msg, $type = 'info' ) {
+		return true;
 	}
 }
 
