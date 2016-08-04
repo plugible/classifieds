@@ -103,7 +103,7 @@ class Starter {
 		if ( file_exists( $autoload_file_path ) ) {
 			require $autoload_file_path;
 			$paths = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $this->plugin_dir_path . 'inc' ), RecursiveIteratorIterator::SELF_FIRST );
-			foreach( $paths as $path => $unused ) {
+			foreach ( $paths as $path => $unused ) {
 				if ( 'php' === end( explode( '.', $path ) ) ) {
 					require $path;
 				}
