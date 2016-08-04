@@ -257,7 +257,7 @@ class Starter {
 	 */
 	protected function watchdog( $msg, $type = 'notice' ) {
 		if ( in_array( $type, [ 'deprecated', 'notice', 'warning', 'error' ], true ) ) {
-			trigger_error( $msg, constant( 'E_USER_' .  strtoupper( $type ) ) );
+			trigger_error( $msg, constant( 'E_USER_' .  strtoupper( $type ) ) ); // XSS OK.
 		}
 	}
 }
