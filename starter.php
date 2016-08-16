@@ -158,14 +158,14 @@ class Starter {
 	 * @todo Improve documentation.
 	 */
 	protected function enqueue_public_assets() {
-		$public_assets_paths = [
+		$paths = [
 			'public/css/frontend-main.css',
 			'public/js/frontend-main.js',
 			'public/css/backend-main.css',
 			'public/js/backend-main.js',
 		];
 
-		foreach ( $public_assets_paths as $path ) {
+		foreach ( $paths as $path ) {
 			if ( file_exists( $path ) ) {
 				$this->enqueue_asset( $path );
 			}
