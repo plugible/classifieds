@@ -51,6 +51,13 @@ class Starter {
 	protected $plugin_dir_path;
 
 	/**
+	 * Relative plugin directory path.
+	 *
+	 * @var String
+	 */
+	protected $plugin_basename;
+
+	/**
 	 * Plugin directory URL.
 	 *
 	 * @var String
@@ -86,6 +93,7 @@ class Starter {
 	 * Initializes plugin
 	 */
 	protected function init() {
+		$this->plugin_basename = plugin_basename( __FILE__ );
 		$this->plugin_dir_path = plugin_dir_path( __FILE__ );
 		$this->plugin_dir_url = plugin_dir_url( __FILE__ );
 		$this->plugin_slug = self::camel_case_to_snake_case( __CLASS__ );
