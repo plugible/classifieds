@@ -166,18 +166,10 @@ class Starter {
 	 * @todo Improve documentation.
 	 */
 	protected function enqueue_public_assets() {
-		$paths = [
-			'public/css/frontend-main.css',
-			'public/js/frontend-main.js',
-			'public/css/backend-main.css',
-			'public/js/backend-main.js',
-		];
-
-		foreach ( $paths as $path ) {
-			if ( file_exists( $path ) ) {
-				$this->enqueue_asset( $path );
-			}
-		}
+		$this->enqueue_asset( 'public/css/frontend-main.css' );
+		$this->enqueue_asset( 'public/js/frontend-main.js' );
+		$this->enqueue_asset( 'public/css/backend-main.css', [ 'is_admin' => true ] );
+		$this->enqueue_asset( 'public/js/backend-main.js', [ 'is_admin' => true ] );
 	}
 
 	/**
@@ -203,12 +195,12 @@ class Starter {
 		$extension = end( explode( '.', $path ) );
 
 		if ( ! file_exists( $args['abspath'] ) ) {
-			$this->watchdog( sprintf( 'File <code>%s</code> does not exist', $path ), 'warning' );
+			$this->watchdog( sprintf( 'File <code>%s</code> does not exist', $path ), 'notice' );
 			return;
 		}
 
 		if ( ! in_array( $extension, [ 'css', 'js' ], true ) ) {
-			$this->watchdog( sprintf( 'File <code>%s</code> cannot be enqueued', $path ), 'warning' );
+			$this->watchdog( sprintf( 'File <code>%s</code> cannot be enqueued', $path ), 'notice' );
 			return;
 		}
 
