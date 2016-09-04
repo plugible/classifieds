@@ -117,7 +117,7 @@ class Starter {
 				}
 			}
 		} else {
-			wp_die( sprintf( __( 'Plugin <strong>%s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%s">plugins page</a>.', $this->plugin_slug ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
+			wp_die( sprintf( __( 'Plugin <strong>%1$s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%1$s">plugins page</a>.', '{{starter}}' ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
 		}
 	}
 
@@ -265,7 +265,8 @@ class Starter {
 	 */
 	protected function watchdog( $msg, $type = 'notice' ) {
 		if ( in_array( $type, [ 'deprecated', 'notice', 'warning', 'error' ], true ) ) {
-			trigger_error( $msg, constant( 'E_USER_' .  strtoupper( $type ) ) ); // XSS OK.
+			// The method does nothing yet.
+			;
 		}
 	}
 }
