@@ -34,35 +34,35 @@ class Starter {
 	 *
 	 * @var String
 	 */
-	protected $plugin_slug;
+	public $plugin_slug;
 
 	/**
 	 * Plugin version.
 	 *
 	 * @var String
 	 */
-	protected $plugin_version;
+	public $plugin_version;
 
 	/**
 	 * Plugin directory path.
 	 *
 	 * @var String
 	 */
-	protected $plugin_dir_path;
+	public $plugin_dir_path;
 
 	/**
 	 * Relative plugin directory path.
 	 *
 	 * @var String
 	 */
-	protected $plugin_basename;
+	public $plugin_basename;
 
 	/**
 	 * Plugin directory URL.
 	 *
 	 * @var String
 	 */
-	protected $plugin_dir_url;
+	public $plugin_dir_url;
 
 	/**
 	 * Constructor
