@@ -104,7 +104,7 @@ class Starter {
 	}
 
 	/**
-	 * Requires Composer generated autoload file
+	 * Requires Composer generated autoload file and .php files in the directory `inc`
 	 */
 	protected function autoload() {
 		$autoload_file_path = $this->plugin_dir_path . 'vendor/autoload.php';
@@ -112,7 +112,7 @@ class Starter {
 			require $autoload_file_path;
 			$paths = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $this->plugin_dir_path . 'inc' ), RecursiveIteratorIterator::SELF_FIRST );
 			foreach ( $paths as $path => $unused ) {
-				if ( 'php' === end( explode( '.', $path ) ) ) {
+				if ( preg_match( '/\/[\w-]+\.php$/', $path ) ) {
 					require $path;
 				}
 			}
