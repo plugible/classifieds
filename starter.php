@@ -192,7 +192,8 @@ class Starter {
 		$args += $default_args;
 		$args['abspath'] = $this->plugin_dir_path . $path;
 		$args['src'] = $this->plugin_dir_url . $path;
-		$extension = end( explode( '.', $path ) );
+		$parts = explode( '.', $path );
+		$extension = end( $parts );
 
 		if ( ! file_exists( $args['abspath'] ) ) {
 			$this->watchdog( sprintf( 'File <code>%s</code> does not exist', $path ), 'notice' );
