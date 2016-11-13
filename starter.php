@@ -272,4 +272,14 @@ class Starter {
 	}
 }
 
-$starter = Starter::get_instance();
+/**
+ * Shortcut.
+ */
+function starter() {
+	return Starter::get_instance();
+}
+
+/**
+ * Fire plugin.
+ */
+starter();
