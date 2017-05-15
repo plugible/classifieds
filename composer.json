@@ -11,6 +11,6 @@
         "tgmpa/tgm-plugin-activation": "^2.5"
     },
     "require-dev": {
-        "raveren/kint": "^1.0"
+        "kint-php/kint": "^2.1"
     }
 }
