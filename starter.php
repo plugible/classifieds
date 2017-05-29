@@ -99,8 +99,9 @@ class Starter {
 		$this->plugin_slug = self::camel_case_to_snake_case( __CLASS__ );
 		$this->autoload();
 		$this->activate();
-		$this->shortcodes();
 		$this->enqueue_public_assets();
+		$this->l10n();
+		$this->shortcodes();
 	}
 
 	/**
@@ -128,6 +129,17 @@ class Starter {
 		register_activation_hook( __FILE__, function() {
 			set_transient( $this->plugin_slug, 1, self::in( '15 minutes' ) );
 		});
+	}
+
+	/**
+	 * Loads textdomain.
+	 *
+	 * Important: textdomain must always e hardcoded in l10n/i18n functions (`__()`, `_e`, ...).
+	 */
+	protected function l10n() {
+		add_action( 'plugins_loaded', function() {
+			load_plugin_textdomain( $this->plugin_slug, false, dirname( $this->plugin_basename ) . '/lang' );
+		} );
 	}
 
 	/**
