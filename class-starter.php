@@ -118,7 +118,9 @@ class Starter {
 				}
 			}
 		} else {
+			// @codingStandardsIgnoreStart
 			wp_die( sprintf( __( 'Plugin <strong>%1$s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%1$s">plugins page</a>.', '{{starter}}' ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
+			// @codingStandardsIgnoreEnd
 		}
 	}
 
@@ -180,8 +182,12 @@ class Starter {
 	protected function enqueue_public_assets() {
 		$this->enqueue_asset( 'public/css/frontend-main.css' );
 		$this->enqueue_asset( 'public/js/frontend-main.js' );
-		$this->enqueue_asset( 'public/css/backend-main.css', [ 'is_admin' => true ] );
-		$this->enqueue_asset( 'public/js/backend-main.js', [ 'is_admin' => true ] );
+		$this->enqueue_asset( 'public/css/backend-main.css', [
+			'is_admin' => true,
+		] );
+		$this->enqueue_asset( 'public/js/backend-main.js', [
+			'is_admin' => true,
+		] );
 	}
 
 	/**
