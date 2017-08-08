@@ -8,7 +8,7 @@
 
 The plugin can require other plugins using the `require_plugin` method in the `init` method, the `require_plugin` method first parameter should be the plugin slug although in some circumstances the plugin name works too.
 
-###Example:
+### Example:
 
 ```php
 /**
