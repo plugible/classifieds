@@ -2,6 +2,7 @@
 /**
  * Plugin Name: Starter
  * Plugin URI: https://www.github.com/kadimi/starter
+ * GitHub Plugin URI: https://github.com/kadimi/kadimi.com-plugin
  * Description: Wordpress starter plugin.
  * Version: 1.0.0
  * Author: Nabil Kadimi
@@ -83,7 +84,7 @@ class Starter {
 	 */
 	public static function get_instance() {
 		if ( ! self::$instance ) {
-			self::$instance = new static;
+			self::$instance = ( new static );
 			self::$instance->init();
 		}
 		return self::$instance;
