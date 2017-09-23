@@ -84,7 +84,7 @@ class Starter {
 	 */
 	public static function get_instance() {
 		if ( ! self::$instance ) {
-			self::$instance = ( new static );
+			self::$instance = new static();
 			self::$instance->init();
 		}
 		return self::$instance;
