@@ -114,6 +114,7 @@ class Starter {
 			require $autoload_file_path;
 			$paths = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $this->plugin_dir_path . 'inc' ), RecursiveIteratorIterator::SELF_FIRST );
 			foreach ( $paths as $path => $unused ) {
+				$path = str_replace( '\\', '/', $path );
 				if ( preg_match( '/\/[\w-]+\.php$/', $path ) ) {
 					require $path;
 				}
