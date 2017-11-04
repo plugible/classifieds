@@ -287,6 +287,7 @@ class Starter {
 	protected function watchdog( $msg, $type = 'notice' ) {
 		if ( in_array( $type, [ 'deprecated', 'notice', 'warning', 'error' ], true ) ) {
 			// The method does nothing yet.
+			return;
 		}
 	}
 }
