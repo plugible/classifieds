@@ -273,7 +273,7 @@ class Starter {
 	 * @param  String $time Time.
 	 * @return int          Seconds to time.
 	 */
-	static function in( $time ) {
+	public static function in( $time ) {
 		return strftime( $time ) - time();
 	}
 
