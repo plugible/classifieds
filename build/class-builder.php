@@ -32,8 +32,6 @@ class Builder {
 	 * Constructor.
 	 *
 	 * Fires all tasks.
-	 *
-	 * @param Array $data Data.
 	 */
 	public function __construct() {
 		$this->timer = microtime( true );
@@ -59,7 +57,7 @@ class Builder {
 		$filename = 'build/starter.zip';
 
 		if ( file_exists( $filename ) ) {
-			unlink( $filename );
+			@unlink( $filename );
 		}
 
 		/**
@@ -173,7 +171,7 @@ class Builder {
 	/**
 	 * Helper function to show error in log.
 	 *
-	 * @param  String $title  The log title.
+	 * @param  String $message  The message.
 	 */
 	protected function log_error( $message ) {
 
@@ -184,6 +182,9 @@ class Builder {
 
 	/**
 	 * Runs a task.
+	 *
+	 * @param  callable $callback  A callback function.
+	 * @param  String   $title     A title.
 	 */
 	protected function task( callable $callback, $title ) {
 		$this->log_title( $title . ' started.' );
@@ -193,6 +194,9 @@ class Builder {
 		$this->log_title( sprintf( '%s completed in %.2fs' , $title, $duration ) );
 	}
 
+	/**
+	 * Generate pot file.
+	 */
 	protected function pot() {
 
 		$this->log();
@@ -239,6 +243,12 @@ class Builder {
 		$this->log( 'Language file created successfully.' );
 	}
 
+	/**
+	 * Check if a shell command exists.
+	 *
+	 * @param  String $command  The command.
+	 * @return Boolean           True if the command exist or false oterwise.
+	 */
 	protected function shell_command_exists( $command ) {
 		$output = shell_exec( sprintf( 'which %s', escapeshellarg( $command ) ) );
 		return ! empty( $output );
