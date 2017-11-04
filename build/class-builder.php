@@ -57,7 +57,9 @@ class Builder {
 		$filename = 'build/starter.zip';
 
 		if ( file_exists( $filename ) ) {
-			@unlink( $filename );
+			// @codingStandardsIgnoreStart
+			unlink( $filename );
+			// @codingStandardsIgnoreEnd
 		}
 
 		/**
