@@ -45,7 +45,7 @@ class Builder {
 	public function __destruct() {
 		$duration = microtime( true ) - $this->timer;
 		if ( ! $this->last_error ) {
-			$this->log_title( sprintf( 'Build completed in %.2fs' , $duration ) );
+			$this->log_title( sprintf( 'Build completed in %.2fs', $duration ) );
 		}
 	}
 
@@ -65,10 +65,11 @@ class Builder {
 		/**
 		 * Prepare a list of files.
 		 */
-		$files = array_diff( $this->find( '.' )
-			, $this->find( '.git' )
-			, $this->find( 'build' )
-			, [
+		$files = array_diff(
+			$this->find( '.' ),
+			$this->find( '.git' ),
+			$this->find( 'build' ),
+			[
 				'.git/',
 				'build/',
 			]
@@ -193,7 +194,7 @@ class Builder {
 		$timer = microtime( true );
 		call_user_func( $callback );
 		$duration = microtime( true ) - $timer;
-		$this->log_title( sprintf( '%s completed in %.2fs' , $title, $duration ) );
+		$this->log_title( sprintf( '%s completed in %.2fs', $title, $duration ) );
 	}
 
 	/**
