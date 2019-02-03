@@ -97,7 +97,7 @@ class Starter {
 		$this->plugin_basename = plugin_basename( __FILE__ );
 		$this->plugin_dir_path = plugin_dir_path( __FILE__ );
 		$this->plugin_dir_url = plugin_dir_url( __FILE__ );
-		$this->plugin_slug = get_class( $this );
+		$this->plugin_slug = str_replace( '_', '-', self::camel_case_to_snake_case( get_class( $this ) ) );
 		$this->autoload();
 		$this->activate();
 		$this->enqueue_public_assets();
