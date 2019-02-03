@@ -97,7 +97,7 @@ class Starter {
 		$this->plugin_basename = plugin_basename( __FILE__ );
 		$this->plugin_dir_path = plugin_dir_path( __FILE__ );
 		$this->plugin_dir_url = plugin_dir_url( __FILE__ );
-		$this->plugin_slug = self::camel_case_to_snake_case( __CLASS__ );
+		$this->plugin_slug = get_class( $this );
 		$this->autoload();
 		$this->activate();
 		$this->enqueue_public_assets();
@@ -121,7 +121,7 @@ class Starter {
 			}
 		} else {
 			// @codingStandardsIgnoreStart
-			wp_die( sprintf( __( 'Plugin <strong>%1$s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%1$s">plugins page</a>.', '{{starter}}' ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
+			wp_die( sprintf( __( 'Plugin <strong>%1$s</strong> not installed yet, run the `<strong><code>composer install</code></strong>` command on a terminal from within the plugin directory and activate the plugin again from the <a href="%2$s">plugins page</a>.', '{{starter}}' ), $this->plugin_slug, admin_url( 'plugins.php' ) ) ); // XSS OK.
 			// @codingStandardsIgnoreEnd
 		}
 	}
