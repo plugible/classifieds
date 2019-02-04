@@ -38,7 +38,10 @@ class Builder {
 	/**
 	 * Constructor.
 	 *
-	 * Fires all tasks.
+	 * Actions:
+	 * - Verifies arguments.
+	 * - Starts timer.
+	 * - Fires all tasks.
 	 */
 	public function __construct() {
 
@@ -56,6 +59,9 @@ class Builder {
 
 	/**
 	 * Destructor.
+	 *
+	 * Actions:
+	 * - Shows duration.
 	 */
 	public function __destruct() {
 		$duration = microtime( true ) - $this->timer;
