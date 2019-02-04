@@ -48,8 +48,8 @@ class Builder {
 			$this->log_error( 'Missing plugin slug parameter, e.g.: `php -f build/build.php acme-plugin`' );
 		}
 
-		$this->plugin_slug = $argv[1];
 		$this->timer = microtime( true );
+		$this->plugin_slug = $argv[1];
 		$this->task( [ $this, 'pot' ], 'Creating Languages File' );
 		$this->task( [ $this, 'package' ], 'Packaging' );
 	}
