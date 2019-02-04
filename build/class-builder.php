@@ -69,8 +69,23 @@ class Builder {
 	 */
 	private function package() {
 
-		$filename = 'build/' . $this->plugin_slug . '.zip';
+		$dir = 'build/releases/';
 
+		/**
+		 * Prepare file name.
+		 */
+		$filename = $dir . $this->plugin_slug . '.zip';
+
+		/**
+		 * Create directory `releases` if it doesn't exist.
+		 */
+		if ( ! is_dir( $dir ) ) {
+			mkdir( $dir, 0755, true );
+		}
+
+		/**
+		 * Delete existing release with same file name.
+		 */
 		if ( file_exists( $filename ) ) {
 			// @codingStandardsIgnoreStart
 			unlink( $filename );
