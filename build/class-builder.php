@@ -15,6 +15,13 @@ use \ZipArchive;
 class Builder {
 
 	/**
+	 * Plugin slug.
+	 *
+	 * @var string
+	 */
+	private $plugin_slug;
+
+	/**
 	 * Last error seen on the log.
 	 *
 	 * @var Boolean|String
@@ -34,6 +41,14 @@ class Builder {
 	 * Fires all tasks.
 	 */
 	public function __construct() {
+
+		global $argv;
+
+		if ( empty ( $argv[1] ) ) {
+			$this->log_error( 'Missing plugin slug parameter, e.g.: `php -f build/build.php acme-plugin`' );
+		}
+
+		$this->plugin_slug = $argv[1];
 		$this->timer = microtime( true );
 		$this->task( [ $this, 'pot' ], 'Creating Languages File' );
 		$this->task( [ $this, 'package' ], 'Packaging' );
@@ -54,7 +69,7 @@ class Builder {
 	 */
 	private function package() {
 
-		$filename = 'build/starter.zip';
+		$filename = 'build/' . $this->plugin_slug . '.zip';
 
 		if ( file_exists( $filename ) ) {
 			// @codingStandardsIgnoreStart
@@ -217,7 +232,7 @@ class Builder {
 			|
 			xargs xgettext
 				--language=PHP
-				--package-name=Starter
+				--package-name=' . $this->plugin_slug . '
 				--package-version=1.0.0
 				--copyright-holder="Nabil Kadimi"
 				--msgid-bugs-address="https://github.com/kadimi/starter/issues/new"
@@ -240,7 +255,7 @@ class Builder {
 				--keyword="esc_html_e"
 				--keyword="esc_html_x:1,2c"
 				--sort-by-file
-				-o lang/starter.pot
+				-o lang/' . $this->plugin_slug . '.pot
 		');
 		shell_exec( $command );
 		$this->log( 'Language file created successfully.' );
