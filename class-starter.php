@@ -1,26 +1,11 @@
 <?php
+
 /**
- * Plugin Name: Starter
- * Plugin URI: https://www.github.com/kadimi/starter
- * GitHub Plugin URI: https://github.com/kadimi/kadimi.com-plugin
- * Description: Wordpress starter plugin.
- * Version: 1.0.0
- * Author: Nabil Kadimi
- * Author URI: http://kadimi.com
- * Text Domain: starter
- * License: GPL2
+ * The Starter class.
  *
  * @package starter
  */
-
-// Avoid direct calls to this file.
-if ( ! function_exists( 'add_action' ) ) {
-	die();
-}
-
-/**
- * Starter class.
- */
+if ( ! class_exists( 'Starter' ) ):
 class Starter {
 
 	/**
@@ -59,6 +44,11 @@ class Starter {
 	public $plugin_basename;
 
 	/**
+	 * Plugin main file.
+	 */
+	public $plugin_file;
+
+	/**
 	 * Plugin directory URL.
 	 *
 	 * @var String
@@ -94,9 +84,11 @@ class Starter {
 	 * Initializes plugin
 	 */
 	protected function init() {
-		$this->plugin_basename = plugin_basename( __FILE__ );
-		$this->plugin_dir_path = plugin_dir_path( __FILE__ );
-		$this->plugin_dir_url = plugin_dir_url( __FILE__ );
+
+		$this->plugin_file =debug_backtrace()[1][ 'file' ];
+		$this->plugin_basename = plugin_basename( $this->plugin_file );
+		$this->plugin_dir_path = plugin_dir_path( $this->plugin_file );
+		$this->plugin_dir_url = plugin_dir_url( $this->plugin_file );
 		$this->plugin_slug = str_replace( '_', '-', self::camel_case_to_snake_case( get_class( $this ) ) );
 		$this->autoload();
 		$this->activate();
@@ -130,7 +122,7 @@ class Starter {
 	 * Runs on plugin actication
 	 */
 	protected function activate() {
-		register_activation_hook( __FILE__, function() {
+		register_activation_hook( $this->plugin_file, function() {
 			set_transient( $this->plugin_slug, 1, self::in( '15 minutes' ) );
 		});
 	}
@@ -291,15 +283,4 @@ class Starter {
 		}
 	}
 }
-
-/**
- * Shortcut.
- */
-function starter() {
-	return Starter::get_instance();
-}
-
-/**
- * Fire plugin.
- */
-starter();
+endif;
