@@ -72,10 +72,10 @@ class Starter {
 	 *
 	 * @return Object
 	 */
-	public static function get_instance() {
+	public static function get_instance( $args = [] ) {
 		if ( ! self::$instance ) {
 			self::$instance = new static();
-			self::$instance->init();
+			self::$instance->init( $args );
 		}
 		return self::$instance;
 	}
@@ -83,13 +83,20 @@ class Starter {
 	/**
 	 * Initializes plugin
 	 */
-	protected function init() {
+	protected function init( $args ) {
 
 		$this->plugin_file =debug_backtrace()[1][ 'file' ];
 		$this->plugin_basename = plugin_basename( $this->plugin_file );
 		$this->plugin_dir_path = plugin_dir_path( $this->plugin_file );
 		$this->plugin_dir_url = plugin_dir_url( $this->plugin_file );
-		$this->plugin_slug = str_replace( '_', '-', self::camel_case_to_snake_case( get_class( $this ) ) );
+		$this->plugin_slug = ( ! empty( $args[ 'slug' ] ) )
+			? $args[ 'slug' ]
+			: str_replace( '_', '-', self::camel_case_to_snake_case( get_class( $this ) ) )
+		;
+		$this->plugin_version = ( ! empty( $args[ 'version' ] ) )
+			? $args[ 'version' ]
+			: '1.0.0'
+		;
 		$this->autoload();
 		$this->activate();
 		$this->enqueue_public_assets();
@@ -193,13 +200,11 @@ class Starter {
 	 */
 	protected function enqueue_asset( $path, $args = [] ) {
 
-		global $wp_version;
-
 		$default_args = [
 			'is_admin' => false,
 			'handle' => $this->plugin_slug,
 			'deps' => null,
-			'ver' => $this->plugin_version ? $this->plugin_version : $wp_version,
+			'ver' => $this->plugin_version,
 			'in_footer' => null,
 			'media' => null,
 		];
