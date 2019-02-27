@@ -192,11 +192,14 @@ class Starter {
 	 * @param  Array  $args Same as what you would provide to wp_enqueue_script or wp_enqueue_style with the addition of is_admin which enqueue the asset on the backend.
 	 */
 	protected function enqueue_asset( $path, $args = [] ) {
+
+		global $wp_version;
+
 		$default_args = [
 			'is_admin' => false,
 			'handle' => $this->plugin_slug,
 			'deps' => null,
-			'ver' => $this->plugin_version,
+			'ver' => $this->plugin_version ? $this->plugin_version : $wp_version,
 			'in_footer' => null,
 			'media' => null,
 		];
