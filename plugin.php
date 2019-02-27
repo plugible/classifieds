@@ -10,7 +10,7 @@
  * Author: Nabil Kadimi
  * Author URI: https://kadimi.com
  *
- * @package myplugin
+ * @package MyPlugin
  */
 
 /**

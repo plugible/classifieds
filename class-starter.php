@@ -3,7 +3,7 @@
 /**
  * The Starter class.
  *
- * @package starter
+ * @package Starter
  */
 if ( ! class_exists( 'Starter' ) ):
 class Starter {
