@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: My Plugin
  * Description: My Plugin Description.
@@ -17,6 +16,10 @@
  * Create the plugin class.
  */
 require 'class-starter.php';
+
+/**
+ * MyPlugin class.
+ */
 class MyPlugin extends Starter {};
 
 /**

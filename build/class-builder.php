@@ -54,11 +54,11 @@ class Builder {
 
 		global $argv;
 
-		if ( empty ( $argv[1] ) ) {
+		if ( empty( $argv[1] ) ) {
 			$this->log_error( 'Missing plugin slug and version, example usage: `php -f build/build.php acme-plugin 1.0.0`' );
 		}
 
-		if ( empty ( $argv[2] ) ) {
+		if ( empty( $argv[2] ) ) {
 			$this->log_error( 'Missing plugin version, example usage: `php -f build/build.php acme-plugin 1.0.0`' );
 		}
 
@@ -257,7 +257,10 @@ class Builder {
 			exit;
 		}
 
-		$command = str_replace( "\n", '', '
+		$command = str_replace(
+			"\n",
+			'',
+			'
 			find -name "*.php"
 				-not -path "./build/*"
 				-not -path "./tests/*"
@@ -289,7 +292,8 @@ class Builder {
 				--keyword="esc_html_x:1,2c"
 				--sort-by-file
 				-o lang/' . $this->plugin_slug . '.pot
-		');
+		'
+		);
 		shell_exec( $command );
 		$this->log( 'Language file created successfully.' );
 	}
