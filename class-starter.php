@@ -255,8 +255,8 @@ if ( ! class_exists( 'Starter' ) ) :
 							break;
 						case 'js':
 							wp_enqueue_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
-							if ( ! empty( $args[ 'l10n' ] ) ) {
-								wp_localize_script( $args['handle'], $args['object_name'], $args[ 'l10n' ] );
+							if ( ! empty( $args['l10n'] ) ) {
+								wp_localize_script( $args['handle'], $args['object_name'], $args['l10n'] );
 							}
 							break;
 						default:
