@@ -142,7 +142,7 @@ if ( ! class_exists( 'Starter' ) ) :
 		/**
 		 * Loads textdomain.
 		 *
-		 * Important: textdomain must always e hardcoded in l10n/i18n functions (`__()`, `_e`, ...).
+		 * Important: textdomain must always be hardcoded in l10n/i18n functions (`__()`, `_e`, ...).
 		 */
 		protected function l10n() {
 			add_action(
@@ -217,7 +217,7 @@ if ( ! class_exists( 'Starter' ) ) :
 		 *
 		 * @todo Improve documentation.
 		 * @param  String $path The path relative to the plugin directory.
-		 * @param  Array  $args Same as what you would provide to wp_enqueue_script or wp_enqueue_style with the addition of is_admin which enqueue the asset on the backend.
+		 * @param  Array  $args Same as what you would provide to wp_enqueue_script or wp_enqueue_style with the addition of is_admin which enqueue the asset on the backend and l10n/object_name for scripts.
 		 */
 		public function enqueue_asset( $path, $args = [] ) {
 
@@ -251,9 +251,14 @@ if ( ! class_exists( 'Starter' ) ) :
 				function() use ( $args, $extension ) {
 					switch ( $extension ) {
 						case 'css':
-							return wp_enqueue_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
+							wp_enqueue_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
+							break;
 						case 'js':
-							return wp_enqueue_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
+							wp_enqueue_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
+							if ( ! empty( $args[ 'l10n' ] ) ) {
+								wp_localize_script( $args['handle'], $args['object_name'], $args[ 'l10n' ] );
+							}
+							break;
 						default:
 							break;
 					}
