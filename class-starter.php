@@ -16,7 +16,7 @@ if ( ! class_exists( 'Starter' ) ) :
 		 *
 		 * @var object
 		 */
-		protected static $instance = null;
+		protected static $instances = [];
 
 		/**
 		 * Plugin slug.
@@ -79,9 +79,9 @@ if ( ! class_exists( 'Starter' ) ) :
 		 * @return Object
 		 */
 		public static function get_instance( $args = [] ) {
-			if ( ! self::$instance ) {
-				self::$instance = new static();
-				self::$instance->init( $args );
+			if ( empty( self::$instances[ get_called_class() ] ) ) {
+				self::$instances[ get_called_class() ] = new  static;
+				self::$instances[ get_called_class() ]->init( $args );
 			}
 			return self::$instance;
 		}
