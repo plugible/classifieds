@@ -23,7 +23,6 @@ matrix:
           env: SNIFF=1
         - php: '5.6'
         - php: '7.0'
-        - php: 'hhvm'
         - php: 'nightly'
 
 # Use this to prepare the system to install prerequisites or dependencies.
