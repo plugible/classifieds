@@ -83,7 +83,7 @@ if ( ! class_exists( 'Starter' ) ) :
 				self::$instances[ get_called_class() ] = new static();
 				self::$instances[ get_called_class() ]->init( $args );
 			}
-			return self::$instance;
+			return self::$instances[ get_called_class() ];
 		}
 
 		/**
