@@ -219,11 +219,11 @@ if ( ! class_exists( 'Starter' ) ) :
 		 * @param  String $path The path relative to the plugin directory.
 		 * @param  Array  $args Same as what you would provide to wp_enqueue_script or wp_enqueue_style with the addition of is_admin which enqueue the asset on the backend.
 		 */
-		protected function enqueue_asset( $path, $args = [] ) {
+		public function enqueue_asset( $path, $args = [] ) {
 
 			$default_args = [
 				'is_admin' => false,
-				'handle' => $this->plugin_slug,
+				'handle' => $this->plugin_slug . '-' . sanitize_user( basename( $path ), true ),
 				'deps' => null,
 				'ver' => $this->plugin_version,
 				'in_footer' => null,
