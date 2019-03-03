@@ -315,10 +315,6 @@ class Builder {
 				file_put_contents( 'lang/' . $this->plugin_slug . '.pot', $old );
 			}
 		}
-
-		$this->log( 'Language file created successfully.' );
-	}
-
 		$this->log( 'Language file created successfully.' );
 	}
 
