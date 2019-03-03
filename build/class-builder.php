@@ -257,7 +257,15 @@ class Builder {
 			exit;
 		}
 
-		$command = str_replace(
+		/**
+		 * Prepare `lang`directory
+		 */
+		shell_exec( 'mkdir -p lang' );
+
+		/**
+		 * Prepare xgettext command.
+		 */
+		$pot_command = str_replace(
 			"\n",
 			'',
 			'
@@ -294,8 +302,23 @@ class Builder {
 				-o lang/' . $this->plugin_slug . '.pot
 		'
 		);
-		shell_exec( 'mkdir -p lang' );
-		shell_exec( $command );
+
+		/**
+		 * Run command and restaure old file if nothing changes except the creation date.
+		 */
+		$old = file_get_contents( 'lang/' . $this->plugin_slug . '.pot' );
+		shell_exec( $pot_command );
+		$new = file_get_contents( 'lang/' . $this->plugin_slug . '.pot' );
+		$modified = array_diff( explode( "\n", $old ), explode( "\n", $new ) );
+		if ( 1 === count( $modified ) ) {
+			if ( preg_match( '/^"POT-Creation-Date/', array_values( $modified )[0] ) ) {
+				file_put_contents( 'lang/' . $this->plugin_slug . '.pot', $old );
+			}
+		}
+
+		$this->log( 'Language file created successfully.' );
+	}
+
 		$this->log( 'Language file created successfully.' );
 	}
 
