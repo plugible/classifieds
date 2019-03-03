@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootswatch build class.
+ * Builder class.
  *
  * @package Starter
  */
