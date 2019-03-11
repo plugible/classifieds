@@ -280,12 +280,14 @@ if ( ! class_exists( 'Starter' ) ) :
 
 		/**
 		 * Register scheduled task.
-		 * @param  calable  $callback    The callback (must return true only on success).
-		 * @param  array    $parameters  Callback parameters.
-		 * @param  int      $interval    Repeating interval in seconds
-		 * @param  array    $preferred   Preferred days and or hours
+		 *
+		 * @param  string  $name        The task name.
+		 * @param  calable $callback    The callback (must return true only on success).
+		 * @param  array   $parameters  Callback parameters.
+		 * @param  int     $interval    Repeating interval in seconds.
+		 * @param  array   $preferred   Preferred days and or hours.
 		 */
-		public function schedule_task( $name, callable $callback, array $parameters = [], int $interval = 6 * 3600, array $preferred = [], $dry = false ) {
+		public function schedule_task( string $name, callable $callback, array $parameters = [], int $interval = 6 * 3600, array $preferred = [] ) {
 
 			/**
 			 * Check preferred hours.
