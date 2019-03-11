@@ -279,6 +279,76 @@ if ( ! class_exists( 'Starter' ) ) :
 		}
 
 		/**
+		 * Register scheduled task.
+		 * @param  calable  $callback    The callback (must return true only on success).
+		 * @param  array    $parameters  Callback parameters.
+		 * @param  int      $interval    Repeating interval in seconds
+		 * @param  array    $preferred   Preferred days and or hours
+		 */
+		public function schedule_task( $name, callable $callback, array $parameters = [], int $interval = 6 * 3600, array $preferred = [], $dry = false ) {
+
+			/**
+			 * Check preferred hours.
+			 */
+			$hour_is_prf = false;
+			if ( isset( $preferred[ 'hours' ] ) ) {
+				$hour_now = date( 'ga', current_time( 'timestamp' ) );
+				foreach ( $preferred[ 'hours' ] as $hour_prf ) {
+					if ( $hour_now === date( 'ga', strtotime( $hour_prf ) ) ) {
+						$hour_is_prf = true;
+						break;
+					}
+				}
+				if ( ! $hour_is_prf ) {
+					return;
+				}
+			}
+
+			/**
+			 * Check preferred days.
+			 */
+			$day_is_prf = false;
+			if ( isset( $preferred[ 'days' ] ) ) {
+				$day_now = date( 'l', current_time( 'timestamp' ) );
+				foreach ( $preferred[ 'days' ] as $day_prf ) {
+					if ( $day_now === date( 'l', strtotime( $day_prf ) ) ) {
+						$day_is_prf = true;
+						break;
+					}
+				}
+				if ( ! $day_is_prf ) {
+					return;
+				}
+			}
+
+			add_action( 'init', function() use ( $name, $callback, $parameters, $interval ) {
+				/**
+				 * Prepare transient name.
+				 */
+				$transient_name = $this->plugin_slug . '_' . sanitize_user( $name, true );
+
+				/**
+				 * Exit function if nothing to do.
+				 */
+				if ( get_transient( $transient_name ) ) {
+					return;
+				}
+
+				/**
+				 * Run scheduled task.
+				 */
+				$status = call_user_func( $callback, $parameters );
+
+				/**
+				 * Mark as run if $status is true.
+				 */
+				if ( $status ) {
+					set_transient( $transient_name, current_time( 'mysql' ), $interval );
+				}
+			} );
+		}
+
+		/**
 		 * Converts a string from camelCase to snake_case
 		 *
 		 * @param  String $str camelCase.
