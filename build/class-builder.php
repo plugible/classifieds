@@ -278,8 +278,7 @@ class Builder {
 				--language=PHP
 				--package-name=' . $this->plugin_slug . '
 				--package-version=' . $this->plugin_version . '
-				--copyright-h
-				er="Nabil Kadimi"
+				--copyright-holder="Nabil Kadimi"
 				--msgid-bugs-address="https://github.com/kadimi/starter/issues/new"
 				--from-code=UTF-8
 				--keyword="__"
