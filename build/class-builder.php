@@ -62,8 +62,8 @@ class Builder {
 			$this->log_error( 'Missing plugin version, example usage: `php -f build/build.php acme-plugin 1.0.0`' );
 		}
 
-		$this->timer = microtime( true );
-		$this->plugin_slug = $argv[1];
+		$this->timer          = microtime( true );
+		$this->plugin_slug    = $argv[1];
 		$this->plugin_version = $argv[2];
 		$this->task( [ $this, 'pot' ], 'Creating Languages File' );
 		$this->task( [ $this, 'package' ], 'Packaging' );
@@ -203,7 +203,9 @@ class Builder {
 		if ( $is_title ) {
 			$message = "\033[32m\033[1m$message\033[0m";
 		}
-		echo $message; // XSS OK.
+		// @codingStandardsIgnoreStart
+		echo $message;
+		// @codingStandardsIgnoreEnd
 		if ( $append_new_line ) {
 			echo "\n";
 		}
@@ -260,7 +262,7 @@ class Builder {
 		/**
 		 * Prepare `lang`directory
 		 */
-		shell_exec( 'mkdir -p lang' );
+		$this->exec( 'mkdir -p lang' );
 
 		/**
 		 * Prepare xgettext command.
@@ -306,13 +308,13 @@ class Builder {
 		/**
 		 * Run command and restaure old file if nothing changes except the creation date.
 		 */
-		$old = file_get_contents( 'lang/' . $this->plugin_slug . '.pot' );
-		shell_exec( $pot_command );
-		$new = file_get_contents( 'lang/' . $this->plugin_slug . '.pot' );
+		$old = $this->file_get_contents( 'lang/' . $this->plugin_slug . '.pot' );
+		$this->exec( $pot_command );
+		$new      = $this->file_get_contents( 'lang/' . $this->plugin_slug . '.pot' );
 		$modified = array_diff( explode( "\n", $old ), explode( "\n", $new ) );
 		if ( 1 === count( $modified ) ) {
 			if ( preg_match( '/^"POT-Creation-Date/', array_values( $modified )[0] ) ) {
-				file_put_contents( 'lang/' . $this->plugin_slug . '.pot', $old );
+				$this->file_put_contents( 'lang/' . $this->plugin_slug . '.pot', $old );
 			}
 		}
 		$this->log( 'Language file created successfully.' );
@@ -325,7 +327,31 @@ class Builder {
 	 * @return Boolean           True if the command exist or false oterwise.
 	 */
 	protected function shell_command_exists( $command ) {
-		$output = shell_exec( sprintf( 'which %s', escapeshellarg( $command ) ) );
+		$output = $this->exec( sprintf( 'which %s', escapeshellarg( $command ) ) );
 		return ! empty( $output );
+	}
+
+	/**
+	 * Wrapper around shell_exec().
+	 *
+	 * @param  string $cmd Command.
+	 * @return string      Command output.
+	 */
+	protected function exec( $cmd ) {
+		// @codingStandardsIgnoreStart
+		return shell_exec( $cmd );
+		// @codingStandardsIgnoreEnd
+	}
+
+	/**
+	 * Wrapper around file_get_contents().
+	 *
+	 * @param  string $file File.
+	 * @return string        File contents.
+	 */
+	protected function file_get_contents( $file ) {
+		// @codingStandardsIgnoreStart
+		return file_get_contents( $file );
+		// @codingStandardsIgnoreEnd
 	}
 }

@@ -93,12 +93,14 @@ if ( ! class_exists( 'Starter' ) ) :
 		 */
 		protected function init( $args ) {
 
-			$this->plugin_file = debug_backtrace()[1]['file'];
+			// @codingStandardsIgnoreStart
+			$this->plugin_file     = debug_backtrace()[1]['file'];
+			// @codingStandardsIgnoreEnd
 			$this->plugin_basename = plugin_basename( $this->plugin_file );
 			$this->plugin_dir_path = plugin_dir_path( $this->plugin_file );
-			$this->plugin_dir_url = plugin_dir_url( $this->plugin_file );
-			$this->plugin_slug = ( ! empty( $args['slug'] ) ) ? $args['slug'] : str_replace( '_', '-', self::camel_case_to_snake_case( get_class( $this ) ) );
-			$this->plugin_version = ( ! empty( $args['version'] ) ) ? $args['version'] : '1.0.0';
+			$this->plugin_dir_url  = plugin_dir_url( $this->plugin_file );
+			$this->plugin_slug     = ( ! empty( $args['slug'] ) ) ? $args['slug'] : str_replace( '_', '-', self::camel_case_to_snake_case( get_class( $this ) ) );
+			$this->plugin_version  = ( ! empty( $args['version'] ) ) ? $args['version'] : '1.0.0';
 			$this->autoload();
 			$this->activate();
 			$this->enqueue_public_assets();
@@ -163,8 +165,8 @@ if ( ! class_exists( 'Starter' ) ) :
 			add_action(
 				'tgmpa_register',
 				function() use ( $name, $options ) {
-					$options['name'] = $name;
-					$options['slug'] = ! empty( $options['slug'] ) ? $options['slug'] : strtolower( preg_replace( '/[^\w\d]+/', '-', $name ) );
+					$options['name']     = $name;
+					$options['slug']     = ! empty( $options['slug'] ) ? $options['slug'] : strtolower( preg_replace( '/[^\w\d]+/', '-', $name ) );
 					$options['required'] = true;
 					tgmpa( [ $options ] );
 				}
@@ -178,7 +180,7 @@ if ( ! class_exists( 'Starter' ) ) :
 			add_shortcode(
 				$this->plugin_slug,
 				function( $atts ) {
-					$args = shortcode_atts(
+					$args   = shortcode_atts(
 						array(
 							'dummy' => 'dummy',
 						),
@@ -222,19 +224,19 @@ if ( ! class_exists( 'Starter' ) ) :
 		public function enqueue_asset( $path, $args = [] ) {
 
 			$default_args = [
-				'is_admin' => false,
-				'handle' => $this->plugin_slug . '-' . sanitize_user( basename( $path ), true ),
-				'deps' => null,
-				'ver' => $this->plugin_version,
+				'is_admin'  => false,
+				'handle'    => $this->plugin_slug . '-' . sanitize_user( basename( $path ), true ),
+				'deps'      => null,
+				'ver'       => $this->plugin_version,
 				'in_footer' => null,
-				'media' => null,
+				'media'     => null,
 			];
 
-			$args += $default_args;
+			$args           += $default_args;
 			$args['abspath'] = $this->plugin_dir_path . $path;
-			$args['src'] = $this->plugin_dir_url . $path;
-			$parts = explode( '.', $path );
-			$extension = end( $parts );
+			$args['src']     = $this->plugin_dir_url . $path;
+			$parts           = explode( '.', $path );
+			$extension       = end( $parts );
 
 			if ( ! file_exists( $args['abspath'] ) ) {
 				$this->watchdog( sprintf( 'File <code>%s</code> does not exist', $path ), 'notice' );
@@ -323,31 +325,34 @@ if ( ! class_exists( 'Starter' ) ) :
 				}
 			}
 
-			add_action( 'init', function() use ( $name, $callback, $parameters, $interval ) {
-				/**
-				 * Prepare transient name.
-				 */
-				$transient_name = $this->plugin_slug . '_' . sanitize_user( $name, true );
+			add_action(
+				'init',
+				function() use ( $name, $callback, $parameters, $interval ) {
+					/**
+					 * Prepare transient name.
+					 */
+					$transient_name = $this->plugin_slug . '_' . sanitize_user( $name, true );
 
-				/**
-				 * Exit function if nothing to do.
-				 */
-				if ( get_transient( $transient_name ) ) {
-					return;
+					/**
+					 * Exit function if nothing to do.
+					 */
+					if ( get_transient( $transient_name ) ) {
+						return;
+					}
+
+					/**
+					 * Run scheduled task.
+					 */
+					$status = call_user_func( $callback, $parameters );
+
+					/**
+					 * Mark as run if $status is true.
+					 */
+					if ( $status ) {
+						set_transient( $transient_name, current_time( 'mysql' ), $interval );
+					}
 				}
-
-				/**
-				 * Run scheduled task.
-				 */
-				$status = call_user_func( $callback, $parameters );
-
-				/**
-				 * Mark as run if $status is true.
-				 */
-				if ( $status ) {
-					set_transient( $transient_name, current_time( 'mysql' ), $interval );
-				}
-			} );
+			);
 		}
 
 		/**
