@@ -287,7 +287,7 @@ if ( ! class_exists( 'Starter' ) ) :
 		 * @param  int     $interval    Repeating interval in seconds.
 		 * @param  array   $preferred   Preferred days and or hours.
 		 */
-		public function schedule_task( string $name, callable $callback, array $parameters = [], int $interval = 6 * 3600, array $preferred = [] ) {
+		public function schedule_task( $name, $callback, $parameters = [], $interval = 6 * 3600, $preferred = [] ) {
 
 			/**
 			 * Check preferred hours.
