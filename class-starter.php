@@ -293,10 +293,10 @@ if ( ! class_exists( 'Starter' ) ) :
 			 * Check preferred hours.
 			 */
 			$hour_is_prf = false;
-			if ( isset( $preferred[ 'hours' ] ) ) {
+			if ( isset( $preferred['hours'] ) ) {
 				$hour_now = date( 'ga', current_time( 'timestamp' ) );
-				foreach ( $preferred[ 'hours' ] as $hour_prf ) {
-					if ( $hour_now === date( 'ga', strtotime( $hour_prf ) ) ) {
+				foreach ( $preferred['hours'] as $hour_prf ) {
+					if ( date( 'ga', strtotime( $hour_prf ) ) === $hour_now ) {
 						$hour_is_prf = true;
 						break;
 					}
@@ -310,10 +310,10 @@ if ( ! class_exists( 'Starter' ) ) :
 			 * Check preferred days.
 			 */
 			$day_is_prf = false;
-			if ( isset( $preferred[ 'days' ] ) ) {
+			if ( isset( $preferred['days'] ) ) {
 				$day_now = date( 'l', current_time( 'timestamp' ) );
-				foreach ( $preferred[ 'days' ] as $day_prf ) {
-					if ( $day_now === date( 'l', strtotime( $day_prf ) ) ) {
+				foreach ( $preferred['days'] as $day_prf ) {
+					if ( date( 'l', strtotime( $day_prf ) ) === $day_now ) {
 						$day_is_prf = true;
 						break;
 					}
