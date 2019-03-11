@@ -347,11 +347,24 @@ class Builder {
 	 * Wrapper around file_get_contents().
 	 *
 	 * @param  string $file File.
-	 * @return string        File contents.
+	 * @return string       File contents.
 	 */
 	protected function file_get_contents( $file ) {
 		// @codingStandardsIgnoreStart
 		return file_get_contents( $file );
+		// @codingStandardsIgnoreEnd
+	}
+
+	/**
+	 * Wrapper around file_put_contents().
+	 *
+	 * @param  string $file     File.
+	 * @param  string $contents File contents.
+	 * @return int              Number of bytes written.
+	 */
+	protected function file_put_contents( $file, $contents ) {
+		// @codingStandardsIgnoreStart
+		return file_put_contents( $file, $contents );
 		// @codingStandardsIgnoreEnd
 	}
 }
