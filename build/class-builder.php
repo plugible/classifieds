@@ -256,7 +256,6 @@ class Builder {
 
 		if ( ! $this->shell_command_exists( 'xgettext' ) ) {
 			$this->log_error( '`xgettext` command does not exist.' );
-			exit;
 		}
 
 		/**
