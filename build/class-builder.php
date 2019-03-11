@@ -128,8 +128,7 @@ class Builder {
 		 */
 		$zip = new ZipArchive();
 		if ( $zip->open( $filename, ZipArchive::CREATE ) !== true ) {
-			$this->log( 'cannot open <$filename>' );
-			exit;
+			$this->log_error( 'cannot open <$filename>' );
 		}
 		foreach ( $files as $file ) {
 			if ( is_dir( $file ) ) {
