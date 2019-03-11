@@ -278,7 +278,8 @@ class Builder {
 				--language=PHP
 				--package-name=' . $this->plugin_slug . '
 				--package-version=' . $this->plugin_version . '
-				--copyright-holder="Nabil Kadimi"
+				--copyright-h
+				er="Nabil Kadimi"
 				--msgid-bugs-address="https://github.com/kadimi/starter/issues/new"
 				--from-code=UTF-8
 				--keyword="__"
@@ -349,7 +350,7 @@ class Builder {
 	 */
 	protected function file_get_contents( $file ) {
 		// @codingStandardsIgnoreStart
-		return file_get_contents( $file );
+		return @file_get_contents( $file );
 		// @codingStandardsIgnoreEnd
 	}
 
