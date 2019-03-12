@@ -286,10 +286,24 @@ if ( ! class_exists( 'Starter' ) ) :
 		 * @param  string  $name        The task name.
 		 * @param  calable $callback    The callback (must return true only on success).
 		 * @param  array   $parameters  Callback parameters.
-		 * @param  int     $interval    Repeating interval in seconds.
+		 * @param  int     $minimum_interval    Minimum interval in seconds.
 		 * @param  array   $preferred   Preferred days and or hours.
+		 * @param  boolean $force Force Force task execution.
 		 */
-		public function schedule_task( $name, $callback, $parameters = [], $interval = 21600, $preferred = [] ) {
+		public function schedule_task( $name, $callback, $parameters = [], $minimum_interval = 21600, $preferred = [], $force = false ) {
+
+			/**
+			 * Prepare transient name.
+			 */
+			$transient_name = $this->plugin_slug . '_' . sanitize_user( $name, true );
+
+			/**
+			 * Maybe force.
+			 */
+			if ( $force ) {
+				$preferred = [];
+				delete_transient( $transient_name );
+			}
 
 			/**
 			 * Check preferred hours.
@@ -327,11 +341,7 @@ if ( ! class_exists( 'Starter' ) ) :
 
 			add_action(
 				'init',
-				function() use ( $name, $callback, $parameters, $interval ) {
-					/**
-					 * Prepare transient name.
-					 */
-					$transient_name = $this->plugin_slug . '_' . sanitize_user( $name, true );
+				function() use ( $callback, $parameters, $minimum_interval, $transient_name ) {
 
 					/**
 					 * Exit function if nothing to do.
@@ -349,7 +359,7 @@ if ( ! class_exists( 'Starter' ) ) :
 					 * Mark as run if $status is true.
 					 */
 					if ( $status ) {
-						set_transient( $transient_name, current_time( 'mysql' ), $interval );
+						set_transient( $transient_name, current_time( 'mysql' ), $minimum_interval );
 					}
 				}
 			);
