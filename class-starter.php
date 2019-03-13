@@ -312,7 +312,7 @@ if ( ! class_exists( 'Starter' ) ) :
 			if ( isset( $preferred['minutes'] ) ) {
 				$minute_now = intval( date( 'i', current_time( 'timestamp' ) ) );
 				foreach ( $preferred['minutes'] as $minute_prf ) {
-					if ( intval( date( 'i', strtotime( $minute_prf ) ) ) === $minute_now ) {
+					if ( intval( $minute_prf ) === $minute_now ) {
 						$minute_is_prf = true;
 						break;
 					}
