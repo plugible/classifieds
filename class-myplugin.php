@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: My Plugin
- * Description: My Plugin Description.
+ * Plugin Name: MyPlugin
+ * Description: MyPlugin Description.
  * Text Domain: myplugin
  * Version: 1.0.0
  * Plugin URI: https://www.github.com/kadimi/starter
@@ -13,20 +13,15 @@
  */
 
 /**
- * Create the plugin class.
+ * Composer stuff.
  */
-require 'class-starter.php';
+require 'vendor/autoload.php';
 
 /**
- * MyPlugin class.
- */
-class MyPlugin extends Starter {};
-
-/**
- * Create a shortcut for ease of use.
+ * Helper function.
  */
 function myplugin() {
-	return MyPlugin::get_instance();
+	return ( new class extends Kadimi\WPStarter {} )::get_instance();
 }
 
 /**
