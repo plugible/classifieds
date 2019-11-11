@@ -1,0 +1,31 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Nabil Kadimi
+# This file is distributed under the same license as the classifieds-by-plugible package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: classifieds-by-plugible 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
+"POT-Creation-Date: 2019-11-11 00:57+0100\n"
+"PO-Revision-Date: 2019-11-11 01:48+0100\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: inc/setup.php:13
+msgid "Classifieds"
+msgstr "الإعلانات"
+
+#: parts/meta-boxes/featured-images.php:13
+#: parts/meta-boxes/featured-images.php:14
+msgid "Set featured image(s)"
+msgstr "تحديد الصور المميزة"
+
+#: parts/meta-boxes/featured-images.php:19
+msgid "Featured Image(s)"
+msgstr "الصور المميزة"

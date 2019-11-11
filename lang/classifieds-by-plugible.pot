@@ -1,0 +1,39 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Nabil Kadimi
+# This file is distributed under the same license as the classifieds-by-plugible package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: classifieds-by-plugible 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
+"POT-Creation-Date: 2019-11-11 02:46+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: inc/setup.php:17
+msgid "Classifieds"
+msgstr ""
+
+#: inc/setup.php:47
+msgid "Location"
+msgstr ""
+
+#: inc/setup.php:66
+msgid "Category"
+msgstr ""
+
+#: parts/meta-boxes/featured-images.php:13
+#: parts/meta-boxes/featured-images.php:14
+msgid "Set featured image(s)"
+msgstr ""
+
+#: parts/meta-boxes/featured-images.php:25
+msgid "Featured Image(s)"
+msgstr ""
