@@ -1,5 +1,5 @@
 composer.lock
-package.lock.json
+package-lock.json
 build/releases/
 node_modules/
 vendor/
