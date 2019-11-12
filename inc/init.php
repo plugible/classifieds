@@ -1,5 +1,11 @@
 <?php
 
+use Plugible\Classifieds\Form;
+
+add_action( 'init', function() {
+	new Form();
+} );
+
 /**
  * Register post types and taxonomies.
  */
@@ -52,3 +58,4 @@ add_action( 'init', function() {
 		],
 	] );
 } );
+

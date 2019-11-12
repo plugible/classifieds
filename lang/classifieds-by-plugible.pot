@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2019-11-11 02:46+0100\n"
+"POT-Creation-Date: 2019-11-11 16:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: inc/setup.php:17
-msgid "Classifieds"
+#: inc/form/form.php:24
+msgid "Error: Login Required"
 msgstr ""
 
-#: inc/setup.php:47
-msgid "Location"
+#: inc/form/form.php:35
+msgid "Classified Title"
 msgstr ""
 
-#: inc/setup.php:66
+#: inc/form/form.php:36
+msgid "Classified Description"
+msgstr ""
+
+#: inc/form/form.php:37
 msgid "Category"
 msgstr ""
 
-#: parts/meta-boxes/featured-images.php:13
-#: parts/meta-boxes/featured-images.php:14
-msgid "Set featured image(s)"
-msgstr ""
-
-#: parts/meta-boxes/featured-images.php:25
-msgid "Featured Image(s)"
+#: inc/form/form.php:38
+msgid "Location"
 msgstr ""
