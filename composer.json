@@ -7,11 +7,16 @@
             "email": "nabil@kadimi.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Plugible\\Classifieds\\": "src/"
+        }
+    },
     "require": {
         "tgmpa/tgm-plugin-activation": "^2.5",
-        "kadimi/wpstarter": "^1.0"
+        "kadimi/wpstarter": "^1.0",
+        "intervention/image": "^2.5"
     },
     "require-dev": {
-        "kint-php/kint": "^2.1"
     }
 }
