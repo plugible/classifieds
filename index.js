@@ -4,8 +4,11 @@ const XHRUpload = require( '@uppy/xhr-upload' );
 require( '@uppy/core/dist/style.css' );
 require( '@uppy/dashboard/dist/style.css' );
 
-import $ from 'jquery';
-import validate from 'jquery-validation';
+const $ = require( 'jquery' );
+const validate = require( 'jquery-validation' );
+const select2 = require( 'select2' );
+require( 'select2/dist/css/select2.css' );
+require( 'select2-bootstrap-theme/dist/select2-bootstrap.css' );
 
 const settingsObjectName = 'classifieds';
 const appSettings = window[ settingsObjectName ];
@@ -72,7 +75,7 @@ form.validate( {
 	},
 	errorElement: "em",
 	errorPlacement: function ( error, element ) {
-		error.addClass( "help-block" ).insertAfter( element );
+		error.addClass( "help-block" ).appendTo( element.parent() );
 	},
 	highlight: function ( element, errorClass, validClass ) {
 		$( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
@@ -97,6 +100,12 @@ $( '[data-disallow-non-digit]', form ).keyup( function() {
 	let $this = $( this );
 	$this.val( $this.val().replace( /[^0-9]/g, '' ) );
 } );
+
+// Select 2
+$( 'select[data-use-select2]', form ).select2();
+$('html > head').append( '<style>.select2-selection__rendered { line-height: 48px !important; }</style>' );
+$('html > head').append( '<style>.select2-container .select2-selection--single { height: 48px !important; }</style>' );
+$('html > head').append( '<style>.select2-selection__arrow { height: 48px !important; }</style>' );
 
 // Debugging.
 if ( appSettings.debug ) {	

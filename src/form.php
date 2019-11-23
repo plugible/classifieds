@@ -258,9 +258,11 @@ Class Form {
 			] )
 			. $this->select( 'category', __( 'Category*', 'classifieds-by-plugible' ), $categories, __( 'Choose...', 'classifieds-by-plugible' ), [
 				'required' => true,
+				'data-use-select2' => true,
 			] )
 			. $this->select( 'location', __( 'Location*', 'classifieds-by-plugible' ), $locations, __( 'Choose...', 'classifieds-by-plugible' ), [
 				'required' => true,
+				'data-use-select2' => true,
 			] )
 			. $this->textarea( 'content', __( 'Description*', 'classifieds-by-plugible' ), [
 				'minlength' => 50,
