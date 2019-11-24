@@ -1,6 +1,6 @@
 composer.lock
 package-lock.json
 build/releases/
+dist/
 node_modules/
 vendor/
-public/js/classifieds.js

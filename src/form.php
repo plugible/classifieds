@@ -56,7 +56,7 @@ Class Form {
 	// }
 
 	private function scripts() {
-		$this->plugin->enqueue_asset( 'public/js/classifieds.js', [
+		$this->plugin->enqueue_asset( 'dist/classifieds.js', [
 			'in_footer' => true,
 			'object_name' => $this->settingsObjectName,
 			'l10n' => [
@@ -68,8 +68,11 @@ Class Form {
 				'uploadElementId' => $this->uploadElementId,
 				'text' => [
 					'submit' => __( 'Submit', 'classifieds-by-plugible' ),
-					'submitting' => __( 'Submitting in progress', 'classifieds-by-plugible' ),
+					'submitting' => __( 'Submitting... Please wait', 'classifieds-by-plugible' ),
+					'fixErrors' => __( 'Errors detected. Please fix errors and submit again', 'classifieds-by-plugible' ),
 					'waitForImageUpload' => __( 'Please wait for the image(s) upload to finish', 'classifieds-by-plugible' ),
+					'submitSuccessTitleHtml' => '<h2>' . __( 'Submission was completed successfully', 'classifieds-by-plugible' ) . '</h2>',
+					'submitSuccessContentHtml' => '<p>'. __( 'Submission was completed successfully', 'classifieds-by-plugible' ) . '</p>',
 				],
 			],
 		] );
@@ -91,9 +94,8 @@ Class Form {
 		/**
 		 * Verify salt.
 		 */
-		if ( ! preg_match( '/^[0-9a-z]{5}$/i', $salt ) ) {
-			status_header( '400' );
-			die( ( string ) __LINE__ );
+		if ( ! preg_match( '/^[0-9a-z]{12}$/i', $salt ) ) {
+			die( -1 );
 		}
 
 		// // Create image.
@@ -130,6 +132,37 @@ Class Form {
 
 	public function ajaxAdSubmission() {
 
+		/**
+		 * Verify salt.
+		 */
+		$saltUsed = ( bool ) get_posts( [
+			'post_type' => 'pl_classified',
+			'meta_key' => 'salt',
+			'meta_value' => $_POST[ 'salt' ],
+			'post_status' => 'all',
+		] );
+		if ( $saltUsed ) {
+			die( '-1' );
+		}
+
+		/**
+		 * Validation.
+		 */
+		$required = [
+			'content',
+			'email',
+			'phone',
+			'title',
+		];
+		foreach ( $required as $r ) {
+			if ( ! array_key_exists( $r, $_REQUEST ) || empty( trim( $_POST[ $r ] ) ) ) {
+				die( '-1' );
+			}
+		}
+
+		/**
+		 * Create ad.
+		 */
 		$post_id = wp_insert_post( [
 			'post_content' => $_POST[ 'content' ],
 			'post_status' => 'draft',
@@ -147,6 +180,7 @@ Class Form {
 
 		add_post_meta( $post_id, 'phone', $_POST[ 'phone' ], true );
 		add_post_meta( $post_id, 'email', $_POST[ 'email' ], true );
+		add_post_meta( $post_id, 'salt', $_POST[ 'salt' ], true );
 
 		/**
 		 * Attach images to ad.
@@ -181,7 +215,7 @@ Class Form {
 		// /**
 		//  * Verify salt.
 		//  */
-		// if ( ! preg_match( '/^[0-9a-z]{5}$/i', $salt ) ) {
+		// if ( ! preg_match( '/^[0-9a-z]{12}$/i', $salt ) ) {
 		// 	status_header( '400' );
 		// 	die( ( string ) __LINE__ );
 		// }
@@ -309,7 +343,7 @@ Class Form {
 	}
 
 	private function salt( $name ) {
-		return $this->hidden( $name, wp_generate_password( 5, false ) );
+		return $this->hidden( $name, wp_generate_password( 12, false ) );
 	}
 
 	private function textarea( $name, $title, $args ) {
