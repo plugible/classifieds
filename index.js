@@ -160,19 +160,19 @@ if ( form.length ) {
 		$this.val( $this.val().replace( /[^0-9]/g, '' ) );
 	} );
 
-	// Select 2
+	// Select 2.
 	$( 'select[data-use-select2]:not([multiple])', form ).select2( {
 	} );
 	$( 'select[data-use-select2][multiple]', form ).select2( {
 		closeOnSelect: false,
 	} );
+
+	// Uppy.
 	$('html > head').append( '<style>\
-		.select2-container { width: 100% !important; }\
-		.select2-container--default .select2-selection--multiple { border: 2px solid #dce4ec; }\
-		.select2-container--default .select2-selection--single { border: 2px solid #dce4ec; }\
-		.select2-container--open .select2-dropdown { top: 32px; } \
 		.uppy-DashboardAddFiles { border-width: 5px !important; }\
 	' );
+
+
 }
 
 // lightGallery
