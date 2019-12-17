@@ -161,17 +161,57 @@ if ( form.length ) {
 	} );
 
 	// Select 2.
-	$( 'select[data-use-select2]:not([multiple])', form ).select2( {
-	} );
+	$( 'select[data-use-select2]:not([multiple])', form ).select2();
 	$( 'select[data-use-select2][multiple]', form ).select2( {
 		closeOnSelect: false,
+	} );
+	$('html > head').append( '<style>\
+		.select2-container .select2-selection--single { height: 35px; }\
+		.select2-container .select2-selection--single { line-height: 55px; }\
+		.select2-container .select2-selection--single .select2-selection__arrow { height: 35px; }\
+		.select2-container .select2-selection--single { border: 1px solid #ced4da; }\
+		.select2-container { width: 100% !important; }\
+		.select2-container [role=option][aria-disabled=true] { display: none; }\
+		.select2-container [aria-multiselectable=true] [role=option][aria-selected=true] { display: none; }\
+		body.admin-bar .select2-container--open .select2-dropdown { top: 32px; } \
+	' );
+
+	// Handle scoped selects.
+	$('select[data-controls]').each( function( index, element ) {
+
+
+		var $this = $( element );
+		var $controlled = $this.data( 'controls' ) ? $( '#' + $this.data( 'controls' ) ) : false;
+		
+		// Disable controlled at first.
+		if ( ! $this.val() ) {
+			$controlled.prop( 'disabled', true );
+		}
+
+		// Handle change.
+		$this.change( function() {
+			var slug = $( ':selected', $this ).data( 'slug' );
+			var $allOptions = $( 'option', $controlled );
+			var $invalidOptions = $( 'option[value!=""][data-scope!="' + slug + '"]', $controlled );
+
+			// Enable all options.
+			$allOptions.prop( 'disabled', false );
+
+			// Disable option with non-matching scope.
+			$invalidOptions.prop( 'disabled', true );
+			if ( $( ':selected', $controlled ).val() ) {
+				$controlled.val( null ).trigger( 'change' );
+			}
+
+			// Show/hide contolled.
+			$controlled.prop( 'disabled', ! slug );
+		} );
 	} );
 
 	// Uppy.
 	$('html > head').append( '<style>\
 		.uppy-DashboardAddFiles { border-width: 5px !important; }\
 	' );
-
 
 }
 

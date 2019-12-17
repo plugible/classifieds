@@ -305,6 +305,7 @@ Class Form {
 			] )
 			. $this->select( 'category', __( 'Category*', 'classifieds-by-plugible' ), $categories, __( 'Choose...', 'classifieds-by-plugible' ), [
 				'required' => true,
+				'data-controls' => 'specifications',
 				'data-use-select2' => true,
 			] )
 			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
@@ -387,7 +388,15 @@ Class Form {
 			: '<option value="">' . $emptyOptionText . '</option>'
 		;
 		array_walk( $options, function( $value, $index ) use( &$options_html ) {
-			$options_html .= sprintf( '<option value="%1$s">%2$s</option>', $index, $value );
+			$name = is_array( $value ) ? $value[ 'name' ] : $value;
+			$scope = is_array( $value ) ? $value[ 'scope' ] : '';
+			$slug = is_array( $value ) ? $value[ 'slug' ] : '';
+			$options_html .= sprintf( '<option value="%1$s" data-slug="%2$s" data-scope="%3$s">%4$s</option>'
+				, $index
+				, $slug
+				, $scope
+				, $name
+			);
 		} );
 
 		return sprintf( $format, $name, $title, $options_html, $this->args2HtmlParameters( $args ) );
@@ -427,7 +436,11 @@ Class Form {
 		}
 
 		foreach ( $terms  as $term ) {
-			$ret[ $term->term_id ] = str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term );
+			$ret[ $term->term_id ] = [
+				'name' => str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term ),
+				'slug' => $term->slug,
+				'scope' => get_option( 'taxonomy_term_' . $term->term_id )[ 'scope' ] ?? '',
+			];
 			$child_terms = get_terms( $taxonomy, [
 				'hide_empty' => false,
 				'parent' => $term->term_id,
