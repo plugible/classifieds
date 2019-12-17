@@ -310,7 +310,7 @@ Class Form {
 			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
 				'data-use-select2' => true,
 				'required' => true,
-				'multiple' => true
+				'multiple' => true,
 			] )
 			. $this->textarea( 'content', __( 'Description*', 'classifieds-by-plugible' ), [
 				'minlength' => 50,

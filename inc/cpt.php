@@ -59,6 +59,7 @@ add_action( 'init', function() {
 	$fields = [
 		'specification' => __( 'Specification', 'classifieds-by-plugibles' ),
 		'value' => __( 'Value', 'classifieds-by-plugibles' ),
+		'scope' => __( 'Scope', 'classifieds-by-plugibles' ),
 	];
 	register_taxonomy( 'pl_classified_specification', [ 'pl_classified' ], [
 		'labels' => [
