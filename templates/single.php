@@ -1,11 +1,5 @@
 <?php global $post; ?>
 
-<h2><?php _e( 'Details' ); ?></h2>
-
-<?php echo $content; ?>
-
-<h2><?php _e( 'Specs' ); ?></h2>
-
 <h2><?php _e( 'Media Gallery' ); ?></h2>
 
 <?php
@@ -39,3 +33,22 @@ $images = get_posts( $args );
 		float:right;
 	}
 </style>
+
+<h2><?php _e( 'Details' ); ?></h2>
+
+<?php echo $content; ?>
+
+<h2><?php _e( 'Specs' ); ?></h2>
+
+<?php $specifications = wp_get_post_terms( $post->ID, 'pl_classified_specification' ); ?>
+<table class="table table-dark">
+	<tbody>
+		<?php foreach ( $specifications as $specification ) { ?>
+			<?php $meta = get_option( 'taxonomy_term_' . $specification->term_id ); ?>
+			<tr>
+				<th scope="row"><?php echo $meta[ 'specification' ]; ?></th>
+				<td><?php echo $meta[ 'value' ]; ?></td>
+			</tr>
+		<?php } ?>
+	</tbody>
+</table>

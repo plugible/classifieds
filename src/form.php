@@ -266,9 +266,16 @@ Class Form {
 		$this->getHierarchicalTerms( 'pl_classified_location', $locations );
 		$categories = [];
 		$this->getHierarchicalTerms( 'pl_classified_category', $categories );
+		$specifications = [];
+		$this->getHierarchicalTerms( 'pl_classified_specification', $specifications, 0, function( $term ) {
+			return sprintf( '%1$s: %2$s'
+				, get_option( 'taxonomy_term_' . $term->term_id )[ 'specification' ]
+				, get_option( 'taxonomy_term_' . $term->term_id )[ 'value' ]
+			);
+		} );
 		return $this->form( ''
 			. $this->separator()
-			. $this->heading( __( 'Contact Info', 'classifieds-by-plugible' ) )
+			. $this->heading( __( 'Contact Information', 'classifieds-by-plugible' ) )
 			. $this->text( 'name', __( 'Name*', 'classifieds-by-plugible' ), [
 				'required' => true,
 			] )
@@ -278,25 +285,32 @@ Class Form {
 				'required' => true,
 			] )
 			. $this->text( 'phone', __( 'Phone*', 'classifieds-by-plugible' ), [
-				'maxlength' => 10,
-				'minlength' => 10,
 				'data-disallow-non-digit' => true,
 				'data-disallow-space' => true,
+				'maxlength' => 10,
+				'minlength' => 10,
 				'required' => true,
 			] )
 			. $this->separator()
-			. $this->heading( __( 'Ad Info', 'classifieds-by-plugible' ) )
+			. $this->heading( __( 'Images', 'classifieds-by-plugible' ) )
 			. $this->uppy( $this->uploadElementId, __( 'Images*', 'classifieds-by-plugible' ) )
+			. $this->separator()
+			. $this->heading( __( 'Ad Information', 'classifieds-by-plugible' ) )
 			. $this->text( 'title', __( 'Title*', 'classifieds-by-plugible' ), [
+				'required' => true,
+			] )
+			. $this->select( 'location', __( 'Location*', 'classifieds-by-plugible' ), $locations, __( 'Choose...', 'classifieds-by-plugible' ), [
+				'data-use-select2' => true,
 				'required' => true,
 			] )
 			. $this->select( 'category', __( 'Category*', 'classifieds-by-plugible' ), $categories, __( 'Choose...', 'classifieds-by-plugible' ), [
 				'required' => true,
 				'data-use-select2' => true,
 			] )
-			. $this->select( 'location', __( 'Location*', 'classifieds-by-plugible' ), $locations, __( 'Choose...', 'classifieds-by-plugible' ), [
-				'required' => true,
+			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
 				'data-use-select2' => true,
+				'required' => true,
+				'multiple' => true
 			] )
 			. $this->textarea( 'content', __( 'Description*', 'classifieds-by-plugible' ), [
 				'minlength' => 50,
@@ -395,24 +409,32 @@ Class Form {
 		return sprintf( $format, $this->formElementId, $contents );
 	}
 
-	private function getHierarchicalTerms( $taxonomy, &$ret, $parent = 0 ) {
+	private function getHierarchicalTerms( $taxonomy, &$ret, $parent = 0, $name_cb = null ) {
 
 		static $level = 0;
 
 		$terms = get_terms( $taxonomy, [
 			'hide_empty' => false,
+			'order' => 'ASC',
+			'orderby' => 'name',
 			'parent' => $parent,
 		] );
 
+		if ( ! $name_cb ) {
+			$name_cb = function( $term ) {
+				return $term->name;
+			};
+		}
+
 		foreach ( $terms  as $term ) {
-			$ret[ $term->term_id ] = str_repeat( '&mdash;', $level ) . ' ' . $term->name;
+			$ret[ $term->term_id ] = str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term );
 			$child_terms = get_terms( $taxonomy, [
 				'hide_empty' => false,
 				'parent' => $term->term_id,
 			] );
 			if ( $child_terms ) {
 				$level++;
-				$this->getHierarchicalTerms( $taxonomy, $ret, $term->term_id );
+				$this->getHierarchicalTerms( $taxonomy, $ret, $term->term_id, $name_cb );
 				$level--;
 			}
 		}

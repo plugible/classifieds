@@ -38,7 +38,7 @@ add_action( 'init', function() {
 			'slug' => 'classifieds-location',
 		],
 	] );
-
+ 
 	/**
 	 * Register the "Classified/Category" taxonomy.
 	 */
@@ -52,6 +52,52 @@ add_action( 'init', function() {
 			'slug' => 'classifieds-category',
 		],
 	] );
+
+	/**
+	 * Register the "Classified/Specification" taxonomy.
+	 */
+	$fields = [
+		'specification' => __( 'Specification', 'classifieds-by-plugibles' ),
+		'value' => __( 'Value', 'classifieds-by-plugibles' ),
+	];
+	register_taxonomy( 'pl_classified_specification', [ 'pl_classified' ], [
+		'labels' => [
+			'name' => 'Specifications', 'classifieds-by-plugibles',
+		],
+		'show_admin_column' => true,
+		'hierarchical' => true,
+		'rewrite' => [
+			'slug' => 'classifieds-specification',
+		],
+	] );
+
+	/**
+	 * Add fields to the "Classified/Specification" taxonomy.
+	 */
+	add_action( 'pl_classified_specification' . '_edit_form_fields', function( $tag, $taxonomy ) use( $fields ) {
+		$term_meta =  get_option( 'taxonomy_term_' . $tag->term_id );
+		foreach ( $fields as $name => $label ) {
+			$value = $term_meta[ $name ] ?? '';
+			?>
+			<tr class="form-field">
+				<th scope="row" valign="top"><label for="<?php echo $name; ?>"><?php echo $label; ?></label></th>
+				<td><input id="term_meta[<?php echo $name; ?>]" name="term_meta[<?php echo $name; ?>]" type="text" value="<?php echo $value; ?>" /></td>
+			</tr>
+			<?php
+		}
+	} , 10, 2 );
+
+	/**
+	 * Save fields to the "Classified/Specification" taxonomy.
+	 */
+	add_action( 'edited_' . 'pl_classified_specification', function( $term_id, $tt_id ) use( $fields ) {
+		$term_meta = ( array ) get_option( 'taxonomy_term_' . $term_id );
+		foreach ( $_POST[ 'term_meta' ] as $key => $value ) {
+			$term_meta[ $key ] = $value;
+		}
+		update_option( 'taxonomy_term_' . $term_id, $term_meta );
+		return;
+	}, 10, 2 );
 } );
 
 /**

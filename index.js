@@ -115,14 +115,24 @@ if ( form.length ) {
 			;
 		},
 		errorElement: "em",
+		errorClass: 'invalid-feedback',
+		validClass: 'valid-feedback',
 		errorPlacement: function ( error, element ) {
-			error.addClass( "help-block" ).appendTo( element.parent() );
+			$( element ).parent().append(
+			error.addClass( "feedback" )
+				);
 		},
 		highlight: function ( element, errorClass, validClass ) {
-			$( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+			$( element ).siblings( '.feedback' )
+				.addClass( "invalid-feedback" )
+				.removeClass( "valid-feedback" )
+			;
 		},
 		unhighlight: function (element, errorClass, validClass) {
-			$( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-error" );
+			$( element ).siblings( '.feedback' )
+				.addClass( "valid-feedback" + errorClass )
+				.removeClass( "invalid-feedback" )
+			;
 		},
 	} );
 
@@ -151,12 +161,16 @@ if ( form.length ) {
 	} );
 
 	// Select 2
-	$( 'select[data-use-select2]', form ).select2();
+	$( 'select[data-use-select2]:not([multiple])', form ).select2( {
+	} );
+	$( 'select[data-use-select2][multiple]', form ).select2( {
+		closeOnSelect: false,
+	} );
 	$('html > head').append( '<style>\
 		.select2-container { width: 100% !important; }\
-		.select2-container .select2-selection--single { height: 48px !important; }\
-		.select2-selection__arrow { height: 48px !important; }\
-		.select2-selection__rendered { line-height: 48px !important; }\
+		.select2-container--default .select2-selection--multiple { border: 2px solid #dce4ec; }\
+		.select2-container--default .select2-selection--single { border: 2px solid #dce4ec; }\
+		.select2-container--open .select2-dropdown { top: 32px; } \
 		.uppy-DashboardAddFiles { border-width: 5px !important; }\
 	' );
 }
@@ -171,14 +185,9 @@ require( 'lightgallery.js/dist/css/lightgallery.min.css' );
 
 $( '.pl_classified_gallery' ).each( function() {
 	lightGallery( this, {
-		thumbnail: true,
-		width: function() {
-			return ( $(window).width() - 50 ) + 'px';
-		},
-		height: function() {
-			return ( $(window).height() - 50 ) + 'px';
-		},
 		download: false,
+		thumbnail: true,
+		hideBarsDelay: 3000,
 	} );
 } );
 
@@ -187,6 +196,4 @@ $( 'html > head').append( '<style>\
 	.lg  { border-color: rgba( 255, 255, 255, 0.25); }\
 	.lg  { border-style: solid; }\
 	.lg  { background: black; }\
-	.lg  { padding: 10px; }\
-	.lg-backdrop.in { opacity: 0.85; }\
 </style>' );	
