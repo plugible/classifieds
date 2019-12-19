@@ -92,7 +92,12 @@ if ( form.length ) {
 				.removeClass( 'btn-primary' )
 				.removeClass( 'btn-danger' )
 			;
-			$.post( appSettings.endpoint, form.serialize() )
+			// Trick to submit disabled inputs.
+			var disabled = form.find( ':disabled' ).prop( 'disabled', false );
+			var serialized = form.serialize();
+			disabled.prop( 'disabled', true );
+			// The actual submission.
+			$.post( appSettings.endpoint, serialized )
 				.done( function( response ) {
 					switch( response ) {
 						case '-1':

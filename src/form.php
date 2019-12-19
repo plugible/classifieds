@@ -177,6 +177,9 @@ Class Form {
 
 		wp_set_post_terms( $post_id, $_POST[ 'location' ], 'pl_classified_location' );
 		wp_set_post_terms( $post_id, $_POST[ 'category' ], 'pl_classified_category' );
+		array_walk( $_POST[ 'specifications' ], function( $term_id ) use ( $post_id ) {
+			wp_set_post_terms( $post_id, get_term( $term_id )->name, 'pl_classified_specification' );
+		} );
 
 		add_post_meta( $post_id, 'phone', $_POST[ 'phone' ], true );
 		add_post_meta( $post_id, 'email', $_POST[ 'email' ], true );
@@ -380,7 +383,12 @@ Class Form {
 
 	private function select( $name, $title, $options, $emptyOptionText = null, $args = [] ) {
 
-		$format = apply_filters( 'pl_classifieds_form_select_format', '<p><label for="%1$s">%2$s<br><select id="%1$s" name="%1$s" %4$s>%3$s</select></label></p>' );
+		$id = $name;
+		if ( $args[ 'multiple' ] ?? false ) {
+			$name .= '[]';
+		}
+
+		$format = apply_filters( 'pl_classifieds_form_select_format', '<p><label for="%2$s">%3$s<br><select id="%2$s" name="%1$s" %5$s>%4$s</select></label></p>' );
 
 		$options_html = is_null( $emptyOptionText ) ? '' : '<option value="">' . $emptyOptionText . '</option>';
 
@@ -404,7 +412,7 @@ Class Form {
 			);
 		} );
 
-		return sprintf( $format, $name, $title, $options_html, $this->args2HtmlParameters( $args ) );
+		return sprintf( $format, $name, $id, $title, $options_html, $this->args2HtmlParameters( $args ) );
 	} 
 
 	private function uppy( $name, $title ) {
