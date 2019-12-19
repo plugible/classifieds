@@ -268,7 +268,7 @@ Class Form {
 		$this->getHierarchicalTerms( 'pl_classified_category', $categories );
 		$specifications = [];
 		$this->getHierarchicalTerms( 'pl_classified_specification', $specifications, 0, function( $term ) {
-			return sprintf( '%1$s: %2$s'
+			return sprintf( '%1$s → %2$s'
 				, get_option( 'taxonomy_term_' . $term->term_id )[ 'specification' ]
 				, get_option( 'taxonomy_term_' . $term->term_id )[ 'value' ]
 			);
@@ -310,6 +310,7 @@ Class Form {
 			] )
 			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
 				'data-use-select2' => true,
+				'data-group-by' => 'specification',
 				'required' => true,
 				'multiple' => true,
 			] )
@@ -383,18 +384,24 @@ Class Form {
 
 		$format = apply_filters( 'pl_classifieds_form_select_format', '<p><label for="%1$s">%2$s<br><select id="%1$s" name="%1$s" %4$s>%3$s</select></label></p>' );
 
-		$options_html = is_null( $emptyOptionText )
-			? ''
-			: '<option value="">' . $emptyOptionText . '</option>'
-		;
+		$options_html = is_null( $emptyOptionText ) ? '' : '<option value="">' . $emptyOptionText . '</option>';
+
 		array_walk( $options, function( $value, $index ) use( &$options_html ) {
 			$name = is_array( $value ) ? $value[ 'name' ] : $value;
-			$scope = is_array( $value ) ? $value[ 'scope' ] : '';
 			$slug = is_array( $value ) ? $value[ 'slug' ] : '';
-			$options_html .= sprintf( '<option value="%1$s" data-slug="%2$s" data-scope="%3$s">%4$s</option>'
+			$data = '';
+			if ( is_array( $value ) && array_key_exists( 'options', $value ) && is_array( $value[ 'options' ] ) ) {
+				foreach ( $value[ 'options' ] as $option_name => $option_value ) {
+					if ( is_numeric( $option_name ) ) {
+						continue;
+					}
+					$data .= sprintf( ' data-%1$s="%2$s"', $option_name, substr( md5( ( string ) $option_value ), 0, 7 ) );
+				}
+			}
+			$options_html .= sprintf( "\n" . '<option value="%1$s" data-slug="%2$s"%3$s>%4$s</option>'
 				, $index
-				, $slug
-				, $scope
+				, substr( md5( $slug ), 0, 7 ) 
+				, $data
 				, $name
 			);
 		} );
@@ -437,9 +444,9 @@ Class Form {
 
 		foreach ( $terms  as $term ) {
 			$ret[ $term->term_id ] = [
-				'name' => str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term ),
+				'name' => trim( str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term ) ),
 				'slug' => $term->slug,
-				'scope' => get_option( 'taxonomy_term_' . $term->term_id )[ 'scope' ] ?? '',
+				'options' => get_option( 'taxonomy_term_' . $term->term_id ) ?? [],
 			];
 			$child_terms = get_terms( $taxonomy, [
 				'hide_empty' => false,

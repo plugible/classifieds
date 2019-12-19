@@ -179,33 +179,71 @@ if ( form.length ) {
 	// Handle scoped selects.
 	$('select[data-controls]').each( function( index, element ) {
 
-
 		var $this = $( element );
 		var $controlled = $this.data( 'controls' ) ? $( '#' + $this.data( 'controls' ) ) : false;
-		
+
 		// Disable controlled at first.
-		if ( ! $this.val() ) {
-			$controlled.prop( 'disabled', true );
-		}
+		$controlled.prop( 'disabled', true );
 
 		// Handle change.
 		$this.change( function() {
 			var slug = $( ':selected', $this ).data( 'slug' );
-			var $allOptions = $( 'option', $controlled );
-			var $invalidOptions = $( 'option[value!=""][data-scope!="' + slug + '"]', $controlled );
 
 			// Enable all options.
-			$allOptions.prop( 'disabled', false );
+			var $validOptions = $( 'option', $controlled );
+			$validOptions.data( 'disabled-by-scope', false );
 
 			// Disable option with non-matching scope.
-			$invalidOptions.prop( 'disabled', true );
+			var $invalidOptions = $validOptions.filter( `option[value!=""][data-scope!=${slug}]` );
 			if ( $( ':selected', $controlled ).val() ) {
-				$controlled.val( null ).trigger( 'change' );
+				$controlled.val( null ).change();
 			}
+			$invalidOptions.data( 'disabled-by-scope', true );
 
 			// Show/hide contolled.
 			$controlled.prop( 'disabled', ! slug );
+
+			// Disable/Enable.
+			$( 'option', $controlled ).prop( 'disabled', false );
+			$( 'option' ).filter( function() {
+				return $( this ).data( 'disabled-by-group' ) || $( this ).data( 'disabled-by-scope' );
+			} ).prop( 'disabled', true );
 		} );
+
+		// First verification.
+		if ( $this.val() ) {
+			$this.change();
+		}
+	} );
+
+	// Disable options with same group.
+	$( 'select[data-group-by]' ).change( function() {
+		
+		var $this = $( this );
+		var groupBy = $this.data( 'group-by' ); // e.g.: "specification".
+
+		$( 'option', $this ).data( 'disabled-by-group', false );
+		$( 'option:selected', $this )
+			.each( function() {
+				var $this = $( this );
+				var $select = $this.parent( 'select' );
+				var group = $this.data( groupBy ); // e.g.: "a1fa277" (for "Type").	
+				$( `option[data-${groupBy}=${group}]`, $select ).not( $this ).data( 'disabled-by-group', true );	
+			} )
+			.data( 'disabled-by-group', true )
+		;
+
+		// Disable/Enable.
+		$( 'option', $this ).prop( 'disabled', false );
+		$( 'option' ).filter( function() {
+			return $( this ).data( 'disabled-by-group' ) || $( this ).data( 'disabled-by-scope' );
+		} ).prop( 'disabled', true );
+
+		// Refresh to hide removed.
+		if ( $this.data( 'select2' ).isOpen() ) {
+			$this.select2( 'close' );
+			$this.select2( 'open' );
+		}
 	} );
 
 	// Uppy.

@@ -72,6 +72,23 @@ add_action( 'init', function() {
 	] );
 
 	/**
+	 * Add columns to the "Classified/Specification" taxonomy.
+	 */
+	add_filter("manage_edit-pl_classified_specification_columns", function( $columns ) use ( $fields ) {
+		return array_merge( $columns, $fields );
+	} );
+	add_filter("manage_pl_classified_specification_custom_column", function( $string, $column_name, $term_id ) {
+
+		static $terms_options = [];
+
+		if ( ! array_key_exists( $term_id, $terms_options ) ) {
+			$terms_options[ $term_id ] = get_option( 'taxonomy_term_' . $term_id );
+		}
+
+		return $terms_options[ $term_id ][ $column_name ] ?? '';
+	}, 10, 3 );
+
+	/**
 	 * Add fields to the "Classified/Specification" taxonomy.
 	 */
 	add_action( 'pl_classified_specification' . '_edit_form_fields', function( $tag, $taxonomy ) use( $fields ) {
