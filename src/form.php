@@ -268,10 +268,8 @@ Class Form {
 		$this->getHierarchicalTerms( 'pl_classified_category', $categories );
 		$specifications = [];
 		$this->getHierarchicalTerms( 'pl_classified_specification', $specifications, 0, function( $term ) {
-			return sprintf( '%1$s → %2$s'
-				, get_option( 'taxonomy_term_' . $term->term_id )[ 'specification' ]
-				, get_option( 'taxonomy_term_' . $term->term_id )[ 'value' ]
-			);
+			$term_options = get_option( 'taxonomy_term_' . $term->term_id );
+			return sprintf( '%1$s → %2$s', $term_options[ 'specification' ], $term_options[ 'value' ] );
 		} );
 		return $this->form( ''
 			. $this->separator()
