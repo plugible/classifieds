@@ -21,6 +21,8 @@ $images = get_posts( $args );
 	<?php } ?>
 </div>
 
+<br style="clear:both" />
+
 <style>
 	.pl_classified_gallery a {
 		display: block;

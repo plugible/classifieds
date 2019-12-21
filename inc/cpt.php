@@ -66,6 +66,7 @@ add_action( 'init', function() {
 			'name' => 'Specifications', 'classifieds-by-plugibles',
 		],
 		'show_admin_column' => true,
+		// 'hierarchical' => true,
 		'rewrite' => [
 			'slug' => 'classifieds-specification',
 		],

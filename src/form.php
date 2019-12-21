@@ -178,7 +178,7 @@ Class Form {
 		wp_set_post_terms( $post_id, $_POST[ 'location' ], 'pl_classified_location' );
 		wp_set_post_terms( $post_id, $_POST[ 'category' ], 'pl_classified_category' );
 		array_walk( $_POST[ 'specifications' ], function( $term_id ) use ( $post_id ) {
-			wp_set_post_terms( $post_id, get_term( $term_id )->name, 'pl_classified_specification' );
+			wp_set_post_terms( $post_id, get_term( $term_id )->name, 'pl_classified_specification', true );
 		} );
 
 		add_post_meta( $post_id, 'phone', $_POST[ 'phone' ], true );
@@ -312,7 +312,7 @@ Class Form {
 			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
 				'data-use-select2' => true,
 				'data-group-by' => 'specification',
-				'required' => true,
+				// 'required' => true,
 				'multiple' => true,
 			] )
 			. $this->textarea( 'content', __( 'Description*', 'classifieds-by-plugible' ), [

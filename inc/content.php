@@ -9,8 +9,7 @@ add_filter( 'the_content', function( $content ) {
 	}
 
 	$templates_path = classifieds_by_plugible()->plugin_dir_path . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-	if ( is_single() ) {
+	if ( is_singular( 'pl_classified' ) ) {
 		include  $templates_path . 'single.php';
 	}
-
 } );
