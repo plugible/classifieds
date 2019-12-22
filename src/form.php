@@ -24,7 +24,6 @@ Class Form {
 
 	private $settingsObjectName = 'classifieds';
 
-
 	public function __construct( $plugin ) {
 		$this->debug = ( boolean ) constant( 'WP_DEBUG' );
 		$this->plugin = $plugin;
@@ -36,25 +35,6 @@ Class Form {
 		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForImageUpload , [ $this, 'ajaxImageUpload' ] );
 	}
 
-	// public function getUploadDir() {
-
-	// 	$fs = bootswatch_get_filesystem();
-
-	// 	$parts = [
-	// 		$this->plugin->plugin_slug,
-	// 		date( 'Y' ),
-	// 		date( 'm' ),
-	// 	];
-
-	// 	$uploadDir = WP_CONTENT_DIR;
-	// 	while ( $part = array_shift( $parts ) ) {
-	// 		$uploadDir .= DIRECTORY_SEPARATOR . $part; 
-	// 		$fs->mkdir( $uploadDir, 0777 );
-	// 	}
-	
-	// 	return $uploadDir;
-	// }
-
 	private function scripts() {
 		$this->plugin->enqueue_asset( 'dist/classifieds.js', [
 			'in_footer' => true,
@@ -64,8 +44,8 @@ Class Form {
 				'debug' => $this->debug,
 				'endpoint' => admin_url( 'admin-ajax.php' ),
 				'formElementId' => $this->formElementId,
-				'saltElementId' => $this->saltElementId,
-				'uploadElementId' => $this->uploadElementId,
+				'saltElementId' => $this->formElementId . '-' .$this->saltElementId,
+				'uploadElementId' => $this->formElementId . '-' .$this->uploadElementId,
 				'text' => [
 					'submit' => __( 'Submit', 'classifieds-by-plugible' ),
 					'submitting' => __( 'Submitting... Please wait', 'classifieds-by-plugible' ),
@@ -82,13 +62,6 @@ Class Form {
 
 		$nowDateTime = (new \DateTime())->format('YmdHis-u');
 
-		// $upload_dir = wp_upload_dir()[ 'path' ];
-
-		// $mime2Extension = [
-		// 	'image/png' => 'png',
-		// 	'image/jpeg' => 'jpg',
-		// ];
-
 		$salt = $_REQUEST[ $this->saltElementId ];
 
 		/**
@@ -98,36 +71,32 @@ Class Form {
 			die( -1 );
 		}
 
-		// // Create image.
-		// $src = $_FILES['files']['tmp_name'][0];
-		// $image = Image::make( $src );
-		// $dest = sprintf( '%s/%s-%s.%s'
-		// 	, $upload_dir
-		// 	, $nowDateTime
-		// 	, $salt
-		// 	, $mime2Extension[ $image->mime ]
-		// );
-
-		// /**
-		//  * Verify file extension.
-		//  */
-		// if ( ! array_key_exists( $image->mime, $mime2Extension ) ) {
-		// 	status_header( '400' );
-		// 	die( ( string ) __LINE__ );
-		// }
-
-		$attachement_id = media_handle_upload( 'files', 0 );
-		add_post_meta( $attachement_id, 'salt', $salt, true );
+		/**
+		 * Upload file and check it's an image.
+		 */
+		$attachement_id = media_handle_upload( 'files', 0, [], [
+			'test_form' => false,
+			'test_type' => true,
+			'mimes' => [
+				'jpg|jpeg|jpe' => 'image/jpeg',
+				'gif'          => 'image/gif',
+				'png'          => 'image/png',
+			],
+		] );
+		if ( is_wp_error( $attachement_id ) ) {
+			status_header( 415 ); // So that Uppy treat it as an error.
+			die( '-' . __LINE__);
+		}
 
 		/**
-		 * Save.
+		 * Add salt to attachment.
 		 */
-		// $image->save( $dest );
+		add_post_meta( $attachement_id, 'salt', $salt, true );
 
 		/**
 		 * Done
 		 */
-		die( '{}' );
+		die( '0' );
 	}
 
 	public function ajaxAdSubmission() {
@@ -135,28 +104,48 @@ Class Form {
 		/**
 		 * Verify salt.
 		 */
+		$salt = $_REQUEST[ $this->formElementId . '-salt' ] ?? '';
+		if ( ! $salt ) {
+			die( '-' . __LINE__ );
+		}
 		$saltUsed = ( bool ) get_posts( [
 			'post_type' => 'pl_classified',
 			'meta_key' => 'salt',
-			'meta_value' => $_POST[ 'salt' ],
+			'meta_value' => $salt,
 			'post_status' => 'all',
 		] );
 		if ( $saltUsed ) {
-			die( '-1' );
+			die( '-' . __LINE__ );
 		}
+
+		$name =           $_REQUEST[  $this->formElementId . '-name' ]           ?? '';
+		$email =          $_REQUEST[  $this->formElementId . '-email' ]          ?? '';
+		$phone =          $_REQUEST[  $this->formElementId . '-phone' ]          ?? '';
+		$title =          $_REQUEST[  $this->formElementId . '-title' ]          ?? '';
+		$location =       $_REQUEST[  $this->formElementId . '-location' ]       ?? '';
+		$category =       $_REQUEST[  $this->formElementId . '-category' ]       ?? '';
+		$specifications = $_REQUEST[  $this->formElementId . '-specifications' ] ?? [];
+		$description =    $_REQUEST[  $this->formElementId . '-description' ]    ?? '';
 
 		/**
 		 * Validation.
 		 */
 		$required = [
-			'content',
+			'name',
 			'email',
 			'phone',
 			'title',
+			'location',
+			'category',
+			'description',
 		];
+
 		foreach ( $required as $r ) {
-			if ( ! array_key_exists( $r, $_REQUEST ) || empty( trim( $_POST[ $r ] ) ) ) {
-				die( '-1' );
+			if ( false
+				|| ! array_key_exists( $this->formElementId . '-' . $r, $_REQUEST )
+				|| empty( trim( $_REQUEST[ $this->formElementId . '-' .$r ] ) )
+			) {
+				die( '-' . __LINE__ );
 			}
 		}
 
@@ -164,26 +153,26 @@ Class Form {
 		 * Create ad.
 		 */
 		$post_id = wp_insert_post( [
-			'post_content' => $_POST[ 'content' ],
+			'post_content' => $description,
 			'post_status' => 'draft',
-			'post_title' => $_POST[ 'title' ],
+			'post_title' => $title,
 			'post_type' => 'pl_classified',
 		], true );
 
 		if ( is_wp_error( $post_id ) ) {
-			echo '-1';
-			exit;
+			die( '-' . __LINE__ );
 		}
 
-		wp_set_post_terms( $post_id, $_POST[ 'location' ], 'pl_classified_location' );
-		wp_set_post_terms( $post_id, $_POST[ 'category' ], 'pl_classified_category' );
-		array_walk( $_POST[ 'specifications' ], function( $term_id ) use ( $post_id ) {
+		add_post_meta( $post_id, 'name', $phone, true );
+		add_post_meta( $post_id, 'phone', $phone, true );
+		add_post_meta( $post_id, 'email', $email, true );
+		add_post_meta( $post_id, 'salt', $salt, true );
+
+		wp_set_post_terms( $post_id, $location, 'pl_classified_location' );
+		wp_set_post_terms( $post_id, $category, 'pl_classified_category' );
+		array_walk( $specifications, function( $term_id ) use ( $post_id ) {
 			wp_set_post_terms( $post_id, get_term( $term_id )->name, 'pl_classified_specification', true );
 		} );
-
-		add_post_meta( $post_id, 'phone', $_POST[ 'phone' ], true );
-		add_post_meta( $post_id, 'email', $_POST[ 'email' ], true );
-		add_post_meta( $post_id, 'salt', $_POST[ 'salt' ], true );
 
 		/**
 		 * Attach images to ad.
@@ -191,7 +180,7 @@ Class Form {
 		$attachments = get_posts( [
 			'post_type' => 'attachment',
 			'meta_key' => 'salt',
-			'meta_value' => $_POST[ 'salt' ],
+			'meta_value' => $salt,
 		] );
 		foreach ( $attachments as $attachment ) {
 			wp_update_post( [
@@ -201,55 +190,10 @@ Class Form {
 			delete_post_meta( $attachement_id, 'salt' );
 		}
 
-		echo '0';
-		exit;
-
-		// $nowDateTime = (new \DateTime())->format('YmdHis-u');
-
-		// $upload_dir = wp_upload_dir()[ 'path' ];
-
-		// $mime2Extension = [
-		// 	'image/png' => 'png',
-		// 	'image/jpeg' => 'jpg',
-		// ];
-
-		// $salt = $_REQUEST[ $this->saltElementId ];
-
-		// /**
-		//  * Verify salt.
-		//  */
-		// if ( ! preg_match( '/^[0-9a-z]{12}$/i', $salt ) ) {
-		// 	status_header( '400' );
-		// 	die( ( string ) __LINE__ );
-		// }
-
-		// // Create image.
-		// $src = $_FILES['files']['tmp_name'][0];
-		// $image = Image::make( $src );
-		// $dest = sprintf( '%s/%s-%s.%s'
-		// 	, $upload_dir
-		// 	, $nowDateTime
-		// 	, $salt
-		// 	, $mime2Extension[ $image->mime ]
-		// );
-
-		// /**
-		//  * Verify file extension.
-		//  */
-		// if ( ! array_key_exists( $image->mime, $mime2Extension ) ) {
-		// 	status_header( '400' );
-		// 	die( ( string ) __LINE__ );
-		// }
-
-		// /**
-		//  * Save.
-		//  */
-		// $image->save( $dest );
-
 		/**
-		 * Done
+		 * Done.
 		 */
-		die( '{}' );
+		die( '0' );
 	}
 
 	public function output() {
@@ -306,7 +250,7 @@ Class Form {
 			] )
 			. $this->select( 'category', __( 'Category*', 'classifieds-by-plugible' ), $categories, __( 'Choose...', 'classifieds-by-plugible' ), [
 				'required' => true,
-				'data-controls' => 'specifications',
+				'data-controls' => $this->formElementId . '-specifications',
 				'data-use-select2' => true,
 			] )
 			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
@@ -315,13 +259,13 @@ Class Form {
 				// 'required' => true,
 				'multiple' => true,
 			] )
-			. $this->textarea( 'content', __( 'Description*', 'classifieds-by-plugible' ), [
+			. $this->textarea( 'description', __( 'Description*', 'classifieds-by-plugible' ), [
 				'minlength' => 50,
 				'required' => true,
 			] )
 			. $this->separator()
 			. $this->salt( 'salt' )
-			. $this->hidden( 'action', $this->ajaxActionForAdSubmission )
+			. $this->hidden( 'action', $this->ajaxActionForAdSubmission, true )
 			. $this->submit( 'submit', __( 'Submit', 'classifieds-by-plugible' ) )
 		);
 	}
@@ -351,24 +295,31 @@ Class Form {
 	}
 
 	private function input( $name, $title, $type = 'text', $args = [] ) {
+		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_input_format', '<p><label for="%1$s">%2$s<br><input type="%3$s" id="%1$s" name="%1$s" %3$s/></label></p>' );
 		return sprintf( $format, $name, $title, $type, $this->args2HtmlParameters( $args ) );
 	}
 
-	private function hidden( $name, $value ) {
+	private function hidden( $name, $value, $raw = false ) {
+		$name = $raw
+			? $name
+			: sprintf( '%1$s-%2$s', $this->formElementId, $name )
+		;
 		return sprintf( '<input type="hidden" id="%1$s" name="%1$s" value="%2$s" />', $name, $value );
 	}
 
-	private function salt( $name ) {
-		return $this->hidden( $name, wp_generate_password( 12, false ) );
+	private function salt( $name, $raw = false ) {
+		return $this->hidden( $name, wp_generate_password( 12, false ), $raw );
 	}
 
 	private function textarea( $name, $title, $args ) {
+		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_textarea_format', '<p><label for="%1$s">%2$s<br><textarea id="%1$s" name="%1$s" cols="40" rows="5" %3$s></textarea></label></p>' );
 		return sprintf( $format, $name, $title, $this->args2HtmlParameters( $args ) );
 	}
 
 	private function wpEditor( $name, $title ) {
+		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_wpeditor_format', '<p><label for="%1$s">%2$s<br>%3$s</label></p>' );
 		ob_start();
 		wp_editor( '', $name, [
@@ -382,7 +333,7 @@ Class Form {
 	}
 
 	private function select( $name, $title, $options, $emptyOptionText = null, $args = [] ) {
-
+		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$id = $name;
 		if ( $args[ 'multiple' ] ?? false ) {
 			$name .= '[]';
@@ -416,12 +367,13 @@ Class Form {
 	} 
 
 	private function uppy( $name, $title ) {
-
+		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_uppy_format', '<div><label for="%1$s">%2$s<br><div id="%1$s"></div></label></div>' );
 		return sprintf( $format, $name, $title );
 	}
 
 	private function submit( $name, $title ) {
+		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_submit_format', '<p><input type="submit" id="%1$s" value="%2$s" /></p>' );
 		return apply_filters( 'pl_classifieds_form_input', sprintf( $format, $name, $title ), $name, $title );
 	}

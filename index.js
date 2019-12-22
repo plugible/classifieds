@@ -13,10 +13,13 @@ require( 'select2-bootstrap-theme/dist/select2-bootstrap.min.css' );
 const settingsObjectName = 'classifieds';
 const appSettings = window[ settingsObjectName ];
 const appText = appSettings.text;
-const form = $( '#' + appSettings.formElementId );
+const $form = $( '#' + appSettings.formElementId );
 
 // Not in a form page.
-if ( form.length ) {
+if ( $form.length ) {
+
+	const $submit = $( `#${appSettings.formElementId}-submit` );
+
 	const uppy = Uppy( {
 		allowMultipleUploads: true,
 		autoProceed: true,
@@ -32,7 +35,7 @@ if ( form.length ) {
 		disableStatusBar: true,
 		inline: true,
 		proudlyDisplayPoweredByUppy: false,
-		target: '#' + appSettings.uploadElementId,
+		target: `#${appSettings.uploadElementId}`,
 		height: 300,
 		width: '100%',
 	} );
@@ -49,73 +52,71 @@ if ( form.length ) {
 	} );
 
 	uppy.on( 'upload', ( result ) => {
-		form.attr( 'data-image-upload-status', 'uploading' );
-		$( '#submit', form )
-			.data( 'data-previous-value', $( '#submit', form ).val() )
+		$form.attr( 'data-image-upload-status', 'uploading' );
+		$submit
+			.data( 'data-previous-value', $submit.val() )
 			.val( appText.waitForImageUpload )
 		;
 	} );
 
 	uppy.on( 'complete', ( result ) => {
-		form.attr( 'data-image-upload-status', 'uploaded' );
-		$( '#submit', form )
-			.val( $( '#submit', form ).data( 'data-previous-value' ) )
+		$form.attr( 'data-image-upload-status', 'uploaded' );
+		$submit
+			.val( $submit.data( 'data-previous-value' ) )
 			.removeAttr( 'data-previous-value' )
 		;
 	} );
 
-	const validator = form.validate( {
+	const validator = $form.validate( {
 		submitHandler: () => {
 			// Do nothing if images upload not completed.
-			if ( 'uploading' === form.attr( 'data-image-upload-status' ) ) {
-				$( '#submit', form ).val( appText.waitForImageUpload );
+			if ( 'uploading' === $form.attr( 'data-image-upload-status' ) ) {
+				$submit.val( appText.waitForImageUpload );
 				return;
 			}
 
 			// De nothing is form submission is currently processing
-			if ( 'processing' === form.attr( 'data-ad-submission-status' ) ) {
+			if ( 'processing' === $form.attr( 'data-ad-submission-status' ) ) {
 				return;
 			}
 
 			// De nothing is form is submission was completed
-			if ( 'complete' === form.attr( 'data-ad-submission-status' ) ) {
+			if ( 'complete' === $form.attr( 'data-ad-submission-status' ) ) {
 				return;
 			}
 
-			form.attr( 'data-ad-submission-status', 'processing' );
+			$form.attr( 'data-ad-submission-status', 'processing' );
 
 			// Submit form.
-			form.animate( { opacity : .5 } );
-			$( '#submit', form )
+			$form.animate( { opacity : .5 } );
+			$submit
 				.val( appText.submitting )
 				.addClass( 'btn-info' )
 				.removeClass( 'btn-primary' )
 				.removeClass( 'btn-danger' )
 			;
 			// Trick to submit disabled inputs.
-			var disabled = form.find( ':disabled' ).prop( 'disabled', false );
-			var serialized = form.serialize();
+			var disabled = $form.find( ':disabled' ).prop( 'disabled', false );
+			var serialized = $form.serialize();
 			disabled.prop( 'disabled', true );
 			// The actual submission.
 			$.post( appSettings.endpoint, serialized )
 				.done( function( response ) {
-					switch( response ) {
-						case '-1':
-							form.attr( 'data-ad-submission-status', 'failed' );
-							form.animate( { opacity : 1 } );
-							$( '#submit', form )
-								.val( appText.fixErrors )
-								.addClass( 'btn-danger' )
-								.removeClass( 'btn-primary' )
-							;
-							break;
-						default:
-							form.attr( 'data-ad-submission-status', 'complete' );
-							form.replaceWith( `<div>${appText.submitSuccessTitleHtml}${appText.submitSuccessContentHtml}</div>` );
+					if( response < 0 ) {
+						$form.attr( 'data-ad-submission-status', 'failed' );
+						$form.animate( { opacity : 1 } );
+						$submit
+							.val( appText.fixErrors )
+							.addClass( 'btn-danger' )
+							.removeClass( 'btn-primary' )
+						;
+					} else {
+						$form.attr( 'data-ad-submission-status', 'complete' );
+						$form.replaceWith( `<div>${appText.submitSuccessTitleHtml}${appText.submitSuccessContentHtml}</div>` );
 					}
 				} )
 				.fail( function() {
-					form.animate( { opacity : 1 } );
+					$form.animate( { opacity : 1 } );
 				} )
 			;
 		},
@@ -128,23 +129,23 @@ if ( form.length ) {
 				);
 		},
 		highlight: function ( element, errorClass, validClass ) {
-			$( element ).siblings( '.feedback' )
-				.addClass( "invalid-feedback" )
-				.removeClass( "valid-feedback" )
+			$( element ).parents( '.form-group' )
+				.addClass( 'has-feedback' )
+				.addClass( 'has-error' )
 			;
 		},
 		unhighlight: function (element, errorClass, validClass) {
-			$( element ).siblings( '.feedback' )
-				.addClass( "valid-feedback" + errorClass )
-				.removeClass( "invalid-feedback" )
+			$( element ).parents( '.form-group' )
+				.removeClass( 'has-feedback' )
+				.removeClass( 'has-error' )
 			;
 		},
 	} );
 
-	$( 'input,select,textarea', form ).filter( ':visible' ).on( 'blur change keyup', function() {
+	$( 'input,select,textarea', $form ).filter( ':visible' ).on( 'blur change keyup', function() {
 		$( this ).valid();
 		if ( ! validator.numberOfInvalids() ) {
-			$( '#submit', form )
+			$submit
 				.val( appText.submit )
 				.addClass( 'btn-primary' )
 				.removeClass( 'btn-danger' )
@@ -154,20 +155,20 @@ if ( form.length ) {
 	} );
 
 	// Remove spaces.
-	$( '[data-disallow-space]', form ).keyup( function() {
+	$( '[data-disallow-space]', $form ).keyup( function() {
 		let $this = $( this );
 		$this.val( $this.val().replace( /\s/g, '' ) );
 	} );
 
 	// Remove non-digits.
-	$( '[data-disallow-non-digit]', form ).keyup( function() {
+	$( '[data-disallow-non-digit]', $form ).keyup( function() {
 		let $this = $( this );
 		$this.val( $this.val().replace( /[^0-9]/g, '' ) );
 	} );
 
 	// Select 2.
-	$( 'select[data-use-select2]:not([multiple])', form ).select2();
-	$( 'select[data-use-select2][multiple]', form ).select2( {
+	$( 'select[data-use-select2]:not([multiple])', $form ).select2();
+	$( 'select[data-use-select2][multiple]', $form ).select2( {
 		closeOnSelect: false,
 	} );
 	$('html > head').append( '<style>\
@@ -238,7 +239,6 @@ if ( form.length ) {
 		$( 'option:selected', $this ).each( function() {
 			groupsUsed.push( $( this ).data( groupBy ) );
 		} );
-		console.log( groupsUsed) ;
 		// Show all.
 		$( 'option', $this ).data( 'disabled-by-group', false )
 		// Hide invalid.
@@ -255,8 +255,8 @@ if ( form.length ) {
 	// Uppy.
 	$('html > head').append( '<style>\
 		.uppy-DashboardAddFiles { border-width: 5px !important; }\
+		.uppy-Dashboard-dropFilesHereHint { border-width: 5px !important; }\
 	' );
-
 }
 
 // lightGallery
