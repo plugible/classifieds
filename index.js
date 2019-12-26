@@ -267,7 +267,7 @@ require( 'lg-video.js' );
 require( 'lg-zoom.js' );
 require( 'lightgallery.js/dist/css/lightgallery.min.css' );
 
-$( '.pl_classified_gallery' ).each( function() {
+$( '.pl_classified_gallery_enhanced' ).each( function() {
 	lightGallery( this, {
 		download: false,
 		thumbnail: true,

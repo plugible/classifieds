@@ -92,6 +92,16 @@ add_action( 'init', function() {
 	/**
 	 * Add fields to the "Classified/Specification" taxonomy.
 	 */
+	add_action( 'pl_classified_specification' . '_add_form_fields', function( $taxonomy ) use( $fields ) {
+		foreach ( $fields as $name => $label ) {
+			?>
+			<div class="form-field term-slug-wrap">
+				<label for="<?php echo $name; ?>"><?php echo $label; ?></label>
+				<input name="term_meta[<?php echo $name; ?>]" id="term_meta[<?php echo $name; ?>]" type="text" value="" size="40">
+			</div>
+			<?php
+		}
+	} );
 	add_action( 'pl_classified_specification' . '_edit_form_fields', function( $tag, $taxonomy ) use( $fields ) {
 		$term_meta =  get_option( 'taxonomy_term_' . $tag->term_id );
 		foreach ( $fields as $name => $label ) {
@@ -108,14 +118,16 @@ add_action( 'init', function() {
 	/**
 	 * Save fields to the "Classified/Specification" taxonomy.
 	 */
-	add_action( 'edited_' . 'pl_classified_specification', function( $term_id, $tt_id ) use( $fields ) {
+	$save_term_cb = function( $term_id, $tt_id ) use( $fields ) {
 		$term_meta = ( array ) get_option( 'taxonomy_term_' . $term_id );
 		foreach ( $_POST[ 'term_meta' ] as $key => $value ) {
 			$term_meta[ $key ] = $value;
 		}
 		update_option( 'taxonomy_term_' . $term_id, $term_meta );
 		return;
-	}, 10, 2 );
+	};
+	add_action( 'created_' . 'pl_classified_specification', $save_term_cb, 10, 2 );
+	add_action( 'edited_' . 'pl_classified_specification', $save_term_cb, 10, 2 );
 } );
 
 /**
