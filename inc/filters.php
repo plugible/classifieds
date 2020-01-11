@@ -87,6 +87,8 @@ add_action( 'pre_get_posts', function( $query ) {
 		}
 	}
 
+	$query->set( 'tax_query', $tax_query );
+
 	/**
 	 * Done.
 	 */
