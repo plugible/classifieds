@@ -270,14 +270,41 @@ require( 'lightgallery.js/dist/css/lightgallery.min.css' );
 $( '.pl_classified_gallery_enhanced' ).each( function() {
 	lightGallery( this, {
 		download: false,
-		thumbnail: true,
 		hideBarsDelay: 3000,
+		mode: 'lg-fade',
+		thumbnail: true,
 	} );
 } );
 
-$( 'html > head').append( '<style>\
-	.lg  { border-width: 10px}\
-	.lg  { border-color: rgba( 255, 255, 255, 0.25); }\
-	.lg  { border-style: solid; }\
-	.lg  { background: black; }\
-</style>' );	
+$( 'html > head').append( `<style>
+	.lg  {
+		background: black;
+		border-width: 10px;
+		border-color: rgba( 255, 255, 255, 0.25);
+		border-style: solid;
+	}
+	html[dir=rtl] .lg-icon {
+		float: left;
+	}
+	html[dir=rtl] .lg-toggle-thumb {
+		left: 20px;
+		right: initial;
+	}
+	html[dir=rtl] .lg-thumb-item {
+		float: right;
+	}
+	html[dir=rtl] #lg-counter {
+		padding-left: 0;
+		padding-right: 20px;
+	}
+	.lg-actions .lg-prev {
+		right: 20px;
+		left: initial;
+		transform: rotateY( 180deg );
+	}
+	.lg-actions .lg-next {
+		right: initial;
+		left: 20px;
+		transform: rotateY( 180deg );
+	}
+</style>` );

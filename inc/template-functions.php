@@ -1,5 +1,29 @@
 <?php
 
+function plcl_load_template( $template, $data = [], $return = false ) {
+
+	static $include_paths = [];
+
+	if ( ! $include_paths ) {
+		$include_paths = [
+			'stylesheet' => trailingslashit( get_stylesheet_directory() ) . 'plcl-templates' . DIRECTORY_SEPARATOR,
+			'template' => trailingslashit( get_template_directory() ) . 'plcl-templates' . DIRECTORY_SEPARATOR,
+			'local' => classifieds_by_plugible()->plugin_dir_path . 'plcl-templates' . DIRECTORY_SEPARATOR,
+		];
+	}
+
+	ob_start();
+	foreach ( $include_paths as $include_path ) {
+		$file = $include_path . $template;
+		if  ( file_exists( $include_path . $template ) ) {
+			include $file;
+			break;
+		}
+	}
+
+	return $return ? ob_get_clean() : print( ob_get_clean() );
+}
+
 function plcl_get_the_category_link() {
 	global $post;
 	$category = get_the_terms( $post, 'pl_classified_category' )[0];
@@ -26,6 +50,7 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 
 	$args = array_merge( [
 		'enhanced' => true,
+		'linked' => false,
 		'size' => [
 			120,
 			120,
@@ -46,11 +71,22 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 		return;
 	}
 
+	$permalink = get_permalink( $post_id );
+
 	?>
 	<div class="pl_classified_gallery <?php echo $args[ 'enhanced' ] ? 'pl_classified_gallery_enhanced' : ''; ?>">
 		<?php foreach ( $images as $image ) { ?>
 			<div data-src="<?php echo wp_get_attachment_url( $image->ID ) ?>">
+
+				<?php if ( $args[ 'linked' ] ) { ?>
+					<a href="<?php echo $permalink; ?>"><?php echo wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?></a>
+				<?php } ?>
+
 				<?php echo wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
+
+				<?php if ( $args[ 'linked' ] ) { ?>
+					</a>
+				<?php } ?>
 			</div>
 		<?php } ?>
 	</div>
@@ -87,8 +123,15 @@ function plcl_classified_specs( $post_id ) {
 	?>
 	<table class="table">
 		<tbody>
-			<?php foreach ( $specifications as $specification ) { ?>
-				<?php $meta = get_option( 'taxonomy_term_' . $specification->term_id ); ?>
+			<?php foreach ( $specifications as $specification ) {
+				$meta = get_option( 'taxonomy_term_' . $specification->term_id );
+				if ( false
+					|| ! array_key_exists( 'specification', $meta  )
+					|| ! array_key_exists( 'value', $meta  )
+				){
+					continue;
+				}
+				?>
 				<tr>
 					<th scope="row"><?php echo $meta[ 'specification' ]; ?></th>
 					<td><?php echo $meta[ 'value' ]; ?></td>
@@ -110,9 +153,11 @@ function plcl_classified_terms( $post_id, $taxonomy, $format = 'linear' ) {
 			// Nothing.
 			break;
 		default:
+			$tmp = [];
 			foreach ( $terms as $term ) {
-				echo $term->name;
+				$tmp[] = $term->name;
 			}
+			echo implode( __( ', ', 'classifieds-theme-by-plugible' ),  $tmp );
 			break;
 	}
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2019-11-11 16:38+0100\n"
+"POT-Creation-Date: 2019-12-26 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,22 +17,98 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: inc/form/form.php:24
+#: inc/cpt.php:60
+msgid "Specification"
+msgstr ""
+
+#: inc/cpt.php:61
+msgid "Value"
+msgstr ""
+
+#: inc/cpt.php:62
+msgid "Scope"
+msgstr ""
+
+#: inc/cpt.php:137 inc/cpt.php:169 src/form.php:240
+msgid "Images"
+msgstr ""
+
+#: plcl-templates/single.php:5
+msgid "Description"
+msgstr ""
+
+#: plcl-templates/single.php:8
+msgid "Specs"
+msgstr ""
+
+#: src/form.php:50 src/form.php:269
+msgid "Submit"
+msgstr ""
+
+#: src/form.php:51
+msgid "Submitting... Please wait"
+msgstr ""
+
+#: src/form.php:52
+msgid "Errors detected. Please fix errors and submit again"
+msgstr ""
+
+#: src/form.php:53
+msgid "Please wait for the image(s) upload to finish"
+msgstr ""
+
+#: src/form.php:54 src/form.php:55
+msgid "Submission was completed successfully"
+msgstr ""
+
+#: src/form.php:206
 msgid "Error: Login Required"
 msgstr ""
 
-#: inc/form/form.php:35
-msgid "Classified Title"
+#: src/form.php:223
+msgid "Contact Information"
 msgstr ""
 
-#: inc/form/form.php:36
-msgid "Classified Description"
+#: src/form.php:224
+msgid "Name*"
 msgstr ""
 
-#: inc/form/form.php:37
-msgid "Category"
+#: src/form.php:227
+msgid "Email*"
 msgstr ""
 
-#: inc/form/form.php:38
-msgid "Location"
+#: src/form.php:232
+msgid "Phone*"
+msgstr ""
+
+#: src/form.php:241
+msgid "Images*"
+msgstr ""
+
+#: src/form.php:243
+msgid "Ad Information"
+msgstr ""
+
+#: src/form.php:244
+msgid "Title*"
+msgstr ""
+
+#: src/form.php:247 src/form.php:251
+msgid "Choose..."
+msgstr ""
+
+#: src/form.php:247
+msgid "Location*"
+msgstr ""
+
+#: src/form.php:251
+msgid "Category*"
+msgstr ""
+
+#: src/form.php:256
+msgid "Specifications*"
+msgstr ""
+
+#: src/form.php:262
+msgid "Description*"
 msgstr ""

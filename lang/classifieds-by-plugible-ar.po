@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2019-11-11 16:38+0100\n"
-"PO-Revision-Date: 2019-11-11 16:39+0100\n"
+"POT-Creation-Date: 2019-12-26 17:29+0100\n"
+"PO-Revision-Date: 2020-01-11 05:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -17,25 +17,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: inc/form/form.php:24
+#: inc/cpt.php:60
+msgid "Specification"
+msgstr "الخاصية"
+
+#: inc/cpt.php:61
+msgid "Value"
+msgstr "القيمة"
+
+#: inc/cpt.php:62
+msgid "Scope"
+msgstr "النطاق"
+
+#: inc/cpt.php:137 inc/cpt.php:169 src/form.php:240
+msgid "Images"
+msgstr "الصور"
+
+#: plcl-templates/single.php:5
+msgid "Description"
+msgstr "الوصف"
+
+#: plcl-templates/single.php:8
+msgid "Specs"
+msgstr "الخصائص"
+
+#: src/form.php:50 src/form.php:269
+msgid "Submit"
+msgstr "إرسال"
+
+#: src/form.php:51
+msgid "Submitting... Please wait"
+msgstr "يجري الإرسال...المرجو الانتظار"
+
+#: src/form.php:52
+msgid "Errors detected. Please fix errors and submit again"
+msgstr "هناك أخطاء. المرجو تصحيح الأخطاء تم الإرسال من حديد"
+
+#: src/form.php:53
+msgid "Please wait for the image(s) upload to finish"
+msgstr "المرجو الانتظار ريثما ينتهي رفع الصور"
+
+#: src/form.php:54 src/form.php:55
+msgid "Submission was completed successfully"
+msgstr "تم الإرسال بنجاح"
+
+#: src/form.php:206
 msgid "Error: Login Required"
-msgstr ""
+msgstr "خطأ: تسجيل الدخول مطلوب"
 
-#: inc/form/form.php:35
-msgid "Classified Title"
-msgstr "عنوان الإعلان"
+#: src/form.php:223
+msgid "Contact Information"
+msgstr "بيانات الاتصال"
 
-#: inc/form/form.php:36
-msgid "Classified Description"
-msgstr "وصف الإعلان"
+#: src/form.php:224
+msgid "Name*"
+msgstr "الاسم*"
 
-#: inc/form/form.php:37
-msgid "Category"
-msgstr "التصنيف"
+#: src/form.php:227
+msgid "Email*"
+msgstr "البريد الإلكتروني*"
 
-#: inc/form/form.php:38
-msgid "Location"
-msgstr "المكان"
+#: src/form.php:232
+msgid "Phone*"
+msgstr "الهاتف*"
+
+#: src/form.php:241
+msgid "Images*"
+msgstr "الصور*"
+
+#: src/form.php:243
+msgid "Ad Information"
+msgstr "معلومات الإعلان"
+
+#: src/form.php:244
+msgid "Title*"
+msgstr "العنوان*"
+
+#: src/form.php:247 src/form.php:251
+msgid "Choose..."
+msgstr "اِخترْ..."
+
+#: src/form.php:247
+msgid "Location*"
+msgstr "المكان*"
+
+#: src/form.php:251
+msgid "Category*"
+msgstr "التصنيف*"
+
+#: src/form.php:256
+msgid "Specifications*"
+msgstr "الخصائص*"
+
+#: src/form.php:262
+msgid "Description*"
+msgstr "الوصف*"
+
+#~ msgid "Classified Title"
+#~ msgstr "عنوان الإعلان"
 
 #~ msgid "Set featured image(s)"
 #~ msgstr "تحديد الصور المميزة"
