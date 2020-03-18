@@ -15,7 +15,7 @@ function plcl_load_template( $template, $data = [], $return = false ) {
 	ob_start();
 	foreach ( $include_paths as $include_path ) {
 		$file = $include_path . $template;
-		if  ( file_exists( $include_path . $template ) ) {
+		if  ( file_exists( $file ) ) {
 			include $file;
 			break;
 		}
@@ -24,16 +24,39 @@ function plcl_load_template( $template, $data = [], $return = false ) {
 	return $return ? ob_get_clean() : print( ob_get_clean() );
 }
 
-function plcl_get_the_category_link() {
-	global $post;
-	$category = get_the_terms( $post, 'pl_classified_category' )[0];
+function plcl_get_the_category() {
+	return is_single()
+		? get_the_terms( $GLOBALS[ 'post' ], 'pl_classified_category' )[0]
+		: get_queried_object();
+	;
+}
+
+function plcl_get_the_category_link( $page = 1, $text = '', $include_filters = false ) {
+
+	$category = plcl_get_the_category();
+	$text = $text ? $text : $category->name;
+	$link = plcl_get_the_category_url( $page, $include_filters );
+
 	ob_start();
-	?><a href="<?php echo get_term_link( $category->slug, 'pl_classified_category' ); ?>"><?php echo $category->name; ?></a><?php
+	?><a href="<?php echo $link ?>"><?php echo $text ?></a><?php
 	return ob_get_clean();
 }
 
-function plcl_the_category_link() {
-	echo plcl_get_the_category_link();
+function plcl_get_the_category_url( $page = 1, $include_filters =false ) {
+	$category = plcl_get_the_category();
+	$url = get_term_link( $category->slug, 'pl_classified_category' );
+	$filters = $_REQUEST[ 'filters' ] ?? [];
+	if ( $page > 1 ) {
+		$url = trailingslashit( $url ) . sprintf( 'page/%d', $page );
+	}
+	if ( $include_filters ) {
+		$url = $url . '?' . http_build_query( [ 'filters' => $filters ] );
+	}
+	return $url;
+}
+
+function plcl_the_category_link( $page = 1, $text = '', $include_filters = false ) {
+	echo plcl_get_the_category_link( $page, $text, $include_filters );
 }
 
 function plcl_classified_image_count( $post_id ) {
@@ -79,7 +102,7 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 			<div data-src="<?php echo wp_get_attachment_url( $image->ID ) ?>">
 
 				<?php if ( $args[ 'linked' ] ) { ?>
-					<a href="<?php echo $permalink; ?>"><?php echo wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?></a>
+					<a href="<?php echo $permalink; ?>"><?php wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?></a>
 				<?php } ?>
 
 				<?php echo wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
@@ -163,25 +186,81 @@ function plcl_classified_terms( $post_id, $taxonomy, $format = 'linear' ) {
 }
 
 function plcl_breadcrumbs( $open, $close ) {
+
+	$paths = [];
+
+	/**
+	 * Add homepage.
+	 */
+	$paths[] = [
+		'text' => '⌂',
+		'url' => home_url(),
+	];
+
+	/**
+	 * Add category.
+	 */
 	if ( is_archive( 'pl_classified' ) ) {
-		echo $open;
-		?>
-		<span class="text-muted">
-			<a href="<?php echo home_url(); ?>" class="text-muted">⌂</a> ›
-		</span>
-		<?php
-		echo $close;
-	} else if ( is_singular( 'pl_classified' ) ) {
-		echo $open;
-		?>
-		<span class="text-muted">
-			<a href="<?php echo home_url(); ?>" class="text-muted">⌂</a> › 
-			<a href="#" class="text-muted"><?php plcl_the_category_link() ?></a> › 
-			<a href="#" class="text-muted">Page 1</a> › 
-		</span>
-		<?php
-		echo $close;
+
+		$paged   = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		$filters = $_REQUEST[ 'filters' ] ?? [];
+
+		/**
+		 * Page 1.
+		 */
+		$paths[] = [
+			'text' => plcl_get_the_category()->name,
+			'url'  => plcl_get_the_category_url(),
+		];
+
+		/**
+		 * Search.
+		 */
+		if ( $filters ) {
+			$paths[] = [
+				'text' => __( 'Search' ),
+				'url'  => plcl_get_the_category_url()
+			];
+		}
+
+		/**
+		 * Current page.
+		 */
+		if ( $paged > 1 ) {
+			$paths[] = [
+				'text' => sprintf( __( 'Page %s', 'classifieds-theme-by-plugible' ), number_format_i18n( $paged ) ),
+				'url'  => plcl_get_the_category_url( $paged),
+			];
+		}
 	}
+
+	/**
+	 * Add classified.
+	 */
+	if ( is_singular( 'pl_classified' ) ) {
+		$paths[] = [
+			'text' => plcl_get_the_category()->name,
+			'url'  => plcl_get_the_category_url(),
+		];
+		$paths[] = [
+			'text' => get_the_title(),
+			'url'  => get_the_permalink(),
+		];
+	}
+
+
+	/**
+	 * Display.
+	 */
+	echo $open;
+	echo '<span class="text-muted">';
+	for ( $i = 0; $i < count( $paths ) - 1; $i++ ) { 
+		printf( '<a href="%1$s">%2$s</a> › ', $paths[ $i ][ 'url' ], $paths[ $i ][ 'text' ] );
+	}
+	echo $paths[ $i ][ 'text' ];
+	echo '</span>';
+	echo $close;
+
 }
 
 function plcl_get_breadcrumbs( $open, $close ) {

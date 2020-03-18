@@ -216,7 +216,9 @@ Class Form {
 		$specifications = [];
 		$this->getHierarchicalTerms( 'pl_classified_specification', $specifications, 0, function( $term ) {
 			$term_options = get_option( 'taxonomy_term_' . $term->term_id );
-			return sprintf( '%1$s → %2$s', $term_options[ 'specification' ], $term_options[ 'value' ] );
+			if ( array_key_exists( 'specification', $term_options ) && array_key_exists( 'value', $term_options ) ) {
+				return sprintf( '%1$s → %2$s', $term_options[ 'specification' ], $term_options[ 'value' ] );
+			}
 		} );
 		return $this->form( ''
 			. $this->separator()

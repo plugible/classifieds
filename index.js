@@ -15,7 +15,36 @@ const appSettings = window[ settingsObjectName ];
 const appText = appSettings.text;
 const $form = $( '#' + appSettings.formElementId );
 
-// Not in a form page.
+// General form fields enhancements.
+// Remove spaces.
+$( '[data-disallow-space]' ).keyup( function() {
+	let $this = $( this );
+	$this.val( $this.val().replace( /\s/g, '' ) );
+} );
+
+// Remove non-digits.
+$( '[data-disallow-non-digit]' ).keyup( function() {
+	let $this = $( this );
+	$this.val( $this.val().replace( /[^0-9]/g, '' ) );
+} );
+
+// Select 2.
+$( 'select[data-use-select2]:not([multiple])' ).select2();
+$( 'select[data-use-select2][multiple]' ).select2( {
+	closeOnSelect: false,
+} );
+$('html > head').append( '<style>\
+	.select2-container .select2-selection--single { height: 45px; }\
+	.select2-container .select2-selection--single { line-height: 55px; }\
+	.select2-container .select2-selection--single .select2-selection__rendered { line-height: 45px; }\
+	.select2-container .select2-selection--single .select2-selection__arrow { height: 45px; }\
+	.select2-container { width: 100% !important; }\
+	.select2-container [role=option][aria-disabled=true] { display: none; }\
+	.select2-container [aria-multiselectable=true] [role=option][aria-selected=true] { display: none; }\
+	body.admin-bar .select2-container--open .select2-dropdown { top: 32px; } \
+' );
+
+// The form.
 if ( $form.length ) {
 
 	const $submit = $( `#${appSettings.formElementId}-submit` );
@@ -154,33 +183,6 @@ if ( $form.length ) {
 		}
 	} );
 
-	// Remove spaces.
-	$( '[data-disallow-space]', $form ).keyup( function() {
-		let $this = $( this );
-		$this.val( $this.val().replace( /\s/g, '' ) );
-	} );
-
-	// Remove non-digits.
-	$( '[data-disallow-non-digit]', $form ).keyup( function() {
-		let $this = $( this );
-		$this.val( $this.val().replace( /[^0-9]/g, '' ) );
-	} );
-
-	// Select 2.
-	$( 'select[data-use-select2]:not([multiple])', $form ).select2();
-	$( 'select[data-use-select2][multiple]', $form ).select2( {
-		closeOnSelect: false,
-	} );
-	$('html > head').append( '<style>\
-		.select2-container .select2-selection--single { height: 35px; }\
-		.select2-container .select2-selection--single { line-height: 55px; }\
-		.select2-container .select2-selection--single .select2-selection__arrow { height: 35px; }\
-		.select2-container .select2-selection--single { border: 1px solid #ced4da; }\
-		.select2-container { width: 100% !important; }\
-		.select2-container [role=option][aria-disabled=true] { display: none; }\
-		.select2-container [aria-multiselectable=true] [role=option][aria-selected=true] { display: none; }\
-		body.admin-bar .select2-container--open .select2-dropdown { top: 32px; } \
-	' );
 	var updateSelect = function( $select ) {
 		// Disable/Enable.
 		$( 'option', $select ).prop( 'disabled', false );
@@ -251,7 +253,6 @@ if ( $form.length ) {
 		updateSelect( $this );
 	} );
 
-
 	// Uppy.
 	$('html > head').append( '<style>\
 		.uppy-DashboardAddFiles { border-width: 5px !important; }\
@@ -297,12 +298,12 @@ $( 'html > head').append( `<style>
 		padding-left: 0;
 		padding-right: 20px;
 	}
-	.lg-actions .lg-prev {
+	html[dir=rtl] .lg-actions .lg-prev {
 		right: 20px;
 		left: initial;
 		transform: rotateY( 180deg );
 	}
-	.lg-actions .lg-next {
+	html[dir=rtl] .lg-actions .lg-next {
 		right: initial;
 		left: 20px;
 		transform: rotateY( 180deg );

@@ -15,7 +15,8 @@
     "require": {
         "tgmpa/tgm-plugin-activation": "^2.5",
         "kadimi/wpstarter": "^1.0",
-        "intervention/image": "^2.5"
+        "intervention/image": "^2.5",
+        "jwage/easy-csv": "^1.0"
     },
     "require-dev": {
     }

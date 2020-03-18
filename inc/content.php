@@ -11,6 +11,6 @@ add_filter( 'the_content', function( $content ) {
 	if ( is_singular( 'pl_classified' ) ) {
 		plcl_load_template( 'single.php' );
 	} else if ( is_archive( 'pl_classified' ) ) {
-		plcl_load_template( 'archive.php' );
+		plcl_load_template( $post->ID > 0 ? 'archive.php' : '404.php' );
 	}
 } );
