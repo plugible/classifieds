@@ -217,7 +217,11 @@ Class Form {
 		$this->getHierarchicalTerms( 'pl_classified_specification', $specifications, 0, function( $term ) {
 			$term_options = get_option( 'taxonomy_term_' . $term->term_id );
 			if ( array_key_exists( 'specification', $term_options ) && array_key_exists( 'value', $term_options ) ) {
-				return sprintf( '%1$s → %2$s', $term_options[ 'specification' ], $term_options[ 'value' ] );
+				return sprintf( '%1$s %2$s %3$s'
+					, $term_options[ 'specification' ]
+					, __( '→', 'classifieds-by-plugible' )
+					, $term_options[ 'value' ]
+				);
 			}
 		} );
 		return $this->form( ''
@@ -359,7 +363,7 @@ Class Form {
 			}
 			$options_html .= sprintf( "\n" . '<option value="%1$s" data-slug="%2$s"%3$s>%4$s</option>'
 				, $index
-				, substr( md5( $slug ), 0, 7 ) 
+				, substr( md5( urldecode( $slug ) ), 0, 7 )
 				, $data
 				, $name
 			);
