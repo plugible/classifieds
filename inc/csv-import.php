@@ -58,7 +58,7 @@ function plcl_register_taxonomy_importer( $args ) {
 				/**
 				 * Get rows.
 				 */
-				$rows = @( new \EasyCSV\Reader( $file[ 'file' ] ) )->getAll();
+				$rows = ( new \EasyCSV\Reader( $file[ 'file' ] ) )->getAll();
 				if ( ! $rows ) {
 					return false;
 				}
@@ -77,7 +77,7 @@ function plcl_register_taxonomy_importer( $args ) {
 					 */
 					$add_term_meta_func = function( $posted_term_meta ) use ( $row, $options ) {
 						foreach ( $options as $option ) {
-							if ( ! empty( $row[ $option ] ) ) {
+							if ( array_key_exists( $option, $row ) ) {
 								$posted_term_meta[ $option ] = $row[ $option ];
 							}
 						}
@@ -85,9 +85,13 @@ function plcl_register_taxonomy_importer( $args ) {
 					};
 
 					/**
-					 * Verify required columns.
+					 * Verify required columns, name or slug, with fallback to name.
 					 */
-					if ( empty( $row[ 'name' ] ) || empty( $row[ 'slug' ] ) ) {
+					if ( ! empty( $row[ 'name' ] ) ) {
+						if ( empty( $row[ 'slug' ] ) ) {
+							$row[ 'slug' ] = $row[ 'name' ];
+						}
+					} else {
 						$num_ignored++;
 						continue;
 					}
