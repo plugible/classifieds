@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2019-12-26 17:29+0100\n"
-"PO-Revision-Date: 2020-01-11 05:58+0100\n"
+"POT-Creation-Date: 2020-03-19 07:41+0100\n"
+"PO-Revision-Date: 2020-03-19 07:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -17,21 +17,138 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: inc/cpt.php:60
+#: inc/cpt.php:105
+msgid "Latitude"
+msgstr ""
+
+#: inc/cpt.php:106
+msgid "Longitude"
+msgstr ""
+
+#: inc/cpt.php:137
 msgid "Specification"
 msgstr "الخاصية"
 
-#: inc/cpt.php:61
+#: inc/cpt.php:138
 msgid "Value"
 msgstr "القيمة"
 
-#: inc/cpt.php:62
+#: inc/cpt.php:139
 msgid "Scope"
 msgstr "النطاق"
 
-#: inc/cpt.php:137 inc/cpt.php:169 src/form.php:240
+#: inc/cpt.php:155
+#, fuzzy
+#| msgid "Classified Title"
+msgid "Classifieds Categories"
+msgstr "عنوان الإعلان"
+
+#: inc/cpt.php:156
+msgid "Import classifieds categories."
+msgstr ""
+
+#: inc/cpt.php:157
+msgid "Import Classifieds Categories"
+msgstr ""
+
+#: inc/cpt.php:159
+#, php-format
+msgid "All done. Go to <a href=\"%s\">categories</a>."
+msgstr ""
+
+#: inc/cpt.php:167
+#, fuzzy
+#| msgid "Specifications*"
+msgid "Classifieds Specifications"
+msgstr "الخصائص*"
+
+#: inc/cpt.php:168
+msgid "Import classifieds specifications."
+msgstr ""
+
+#: inc/cpt.php:169
+msgid "Import Classifieds Specifications"
+msgstr ""
+
+#: inc/cpt.php:175
+#, php-format
+msgid "All done. Go to <a href=\"%s\">specifications</a>."
+msgstr ""
+
+#: inc/cpt.php:183
+#, fuzzy
+#| msgid "Classified Title"
+msgid "Classifieds Locations"
+msgstr "عنوان الإعلان"
+
+#: inc/cpt.php:184
+msgid "Import classifieds locations."
+msgstr ""
+
+#: inc/cpt.php:185
+msgid "Import Classifieds Locations"
+msgstr ""
+
+#: inc/cpt.php:187
+#, php-format
+msgid "All done. Go to <a href=\"%s\">locations</a>."
+msgstr ""
+
+#: inc/cpt.php:196 inc/cpt.php:228 src/form.php:246
 msgid "Images"
 msgstr "الصور"
+
+#: inc/csv-import.php:48 inc/csv-import.php:52
+msgid "Sorry, there has been an error."
+msgstr ""
+
+#: inc/csv-import.php:53
+#, php-format
+msgid ""
+"The export file could not be found at <code>%s</code>. It is likely that "
+"this was caused by a permissions problem."
+msgstr ""
+
+#: inc/csv-import.php:169
+#, php-format
+msgid "<strong>%s</strong></a> created"
+msgstr ""
+
+#: inc/csv-import.php:171
+#, php-format
+msgid "<strong>%s</strong></a> updated"
+msgstr ""
+
+#: inc/csv-import.php:173
+#, php-format
+msgid "<strong>%s</strong></a> ignored"
+msgstr ""
+
+#: inc/template-functions.php:183
+msgid ", "
+msgstr ""
+
+#: inc/template-functions.php:221 plcl-templates/filters.php:95
+msgid "Search"
+msgstr ""
+
+#: inc/template-functions.php:231
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: plcl-templates/404.php:1
+msgid "Nothing Found"
+msgstr ""
+
+#: plcl-templates/404.php:2
+msgid "Nothing found. Please update the search criteria."
+msgstr ""
+
+#: plcl-templates/shortcodes/list-item.php:18
+#, php-format
+msgid "%s ago"
+msgstr ""
 
 #: plcl-templates/single.php:5
 msgid "Description"
@@ -41,7 +158,7 @@ msgstr "الوصف"
 msgid "Specs"
 msgstr "الخصائص"
 
-#: src/form.php:50 src/form.php:269
+#: src/form.php:50 src/form.php:275
 msgid "Submit"
 msgstr "إرسال"
 
@@ -65,56 +182,57 @@ msgstr "تم الإرسال بنجاح"
 msgid "Error: Login Required"
 msgstr "خطأ: تسجيل الدخول مطلوب"
 
-#: src/form.php:223
+#: src/form.php:222
+msgid "→"
+msgstr "←"
+
+#: src/form.php:229
 msgid "Contact Information"
 msgstr "بيانات الاتصال"
 
-#: src/form.php:224
+#: src/form.php:230
 msgid "Name*"
 msgstr "الاسم*"
 
-#: src/form.php:227
+#: src/form.php:233
 msgid "Email*"
 msgstr "البريد الإلكتروني*"
 
-#: src/form.php:232
+#: src/form.php:238
 msgid "Phone*"
 msgstr "الهاتف*"
 
-#: src/form.php:241
+#: src/form.php:247
 msgid "Images*"
 msgstr "الصور*"
 
-#: src/form.php:243
+#: src/form.php:249
 msgid "Ad Information"
 msgstr "معلومات الإعلان"
 
-#: src/form.php:244
+#: src/form.php:250
 msgid "Title*"
 msgstr "العنوان*"
 
-#: src/form.php:247 src/form.php:251
+#: src/form.php:253 src/form.php:257
 msgid "Choose..."
 msgstr "اِخترْ..."
 
-#: src/form.php:247
+#: src/form.php:253
 msgid "Location*"
 msgstr "المكان*"
 
-#: src/form.php:251
+#: src/form.php:257
 msgid "Category*"
 msgstr "التصنيف*"
 
-#: src/form.php:256
+#: src/form.php:262
 msgid "Specifications*"
 msgstr "الخصائص*"
 
-#: src/form.php:262
+#: src/form.php:268
 msgid "Description*"
 msgstr "الوصف*"
-
-#~ msgid "Classified Title"
-#~ msgstr "عنوان الإعلان"
 
 #~ msgid "Set featured image(s)"
 #~ msgstr "تحديد الصور المميزة"

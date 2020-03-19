@@ -8,29 +8,140 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2019-12-26 17:29+0100\n"
+"POT-Creation-Date: 2020-03-19 07:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: inc/cpt.php:60
+#: inc/cpt.php:105
+msgid "Latitude"
+msgstr ""
+
+#: inc/cpt.php:106
+msgid "Longitude"
+msgstr ""
+
+#: inc/cpt.php:137
 msgid "Specification"
 msgstr ""
 
-#: inc/cpt.php:61
+#: inc/cpt.php:138
 msgid "Value"
 msgstr ""
 
-#: inc/cpt.php:62
+#: inc/cpt.php:139
 msgid "Scope"
 msgstr ""
 
-#: inc/cpt.php:137 inc/cpt.php:169 src/form.php:240
+#: inc/cpt.php:155
+msgid "Classifieds Categories"
+msgstr ""
+
+#: inc/cpt.php:156
+msgid "Import classifieds categories."
+msgstr ""
+
+#: inc/cpt.php:157
+msgid "Import Classifieds Categories"
+msgstr ""
+
+#: inc/cpt.php:159
+#, php-format
+msgid "All done. Go to <a href=\"%s\">categories</a>."
+msgstr ""
+
+#: inc/cpt.php:167
+msgid "Classifieds Specifications"
+msgstr ""
+
+#: inc/cpt.php:168
+msgid "Import classifieds specifications."
+msgstr ""
+
+#: inc/cpt.php:169
+msgid "Import Classifieds Specifications"
+msgstr ""
+
+#: inc/cpt.php:175
+#, php-format
+msgid "All done. Go to <a href=\"%s\">specifications</a>."
+msgstr ""
+
+#: inc/cpt.php:183
+msgid "Classifieds Locations"
+msgstr ""
+
+#: inc/cpt.php:184
+msgid "Import classifieds locations."
+msgstr ""
+
+#: inc/cpt.php:185
+msgid "Import Classifieds Locations"
+msgstr ""
+
+#: inc/cpt.php:187
+#, php-format
+msgid "All done. Go to <a href=\"%s\">locations</a>."
+msgstr ""
+
+#: inc/cpt.php:196 inc/cpt.php:228 src/form.php:246
 msgid "Images"
+msgstr ""
+
+#: inc/csv-import.php:48 inc/csv-import.php:52
+msgid "Sorry, there has been an error."
+msgstr ""
+
+#: inc/csv-import.php:53
+#, php-format
+msgid ""
+"The export file could not be found at <code>%s</code>. It is likely that "
+"this was caused by a permissions problem."
+msgstr ""
+
+#: inc/csv-import.php:169
+#, php-format
+msgid "<strong>%s</strong></a> created"
+msgstr ""
+
+#: inc/csv-import.php:171
+#, php-format
+msgid "<strong>%s</strong></a> updated"
+msgstr ""
+
+#: inc/csv-import.php:173
+#, php-format
+msgid "<strong>%s</strong></a> ignored"
+msgstr ""
+
+#: inc/template-functions.php:183
+msgid ", "
+msgstr ""
+
+#: inc/template-functions.php:221 plcl-templates/filters.php:95
+msgid "Search"
+msgstr ""
+
+#: inc/template-functions.php:231
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: plcl-templates/404.php:1
+msgid "Nothing Found"
+msgstr ""
+
+#: plcl-templates/404.php:2
+msgid "Nothing found. Please update the search criteria."
+msgstr ""
+
+#: plcl-templates/shortcodes/list-item.php:18
+#, php-format
+msgid "%s ago"
 msgstr ""
 
 #: plcl-templates/single.php:5
@@ -41,7 +152,7 @@ msgstr ""
 msgid "Specs"
 msgstr ""
 
-#: src/form.php:50 src/form.php:269
+#: src/form.php:50 src/form.php:275
 msgid "Submit"
 msgstr ""
 
@@ -65,50 +176,54 @@ msgstr ""
 msgid "Error: Login Required"
 msgstr ""
 
-#: src/form.php:223
+#: src/form.php:222
+msgid "→"
+msgstr ""
+
+#: src/form.php:229
 msgid "Contact Information"
 msgstr ""
 
-#: src/form.php:224
+#: src/form.php:230
 msgid "Name*"
 msgstr ""
 
-#: src/form.php:227
+#: src/form.php:233
 msgid "Email*"
 msgstr ""
 
-#: src/form.php:232
+#: src/form.php:238
 msgid "Phone*"
 msgstr ""
 
-#: src/form.php:241
+#: src/form.php:247
 msgid "Images*"
 msgstr ""
 
-#: src/form.php:243
+#: src/form.php:249
 msgid "Ad Information"
 msgstr ""
 
-#: src/form.php:244
+#: src/form.php:250
 msgid "Title*"
 msgstr ""
 
-#: src/form.php:247 src/form.php:251
+#: src/form.php:253 src/form.php:257
 msgid "Choose..."
 msgstr ""
 
-#: src/form.php:247
+#: src/form.php:253
 msgid "Location*"
 msgstr ""
 
-#: src/form.php:251
+#: src/form.php:257
 msgid "Category*"
 msgstr ""
 
-#: src/form.php:256
+#: src/form.php:262
 msgid "Specifications*"
 msgstr ""
 
-#: src/form.php:262
+#: src/form.php:268
 msgid "Description*"
 msgstr ""
