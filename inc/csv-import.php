@@ -97,7 +97,7 @@ function plcl_register_taxonomy_importer( $args ) {
 					}
 
 					/**
-					 * Create or import term.
+					 * Create or update term.
 					 */
 					add_filter( $taxonomy . '_posted_term_meta', $add_term_meta_func );
 					$term = wp_insert_term( $row[ 'name' ], $taxonomy, [
