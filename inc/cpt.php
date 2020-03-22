@@ -192,7 +192,12 @@ add_action( 'admin_init', function() {
 /**
  * Classifieds attached images metabox.
  */
-add_action( 'add_meta_boxes', function() {
+add_action( 'add_meta_boxes', function( $post_type ) {
+
+	if ( 'pl_classified' !== $post_type ) {
+		return;
+	}
+
 	add_meta_box( 'pl_classified_images_metabox', __( 'Images' ), function( $post ) {
 		$w = 150;
 		$h = 150;
@@ -205,7 +210,7 @@ add_action( 'add_meta_boxes', function() {
 			echo wp_get_attachment_image( $attachment_id, [ $w, $h ] ) . ' ';
 		}
 	} );
-});
+} );
 
 /**
  * Classifieds attached images column.
