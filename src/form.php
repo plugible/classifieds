@@ -74,7 +74,7 @@ Class Form {
 		/**
 		 * Upload file and check it's an image.
 		 */
-		$attachement_id = media_handle_upload( 'files', 0, [], [
+		$attachment_id = media_handle_upload( 'files', 0, [], [
 			'test_form' => false,
 			'test_type' => true,
 			'mimes' => [
@@ -83,7 +83,7 @@ Class Form {
 				'png'          => 'image/png',
 			],
 		] );
-		if ( is_wp_error( $attachement_id ) ) {
+		if ( is_wp_error( $attachment_id ) ) {
 			status_header( 415 ); // So that Uppy treat it as an error.
 			die( '-' . __LINE__);
 		}
@@ -91,7 +91,7 @@ Class Form {
 		/**
 		 * Add salt to attachment.
 		 */
-		add_post_meta( $attachement_id, 'salt', $salt, true );
+		add_post_meta( $attachment_id, 'salt', $salt, true );
 
 		/**
 		 * Done
@@ -177,18 +177,34 @@ Class Form {
 		/**
 		 * Attach images to ad.
 		 */
-		$attachments = get_posts( [
+		$attachments_old = get_post_meta( $post_id, 'plcl_image' ) ?? [];
+		$attachments_new = get_posts( [
 			'post_type' => 'attachment',
 			'meta_key' => 'salt',
 			'meta_value' => $salt,
 		] );
-		foreach ( $attachments as $attachment ) {
+		foreach ( $attachments_new as $attachment_new ) {
+			/**
+			 * Add image.
+			 */
+			$attachments_old[ $attachment_new->ID ] = wp_get_attachment_url( $attachment_new->ID );
+			/**
+			 * Attach to parent.
+			 */
 			wp_update_post( [
-				'ID' => $attachment->ID,
+				'ID' => $attachment_new->ID,
 				'post_parent' => $post_id,
 			] );
-			delete_post_meta( $attachement_id, 'salt' );
+			/**
+			 * Remove salt.
+			 */
+			delete_post_meta( $attachment_new->ID, 'salt' );
 		}
+		/**
+		 * Save to 'plcl_image' meta.
+		 */
+		delete_post_meta( $post_id, 'plcl_image' );
+		add_post_meta( $post_id, 'plcl_image', $attachments_old );
 
 		/**
 		 * Done.

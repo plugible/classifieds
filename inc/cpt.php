@@ -190,29 +190,6 @@ add_action( 'admin_init', function() {
 
 
 /**
- * Classifieds attached images metabox.
- */
-add_action( 'add_meta_boxes', function( $post_type ) {
-
-	if ( 'pl_classified' !== $post_type ) {
-		return;
-	}
-
-	add_meta_box( 'pl_classified_images_metabox', __( 'Images' ), function( $post ) {
-		$w = 150;
-		$h = 150;
-		$attachments = get_children( [
-			'post_mime_type' => 'image',
-			'post_parent' => $post->ID,
-			'post_type' => 'attachment',
-		] );
-		foreach ( $attachments as $attachment_id => $attachment ) {
-			echo wp_get_attachment_image( $attachment_id, [ $w, $h ] ) . ' ';
-		}
-	} );
-} );
-
-/**
  * Classifieds attached images column.
  */
 add_action( 'manage_pl_classified_posts_custom_column', function( $column_name, $post_id ) {
@@ -234,6 +211,70 @@ add_filter( 'manage_pl_classified_posts_columns', function ( $cols ) {
 	return $cols;
 } );
 
+/**
+ * Add images metabox.
+ */
+add_action( 'cmb2_admin_init', function() {
+
+	$cmb = new_cmb2_box( [
+		'id' => 'plcl_metabox_pl_classified',
+		'title' => __( 'Images' ),
+		'object_types' => [ 'pl_classified' ],
+		'show_names' => false,
+	] )->add_field( [
+		'id' => 'plcl_image',
+		'name' => esc_html__( 'Images' ),
+		'type' => 'file_list',
+	] );
+} );
+
+/**
+ * Delete images attached to the deleted classified.
+ */
+add_action( 'before_delete_post', function( $post_id ) {
 
 
- 
+    global $post_type;
+	if ( 'pl_classified' !== $post_type ) {
+		return;
+	}
+	foreach ( get_attached_media( '', $post_id ) as $attachment ) {
+		wp_delete_attachment( $attachment->ID );
+	}
+} );
+
+/**
+ * Sync attachments to 'plcl_image' meta.
+ */
+add_action( 'cmb2_save_field_' . 'plcl_image', function( $updated, $action, $field ) {
+
+	$post_id = $field->object_id;
+
+	$attachments_new = $field->get_data();
+	$attachments_old = get_posts( [
+		'post_type' => 'attachment',
+		'post_parent' => $post_id,
+		'fields' => 'ids',
+	] );
+
+	/**
+	 * Remove removed.
+	 */
+	foreach ( $attachments_old as $attachment_old_id ) {
+		if ( ! array_key_exists( ( string ) $attachment_old_id, $attachments_new ) ) {
+			wp_delete_attachment( $attachment_old_id );
+		}
+	}
+
+	/**
+	 * Add added.
+	 */
+	foreach ( $attachments_new as $attachment_new_id ) {
+		if ( ! array_key_exists( ( int ) $attachment_new_id, $attachments_old ) ) {
+			wp_update_post( [
+				'ID' => $attachment_new_id,
+				'post_parent' => $post_id,
+			] );
+		}
+	}
+}, 10, 4 );
