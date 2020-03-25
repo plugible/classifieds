@@ -163,7 +163,7 @@ Class Form {
 			die( '-' . __LINE__ );
 		}
 
-		add_post_meta( $post_id, 'name', $phone, true );
+		add_post_meta( $post_id, 'name', $name, true );
 		add_post_meta( $post_id, 'phone', $phone, true );
 		add_post_meta( $post_id, 'email', $email, true );
 		add_post_meta( $post_id, 'salt', $salt, true );
@@ -209,6 +209,7 @@ Class Form {
 		/**
 		 * Done.
 		 */
+		do_action( 'plcl_classified_inserted', $post_id );
 		die( '0' );
 	}
 
