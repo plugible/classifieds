@@ -72,7 +72,7 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( 'Congratulations! Your ad has been approved and published. You can view it here {link}.', 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Congratulations! Your ad has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_ad_approved_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
@@ -126,15 +126,16 @@ add_action( 'cmb2_init', function() {
 	} );
 }, PHP_INT_MIN );
 
-function plcl_get_option( $option ) {
-	$default = cmb2_get_metabox( plcl_get_box_id() )->get_field( $option )->get_default();
-	return cmb2_get_option( plcl_get_box_id(), $option, $default );
+function plcl_get_option( $option_id ) {
+	$option_id = plcl_get_option_id( $option_id );
+	$default = cmb2_get_metabox( plcl_get_box_id() )->get_field( $option_id )->get_default();
+	return cmb2_get_option( plcl_get_box_id(), $option_id, $default );
 }
 
-function plcl_get_option_id( $id, $translatable = true ) {
+function plcl_get_option_id( $option_id, $translatable = true ) {
 
 	if ( ! $translatable ) {
-		return $id;
+		return $option_id;
 	}
 
 	/**
@@ -142,14 +143,14 @@ function plcl_get_option_id( $id, $translatable = true ) {
 	 */
 	if ( function_exists( 'pll_default_language' ) ) {
 		if ( pll_current_language() && pll_default_language() !== pll_current_language() ) {
-			$id .= '_' . pll_current_language();
+			$option_id .= '_' . pll_current_language();
 		}
 	}
 
 	/**
 	 * Done.
 	 */
-	return $id;
+	return $option_id;
 }
 
 function plcl_get_translation( $text ) {
