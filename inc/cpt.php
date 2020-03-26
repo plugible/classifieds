@@ -72,7 +72,7 @@ add_action( 'init', function() {
 	 */
 	register_post_type( 'pl_classified', [
 		'labels' => [
-			'name' => 'Classifieds', 'classifieds-by-plugibles',
+			'name' => __( 'Classifieds', 'classifieds-by-plugible' ),
 		],
 		'menu_icon' => 'dashicons-megaphone',
 		'public' => true,
@@ -93,7 +93,7 @@ add_action( 'init', function() {
 	 */
 	register_taxonomy( 'pl_classified_location', [ 'pl_classified' ], [
 		'labels' => [
-			'name' => 'Locations', 'classifieds-by-plugibles',
+			'name' => __( 'Locations', 'classifieds-by-plugible' ),
 		],
 		'show_admin_column' => true,
 		'hierarchical' => true,
@@ -102,8 +102,8 @@ add_action( 'init', function() {
 		],
 	] );
 	$register_taxonomy_fields( 'pl_classified_location', [
-		'_latitude' => __( 'Latitude', 'classifieds-by-plugibles' ),
-		'_longitude' => __( 'Longitude', 'classifieds-by-plugibles' ),
+		'_latitude' => __( 'Latitude', 'classifieds-by-plugible' ),
+		'_longitude' => __( 'Longitude', 'classifieds-by-plugible' ),
 	] );
  
 	/**
@@ -111,7 +111,7 @@ add_action( 'init', function() {
 	 */
 	register_taxonomy( 'pl_classified_category', [ 'pl_classified' ], [
 		'labels' => [
-			'name' => 'Categories', 'classifieds-by-plugibles',
+			'name' => __( 'Categories', 'classifieds-by-plugible' ),
 		],
 		'show_admin_column' => true,
 		'hierarchical' => true,
@@ -125,7 +125,7 @@ add_action( 'init', function() {
 	 */
 	register_taxonomy( 'pl_classified_specification', [ 'pl_classified' ], [
 		'labels' => [
-			'name' => 'Specifications', 'classifieds-by-plugibles',
+			'name' => __( 'Specifications', 'classifieds-by-plugible' ),
 		],
 		'show_admin_column' => true,
 		// 'hierarchical' => true,
@@ -134,9 +134,9 @@ add_action( 'init', function() {
 		],
 	] );
 	$register_taxonomy_fields( 'pl_classified_specification', [
-		'specification' => __( 'Specification', 'classifieds-by-plugibles' ),
-		'value' => __( 'Value', 'classifieds-by-plugibles' ),
-		'scope' => __( 'Scope', 'classifieds-by-plugibles' ),
+		'specification' => __( 'Specification', 'classifieds-by-plugible' ),
+		'value' => __( 'Value', 'classifieds-by-plugible' ),
+		'scope' => __( 'Scope', 'classifieds-by-plugible' ),
 	] );
 
 } );
@@ -152,11 +152,9 @@ add_action( 'admin_init', function() {
 	 */
 	plcl_register_taxonomy_importer( [
 		'taxonomy'    => 'pl_classified_category',
-		'name'        => __( 'Classifieds Categories' ),
-		'description' => __( 'Import classifieds categories.' ),
-		'header'      => __( 'Import Classifieds Categories' ),
+		'name'        => __( 'Classifieds Categories', 'classifieds-by-plugible' ),
 		'options'     => [],
-		'success'     => _( 'All done. Go to <a href="%s">categories</a>.' ),
+		'success'     => __( 'All done.', 'classifieds-by-plugible' ). ' ' . __( 'Go to <a href="%s">categories</a>.', 'classifieds-by-plugible' ),
 	] );
 
 	/**
@@ -164,15 +162,13 @@ add_action( 'admin_init', function() {
 	 */
 	plcl_register_taxonomy_importer( [
 		'taxonomy'    => 'pl_classified_specification',
-		'name'        => __( 'Classifieds Specifications' ),
-		'description' => __( 'Import classifieds specifications.' ),
-		'header'      => __( 'Import Classifieds Specifications' ),
+		'name'        => __( 'Classifieds Specifications', 'classifieds-by-plugible' ),
 		'options'     => [
 			'scope',
 			'specification',
 			'value',
 		],
-		'success'     => _( 'All done. Go to <a href="%s">specifications</a>.' ),
+		'success'     => __( 'All done.', 'classifieds-by-plugible' ). ' ' . __( 'Go to <a href="%s">specifications</a>.', 'classifieds-by-plugible' ),
 	] );
 
 	/**
@@ -180,11 +176,9 @@ add_action( 'admin_init', function() {
 	 */
 	plcl_register_taxonomy_importer( [
 		'taxonomy'    => 'pl_classified_location',
-		'name'        => __( 'Classifieds Locations' ),
-		'description' => __( 'Import classifieds locations.' ),
-		'header'      => __( 'Import Classifieds Locations' ),
+		'name'        => __( 'Classifieds Locations', 'classifieds-by-plugible' ),
 		'options'     => [],
-		'success'     => _( 'All done. Go to <a href="%s">locations</a>.' ),
+		'success'     => __( 'All done.', 'classifieds-by-plugible' ). ' ' . __( 'Go to <a href="%s">locations</a>.', 'classifieds-by-plugible' ),
 	] );
 } );
 

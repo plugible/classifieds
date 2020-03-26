@@ -45,12 +45,12 @@ function plcl_register_taxonomy_importer( $args ) {
 				 */
 				$file = wp_import_handle_upload();
 				if ( isset( $file['error'] ) ) {
-					echo '<p><strong>' . __( 'Sorry, there has been an error.', 'wordpress-importer' ) . '</strong><br />';
+					echo '<p><strong>' . __( 'An error happened.', 'classifieds-by-plugible' ) . '</strong><br />';
 					echo esc_html( $file[ 'error' ] ) . '</p>';
 					return false;
 				} else if ( ! file_exists( $file[ 'file' ] ) ) {
-					echo '<p><strong>' . __( 'Sorry, there has been an error.', 'wordpress-importer' ) . '</strong><br />';
-					printf( __( 'The export file could not be found at <code>%s</code>. It is likely that this was caused by a permissions problem.', 'wordpress-importer' ), esc_html( $file['file'] ) );
+					echo '<p><strong>' . __( 'An error happened.', 'classifieds-by-plugible' ) . '</strong><br />';
+					printf( __( 'The export file could not be found at <code>%s</code>.', 'classifieds-by-plugible' ), esc_html( $file['file'] ) );
 					echo '</p>';
 					return false;
 				}
@@ -133,7 +133,7 @@ function plcl_register_taxonomy_importer( $args ) {
 					/**
 					 * Polylang Integration.
 					 */
-					if ( function_exists( 'pll_set_term_language' ) ) {
+					if ( function_exists( 'pll_default_language' ) ) {
 						if ( ! empty( $row[ 'language' ] ) ) {
 							/**
 							 * Set language.
@@ -186,10 +186,10 @@ function plcl_register_taxonomy_importer( $args ) {
 	register_importer(
 		$args[ 'taxonomy' ],
 		$args[ 'name' ],
-		$args[ 'description' ],
+		$args[ 'name' ],
 		function() use ( $args, $header_func, $footer_func, $step_func ) {
 			$step = empty( $_GET[ 'step' ] ) ? 0 : ( int ) $_GET[ 'step' ];
-			$header_func( $args[ 'header' ] );
+			$header_func( $args[ 'name' ] );
 			$step_func( $step, $args[ 'taxonomy' ], $args[ 'options' ], $args[ 'success' ] );
 			$footer_func();
 		}
