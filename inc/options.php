@@ -3,104 +3,104 @@
 add_action( 'cmb2_init', function() {
 
 	$options = new_cmb2_box( [
-		'id' => 'plcl_settings',
-		'menu_title' => __( 'Settings' ),
+		'id' => plcl_get_box_id(),
+		'menu_title' => __( 'Settings', 'classifieds-by-plugible' ),
 		'object_types' => [ 'options-page' ],
-		'option_key' => 'plcl_settings',
+		'option_key' => plcl_get_box_id(),
 		'parent_slug' => 'edit.php?post_type=pl_classified',
 		'save_button' => __( 'Save' ),
 		'title' => __( 'Classifieds Settings' ),
 	] );
 
 	$options->add_field( [
-		'id' => 'email_global_header',
-		'name' => __( 'Email Global Header' ),
-		'default' => __( 'Hello {name},' ),
+		'id' => plcl_get_option_id( 'email_global_header' ),
+		'name' => plcl_get_translation( __( 'Email Global Header', 'classfieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( 'Hello {name},', 'classifieds-by-plugible' ) ),
 		'type' => 'textarea_small',
 	] );
 
 	$options->add_field( [
-		'id' => 'email_global_footer',
-		'name' => __( 'Email Global Footer' ),
-		'default' => __( "Thanks,\n{site}" ),
+		'id' => plcl_get_option_id( 'email_global_footer' ),
+		'name' => plcl_get_translation( __( 'Email Global Footer', 'classfieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Thanks,\n{site}", 'classifieds-by-plugible' ) ),
 		'type' => 'textarea_small',
 	] );
 
 	/**
 	 * Email: Ad Pending.
 	 */
-	$options->add_field( array(
-		'name' => __( 'Email: Ad Pending' ),
-		'type' => 'title',
-		'id' => wp_generate_password( 12, false ),
-	) );
-	$options->add_field( array(
-		'name' => 'Enabled',
-		'id'   => 'email_ad_pending_enabled',
-		'type' => 'checkbox',
-	) );
 	$options->add_field( [
-		'id' => 'email_ad_pending_subject',
-		'default' => __( '[{site}] Ad Pending' ),
-		'name' => __( 'Subject' ),
+		'id' => wp_generate_password( 12, false ),
+		'name' => plcl_get_translation( __( 'Email: Ad Pending', 'classfieds-by-plugible' ) ),
+		'type' => 'title',
+	] );
+	$options->add_field( [
+		'id' => plcl_get_option_id( 'email_ad_pending_enabled', false ),
+		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+		'type' => 'checkbox',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( '[{site}] Ad Pending', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_ad_pending_subject' ),
+		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'id' => 'email_ad_pending_message',
-		'name' => __( 'Subject' ),
-		'default' => __( "We've received your ad \"{title}\". It will become visible once approved." ),
+		'default' => plcl_get_translation( __( "We've received your ad \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_ad_pending_message' ),
+		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
 	] );
 
 	/**
 	 * Email: Ad Approved.
 	 */
-	$options->add_field( array(
-		'name' => __( 'Email: Ad Approved' ),
-		'type' => 'title',
-		'id' => wp_generate_password( 12, false ),
-	) );
-	$options->add_field( array(
-		'name' => 'Enabled',
-		'id'   => 'email_ad_approved_enabled',
-		'type' => 'checkbox',
-	) );
 	$options->add_field( [
-		'id' => 'email_ad_approved_subject',
-		'default' => __( '[{site}] Ad Approved' ),
-		'name' => __( 'Subject' ),
+		'id' => wp_generate_password( 12, false ),
+		'name' => plcl_get_translation( __( 'Email: Ad Approved', 'classfieds-by-plugible' ) ),
+		'type' => 'title',
+	] );
+	$options->add_field( [
+		'id' => plcl_get_option_id( 'email_ad_approved_enabled', false ),
+		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+		'type' => 'checkbox',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( '[{site}] Ad Approved', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_ad_approved_subject' ),
+		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'id' => 'email_ad_approved_message',
-		'name' => __( 'Subject' ),
-		'default' => __( 'Congratulations! Your ad has been approved and published, you can view it here "{link}".' ),
+		'default' => plcl_get_translation( __( 'Congratulations! Your ad has been approved and published. You can view it here {link}.', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_ad_approved_message' ),
+		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
 	] );
 
 	/**
 	 * Email: Ad Approved.
 	 */
-	$options->add_field( array(
-		'name' => __( 'Email: Ad Rejected' ),
-		'type' => 'title',
-		'id' => wp_generate_password( 12, false ),
-	) );
-	$options->add_field( array(
-		'name' => 'Enabled',
-		'id'   => 'email_ad_rejected_enabled',
-		'type' => 'checkbox',
-	) );
 	$options->add_field( [
-		'id' => 'email_ad_rejected_subject',
-		'default' => __( '[{site}] Ad Rejected' ),
-		'name' => __( 'Subject' ),
+		'id' => wp_generate_password( 12, false ),
+		'name' => plcl_get_translation( __( 'Email: Ad Rejected', 'classfieds-by-plugible' ) ),
+		'type' => 'title',
+	] );
+	$options->add_field( [
+		'id' => plcl_get_option_id( 'email_ad_rejected_enabled', false ),
+		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+		'type' => 'checkbox',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( '[{site}] Ad Rejected', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_ad_rejected_subject' ),
+		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'id' => 'email_ad_rejected_message',
-		'name' => __( 'Subject' ),
-		'default' => __( 'We apologize! Your ad "{title}" was rejected, .' ),
+		'default' => plcl_get_translation( __( 'We apologize! Your ad "{title}" was rejected.', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_ad_rejected_message' ),
+		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
 	] );
 
@@ -124,10 +124,67 @@ add_action( 'cmb2_init', function() {
 			} );
 		</script><?php
 	} );
-
 }, PHP_INT_MIN );
 
 function plcl_get_option( $option ) {
-	$default = cmb2_get_metabox( 'plcl_settings' )->get_field( $option )->get_default();
-	return cmb2_get_option( 'plcl_settings', $option, $default );
+	$default = cmb2_get_metabox( plcl_get_box_id() )->get_field( $option )->get_default();
+	return cmb2_get_option( plcl_get_box_id(), $option, $default );
+}
+
+function plcl_get_option_id( $id, $translatable = true ) {
+
+	if ( ! $translatable ) {
+		return $id;
+	}
+
+	/**
+	 * Polylang Integration.
+	 */
+	if ( function_exists( 'pll_default_language' ) ) {
+		if ( pll_current_language() && pll_default_language() !== pll_current_language() ) {
+			$id .= '_' . pll_current_language();
+		}
+	}
+
+	/**
+	 * Done.
+	 */
+	return $id;
+}
+
+function plcl_get_translation( $text ) {
+
+	/**
+	 * Polylang integration.
+	 */
+	if ( function_exists( 'pll_current_language' ) ) {
+		if ( pll_current_language() && pll_default_language() !== pll_current_language() ) {
+			$lang_file = sprintf( '%1$s/%2$s/%3$s-%4$s.mo'
+				, classifieds_by_plugible()->plugin_dir_path
+				, 'lang'
+				, classifieds_by_plugible()->plugin_slug
+				, pll_current_language( 'locale' )
+			);
+			$translations = [];
+			if ( file_exists( $lang_file ) ) {
+				$mo = new MO();
+				if ( $mo->import_from_file( $lang_file ) ) {
+					$translations = $mo->entries;
+					if ( ! empty( $translations[ $text ] ) ) {
+						$text = $translations[ $text ]->translations[0];
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Done.
+	 */
+	return $text;
+}
+
+function plcl_get_box_id() {
+	$box_id = 'plcl_settings';
+	return $box_id;
 }
