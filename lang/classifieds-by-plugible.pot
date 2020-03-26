@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-03-19 07:41+0100\n"
+"POT-Creation-Date: 2020-03-26 04:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: inc/cpt.php:75
+msgid "Classifieds"
+msgstr ""
+
+#: inc/cpt.php:96
+msgid "Locations"
+msgstr ""
+
 #: inc/cpt.php:105
 msgid "Latitude"
 msgstr ""
 
 #: inc/cpt.php:106
 msgid "Longitude"
+msgstr ""
+
+#: inc/cpt.php:114
+msgid "Categories"
+msgstr ""
+
+#: inc/cpt.php:128
+msgid "Specifications"
 msgstr ""
 
 #: inc/cpt.php:137
@@ -41,66 +57,44 @@ msgstr ""
 msgid "Classifieds Categories"
 msgstr ""
 
-#: inc/cpt.php:156
-msgid "Import classifieds categories."
+#: inc/cpt.php:157 inc/cpt.php:171 inc/cpt.php:181
+msgid "All done."
 msgstr ""
 
 #: inc/cpt.php:157
-msgid "Import Classifieds Categories"
-msgstr ""
-
-#: inc/cpt.php:159
 #, php-format
-msgid "All done. Go to <a href=\"%s\">categories</a>."
+msgid "Go to <a href=\"%s\">categories</a>."
 msgstr ""
 
-#: inc/cpt.php:167
+#: inc/cpt.php:165
 msgid "Classifieds Specifications"
 msgstr ""
 
-#: inc/cpt.php:168
-msgid "Import classifieds specifications."
-msgstr ""
-
-#: inc/cpt.php:169
-msgid "Import Classifieds Specifications"
-msgstr ""
-
-#: inc/cpt.php:175
+#: inc/cpt.php:171
 #, php-format
-msgid "All done. Go to <a href=\"%s\">specifications</a>."
+msgid "Go to <a href=\"%s\">specifications</a>."
 msgstr ""
 
-#: inc/cpt.php:183
+#: inc/cpt.php:179
 msgid "Classifieds Locations"
 msgstr ""
 
-#: inc/cpt.php:184
-msgid "Import classifieds locations."
-msgstr ""
-
-#: inc/cpt.php:185
-msgid "Import Classifieds Locations"
-msgstr ""
-
-#: inc/cpt.php:187
+#: inc/cpt.php:181
 #, php-format
-msgid "All done. Go to <a href=\"%s\">locations</a>."
+msgid "Go to <a href=\"%s\">locations</a>."
 msgstr ""
 
-#: inc/cpt.php:196 inc/cpt.php:228 src/form.php:246
+#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220 src/form.php:263
 msgid "Images"
 msgstr ""
 
 #: inc/csv-import.php:48 inc/csv-import.php:52
-msgid "Sorry, there has been an error."
+msgid "An error happened."
 msgstr ""
 
 #: inc/csv-import.php:53
 #, php-format
-msgid ""
-"The export file could not be found at <code>%s</code>. It is likely that "
-"this was caused by a permissions problem."
+msgid "The export file could not be found at <code>%s</code>."
 msgstr ""
 
 #: inc/csv-import.php:169
@@ -116,6 +110,87 @@ msgstr ""
 #: inc/csv-import.php:173
 #, php-format
 msgid "<strong>%s</strong></a> ignored"
+msgstr ""
+
+#: inc/options.php:7
+msgid "Settings"
+msgstr ""
+
+#: inc/options.php:11
+msgid "Save"
+msgstr ""
+
+#: inc/options.php:12
+msgid "Classifieds Settings"
+msgstr ""
+
+#: inc/options.php:17
+msgid "Email Global Header"
+msgstr ""
+
+#: inc/options.php:18
+msgid "Hello {name},"
+msgstr ""
+
+#: inc/options.php:24
+msgid "Email Global Footer"
+msgstr ""
+
+#: inc/options.php:25
+msgid ""
+"Thanks,\n"
+"{site}"
+msgstr ""
+
+#: inc/options.php:34
+msgid "Email: Ad Pending"
+msgstr ""
+
+#: inc/options.php:39 inc/options.php:65 inc/options.php:91
+msgid "Enabled"
+msgstr ""
+
+#: inc/options.php:43
+msgid "[{site}] Ad Pending"
+msgstr ""
+
+#: inc/options.php:45 inc/options.php:71 inc/options.php:97
+msgid "Subject"
+msgstr ""
+
+#: inc/options.php:49
+msgid ""
+"We've received your ad \"{title}\". It will become visible once approved."
+msgstr ""
+
+#: inc/options.php:51 inc/options.php:77 inc/options.php:103
+msgid "Body"
+msgstr ""
+
+#: inc/options.php:60
+msgid "Email: Ad Approved"
+msgstr ""
+
+#: inc/options.php:69
+msgid "[{site}] Ad Approved"
+msgstr ""
+
+#: inc/options.php:75
+msgid ""
+"Congratulations! Your ad has been approved and published. You can view it "
+"here {link}."
+msgstr ""
+
+#: inc/options.php:86
+msgid "Email: Ad Rejected"
+msgstr ""
+
+#: inc/options.php:95
+msgid "[{site}] Ad Rejected"
+msgstr ""
+
+#: inc/options.php:101
+msgid "We apologize! Your ad \"{title}\" was rejected."
 msgstr ""
 
 #: inc/template-functions.php:183
@@ -152,7 +227,7 @@ msgstr ""
 msgid "Specs"
 msgstr ""
 
-#: src/form.php:50 src/form.php:275
+#: src/form.php:50 src/form.php:292
 msgid "Submit"
 msgstr ""
 
@@ -172,58 +247,58 @@ msgstr ""
 msgid "Submission was completed successfully"
 msgstr ""
 
-#: src/form.php:206
+#: src/form.php:223
 msgid "Error: Login Required"
 msgstr ""
 
-#: src/form.php:222
+#: src/form.php:239
 msgid "→"
 msgstr ""
 
-#: src/form.php:229
+#: src/form.php:246
 msgid "Contact Information"
 msgstr ""
 
-#: src/form.php:230
+#: src/form.php:247
 msgid "Name*"
 msgstr ""
 
-#: src/form.php:233
+#: src/form.php:250
 msgid "Email*"
 msgstr ""
 
-#: src/form.php:238
+#: src/form.php:255
 msgid "Phone*"
 msgstr ""
 
-#: src/form.php:247
+#: src/form.php:264
 msgid "Images*"
 msgstr ""
 
-#: src/form.php:249
+#: src/form.php:266
 msgid "Ad Information"
 msgstr ""
 
-#: src/form.php:250
+#: src/form.php:267
 msgid "Title*"
 msgstr ""
 
-#: src/form.php:253 src/form.php:257
+#: src/form.php:270 src/form.php:274
 msgid "Choose..."
 msgstr ""
 
-#: src/form.php:253
+#: src/form.php:270
 msgid "Location*"
 msgstr ""
 
-#: src/form.php:257
+#: src/form.php:274
 msgid "Category*"
 msgstr ""
 
-#: src/form.php:262
+#: src/form.php:279
 msgid "Specifications*"
 msgstr ""
 
-#: src/form.php:268
+#: src/form.php:285
 msgid "Description*"
 msgstr ""

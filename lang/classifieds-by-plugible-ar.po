@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-03-19 07:41+0100\n"
-"PO-Revision-Date: 2020-03-19 07:57+0100\n"
+"POT-Creation-Date: 2020-03-26 04:47+0100\n"
+"PO-Revision-Date: 2020-03-26 04:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -17,17 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 
+#: inc/cpt.php:75
+msgid "Classifieds"
+msgstr "الإعلانات"
+
+#: inc/cpt.php:96
+msgid "Locations"
+msgstr "الأماكن"
+
 #: inc/cpt.php:105
 msgid "Latitude"
-msgstr ""
+msgstr "خط العرض"
 
 #: inc/cpt.php:106
 msgid "Longitude"
-msgstr ""
+msgstr "خط الطول"
+
+#: inc/cpt.php:114
+msgid "Categories"
+msgstr "الأقسام"
+
+#: inc/cpt.php:128
+msgid "Specifications"
+msgstr "المواصفات"
 
 #: inc/cpt.php:137
 msgid "Specification"
-msgstr "الخاصية"
+msgstr "المواصفة"
 
 #: inc/cpt.php:138
 msgid "Value"
@@ -38,117 +54,172 @@ msgid "Scope"
 msgstr "النطاق"
 
 #: inc/cpt.php:155
-#, fuzzy
-#| msgid "Classified Title"
 msgid "Classifieds Categories"
-msgstr "عنوان الإعلان"
+msgstr "أقسام الإعلانات"
 
-#: inc/cpt.php:156
-msgid "Import classifieds categories."
-msgstr ""
+#: inc/cpt.php:157 inc/cpt.php:171 inc/cpt.php:181
+msgid "All done."
+msgstr "تم."
 
 #: inc/cpt.php:157
-msgid "Import Classifieds Categories"
-msgstr ""
-
-#: inc/cpt.php:159
 #, php-format
-msgid "All done. Go to <a href=\"%s\">categories</a>."
-msgstr ""
+msgid "Go to <a href=\"%s\">categories</a>."
+msgstr "اِذهب إلي <a href=\"%s\">الأقسام</a>."
 
-#: inc/cpt.php:167
-#, fuzzy
-#| msgid "Specifications*"
+#: inc/cpt.php:165
 msgid "Classifieds Specifications"
-msgstr "الخصائص*"
+msgstr "مواصفات الإعلانات"
 
-#: inc/cpt.php:168
-msgid "Import classifieds specifications."
-msgstr ""
-
-#: inc/cpt.php:169
-msgid "Import Classifieds Specifications"
-msgstr ""
-
-#: inc/cpt.php:175
+#: inc/cpt.php:171
 #, php-format
-msgid "All done. Go to <a href=\"%s\">specifications</a>."
-msgstr ""
+msgid "Go to <a href=\"%s\">specifications</a>."
+msgstr "اِذهب إلي <a href=\"%s\">المواصفات</a>."
 
-#: inc/cpt.php:183
-#, fuzzy
-#| msgid "Classified Title"
+#: inc/cpt.php:179
 msgid "Classifieds Locations"
-msgstr "عنوان الإعلان"
+msgstr "أماكن الإعلانات"
 
-#: inc/cpt.php:184
-msgid "Import classifieds locations."
-msgstr ""
-
-#: inc/cpt.php:185
-msgid "Import Classifieds Locations"
-msgstr ""
-
-#: inc/cpt.php:187
+#: inc/cpt.php:181
 #, php-format
-msgid "All done. Go to <a href=\"%s\">locations</a>."
-msgstr ""
+msgid "Go to <a href=\"%s\">locations</a>."
+msgstr "اِذهب إلي <a href=\"%s\">الأماكن</a>."
 
-#: inc/cpt.php:196 inc/cpt.php:228 src/form.php:246
+#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220 src/form.php:263
 msgid "Images"
 msgstr "الصور"
 
 #: inc/csv-import.php:48 inc/csv-import.php:52
-msgid "Sorry, there has been an error."
-msgstr ""
+msgid "An error happened."
+msgstr "لقد طرأ خطأ."
 
 #: inc/csv-import.php:53
 #, php-format
-msgid ""
-"The export file could not be found at <code>%s</code>. It is likely that "
-"this was caused by a permissions problem."
-msgstr ""
+msgid "The export file could not be found at <code>%s</code>."
+msgstr "تعذر العثور على ملف التصدير في <code>%s</code>."
 
 #: inc/csv-import.php:169
 #, php-format
 msgid "<strong>%s</strong></a> created"
-msgstr ""
+msgstr "<strong>%s</strong></a> تم إنشاءه"
 
 #: inc/csv-import.php:171
 #, php-format
 msgid "<strong>%s</strong></a> updated"
-msgstr ""
+msgstr "<strong>%s</strong></a> تم تعديله"
 
 #: inc/csv-import.php:173
 #, php-format
 msgid "<strong>%s</strong></a> ignored"
+msgstr "<strong>%s</strong></a> تم تجاهله"
+
+#: inc/options.php:7
+msgid "Settings"
+msgstr "إعدادات"
+
+#: inc/options.php:11
+msgid "Save"
+msgstr "حفظ"
+
+#: inc/options.php:12
+msgid "Classifieds Settings"
+msgstr "إعدادات الإعلانات"
+
+#: inc/options.php:17
+msgid "Email Global Header"
+msgstr "ترويسة البريد الإلكتوني الشاملة"
+
+#: inc/options.php:18
+msgid "Hello {name},"
+msgstr "مرحبا {name}،"
+
+#: inc/options.php:24
+msgid "Email Global Footer"
+msgstr "تذييل البريد الإلكتوني الشامل"
+
+#: inc/options.php:25
+msgid ""
+"Thanks,\n"
+"{site}"
 msgstr ""
+"شكرا،\n"
+"{site}"
+
+#: inc/options.php:34
+msgid "Email: Ad Pending"
+msgstr "بريد إلكتروني: إعلان معلّق"
+
+#: inc/options.php:39 inc/options.php:65 inc/options.php:91
+msgid "Enabled"
+msgstr "مفعّل"
+
+#: inc/options.php:43
+msgid "[{site}] Ad Pending"
+msgstr "[{site}] إعلان معلّق"
+
+#: inc/options.php:45 inc/options.php:71 inc/options.php:97
+msgid "Subject"
+msgstr "الموضوع"
+
+#: inc/options.php:49
+msgid ""
+"We've received your ad \"{title}\". It will become visible once approved."
+msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
+
+#: inc/options.php:51 inc/options.php:77 inc/options.php:103
+msgid "Body"
+msgstr "النص"
+
+#: inc/options.php:60
+msgid "Email: Ad Approved"
+msgstr "بريد إلكتروني: إعلان مقبول"
+
+#: inc/options.php:69
+msgid "[{site}] Ad Approved"
+msgstr "[{site}] إعلان مقبول"
+
+#: inc/options.php:75
+msgid ""
+"Congratulations! Your ad has been approved and published. You can view it "
+"here {link}."
+msgstr "هنيئا لك! لقد قٌبِل إعلانك ونُشِر. يمكنك مشاهدته هنا {link}."
+
+#: inc/options.php:86
+msgid "Email: Ad Rejected"
+msgstr "بريد إلكتروني: إعلان مرفوض"
+
+#: inc/options.php:95
+msgid "[{site}] Ad Rejected"
+msgstr "[{site}] إعلان مرفوض"
+
+#: inc/options.php:101
+msgid "We apologize! Your ad \"{title}\" was rejected."
+msgstr "نعتذر. لقد رُفِض إعلانك \"{title}\"."
 
 #: inc/template-functions.php:183
 msgid ", "
-msgstr ""
+msgstr "، "
 
 #: inc/template-functions.php:221 plcl-templates/filters.php:95
 msgid "Search"
-msgstr ""
+msgstr "بحث"
 
 #: inc/template-functions.php:231
 #, php-format
 msgid "Page %s"
-msgstr ""
+msgstr "صفحة %s"
 
 #: plcl-templates/404.php:1
 msgid "Nothing Found"
-msgstr ""
+msgstr "لا يوجد شيء"
 
 #: plcl-templates/404.php:2
 msgid "Nothing found. Please update the search criteria."
-msgstr ""
+msgstr "لا يوجد شيء. المرجو تعديل معايير البحث."
 
 #: plcl-templates/shortcodes/list-item.php:18
 #, php-format
 msgid "%s ago"
-msgstr ""
+msgstr "منذ %s"
 
 #: plcl-templates/single.php:5
 msgid "Description"
@@ -158,7 +229,7 @@ msgstr "الوصف"
 msgid "Specs"
 msgstr "الخصائص"
 
-#: src/form.php:50 src/form.php:275
+#: src/form.php:50 src/form.php:292
 msgid "Submit"
 msgstr "إرسال"
 
@@ -178,61 +249,64 @@ msgstr "المرجو الانتظار ريثما ينتهي رفع الصور"
 msgid "Submission was completed successfully"
 msgstr "تم الإرسال بنجاح"
 
-#: src/form.php:206
+#: src/form.php:223
 msgid "Error: Login Required"
 msgstr "خطأ: تسجيل الدخول مطلوب"
 
-#: src/form.php:222
+#: src/form.php:239
 msgid "→"
 msgstr "←"
 
-#: src/form.php:229
+#: src/form.php:246
 msgid "Contact Information"
 msgstr "بيانات الاتصال"
 
-#: src/form.php:230
+#: src/form.php:247
 msgid "Name*"
 msgstr "الاسم*"
 
-#: src/form.php:233
+#: src/form.php:250
 msgid "Email*"
 msgstr "البريد الإلكتروني*"
 
-#: src/form.php:238
+#: src/form.php:255
 msgid "Phone*"
 msgstr "الهاتف*"
 
-#: src/form.php:247
+#: src/form.php:264
 msgid "Images*"
 msgstr "الصور*"
 
-#: src/form.php:249
+#: src/form.php:266
 msgid "Ad Information"
 msgstr "معلومات الإعلان"
 
-#: src/form.php:250
+#: src/form.php:267
 msgid "Title*"
 msgstr "العنوان*"
 
-#: src/form.php:253 src/form.php:257
+#: src/form.php:270 src/form.php:274
 msgid "Choose..."
 msgstr "اِخترْ..."
 
-#: src/form.php:253
+#: src/form.php:270
 msgid "Location*"
 msgstr "المكان*"
 
-#: src/form.php:257
+#: src/form.php:274
 msgid "Category*"
 msgstr "التصنيف*"
 
-#: src/form.php:262
+#: src/form.php:279
 msgid "Specifications*"
 msgstr "الخصائص*"
 
-#: src/form.php:268
+#: src/form.php:285
 msgid "Description*"
 msgstr "الوصف*"
+
+#~ msgid "Sorry, there has been an error."
+#~ msgstr "عذرا. وقع خطأ ما."
 
 #~ msgid "Set featured image(s)"
 #~ msgstr "تحديد الصور المميزة"
