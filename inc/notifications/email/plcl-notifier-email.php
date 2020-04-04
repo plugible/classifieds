@@ -10,11 +10,14 @@ class PLCLNotifierEmail {
 	}
 
 	private function bind() {
-		add_action( 'plcl_classified_inserted_publish', function( $post_id ) {
+		add_action( 'plcl_classified_pending', function( $post_id ) {
+			$this->notify( 'ad_pending', $post_id );
+		} );
+		add_action( 'plcl_classified_approved', function( $post_id ) {
 			$this->notify( 'ad_approved', $post_id );
 		} );
-		add_action( 'plcl_classified_inserted_draft', function( $post_id ) {
-			$this->notify( 'ad_pending', $post_id );
+		add_action( 'plcl_classified_rejected', function( $post_id ) {
+			$this->notify( 'ad_rejected', $post_id );
 		} );
 	}
 
