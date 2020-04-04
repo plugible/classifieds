@@ -1,37 +1,7 @@
 <?php
 
 /**
- * Trigger classified emails with new submissin.
- */
-add_action( 'plcl_classified_inserted', function( $post_id ) {
-	$post = get_post( $post_id );
-	do_action( 'plcl_classified_inserted_' . $post->post_status, $post_id );
-} );
-
-/**
- * Trigger classified emails with status change.
- */
-add_action( 'transition_post_status', function( $new_status, $old_status, $post ) {
-	if ( 'pl_classified' === $post->post_type
-		&& 'publish' === $new_status
-		&& 'draft' === $old_status
-	) {
-		plcl_mail( 'ad_approved', $post->ID );
-	}
-}, 10, 3 );
-
-/**
- * Send notificatinos.
- */
-add_action( 'plcl_classified_inserted_publish', function( $post_id ) {
-	plcl_mail( 'ad_approved', $post_id );
-} );
-add_action( 'plcl_classified_inserted_draft', function( $post_id ) {
-	plcl_mail( 'ad_pending', $post_id );
-} );
-
-/**
- * Send email.
+ * Sends email.
  */
 function plcl_mail( $which, $content_id, $type = 'ad' ) {
 	$to = get_post_meta( $content_id, 'email', true );
@@ -47,7 +17,7 @@ function plcl_mail( $which, $content_id, $type = 'ad' ) {
 }
 
 /**
- * Interpolate replacement tags in email templates.
+ * Interpolates replacement tags in email templates.
  */
 function plcl_interpolate( $template, $content_id, $type = 'ad' ) {
 
