@@ -101,6 +101,8 @@ Class Form {
 
 	public function ajaxAdSubmission() {
 
+		$status = 'draft';
+
 		/**
 		 * Verify salt.
 		 */
@@ -154,7 +156,7 @@ Class Form {
 		 */
 		$post_id = wp_insert_post( [
 			'post_content' => $description,
-			'post_status' => 'draft',
+			'post_status' => $status,
 			'post_title' => $title,
 			'post_type' => 'pl_classified',
 		], true );
@@ -210,6 +212,7 @@ Class Form {
 		 * Done.
 		 */
 		do_action( 'plcl_classified_inserted', $post_id );
+		do_action( 'plcl_classified_inserted_' . $status, $post_id );
 		die( '0' );
 	}
 
