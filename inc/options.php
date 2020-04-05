@@ -72,7 +72,7 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( "Congratulations! Your Classified has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Congratulations! Your Classified \"{title}\" has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_classified_approved_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
@@ -124,7 +124,7 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( "Congratulations! Your comment has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Congratulations! Your comment on \"{title}\" has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_comment_approved_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
