@@ -11,20 +11,20 @@ class PLCLNotifierEmail {
 
 	private function bind() {
 		add_action( 'plcl_classified_pending', function( $post_id ) {
-			$this->notify( 'ad_pending', $post_id );
+			$this->notify( 'classified_pending', $post_id );
 		} );
 		add_action( 'plcl_classified_approved', function( $post_id ) {
-			$this->notify( 'ad_approved', $post_id );
+			$this->notify( 'classified_approved', $post_id );
 		} );
 		add_action( 'plcl_classified_rejected', function( $post_id ) {
-			$this->notify( 'ad_rejected', $post_id );
+			$this->notify( 'classified_rejected', $post_id );
 		} );
 		add_action( 'plcl_comment_approved', function( $comment_id ) {
 			$this->notify( 'comment_approved', $comment_id );
 		} );
 	}
 
-	private function notify( $which, $content_id, $type = 'ad' ) {
+	private function notify( $which, $content_id, $type = 'classified' ) {
 		$to = get_post_meta( $content_id, 'email', true );
 		$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id );
 		$message = plcl_interpolate( ''

@@ -3,7 +3,7 @@
 /**
  * Sends email.
  */
-function plcl_mail( $which, $content_id, $type = 'ad' ) {
+function plcl_mail( $which, $content_id, $type = 'classified' ) {
 	$to = get_post_meta( $content_id, 'email', true );
 	$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id );
 	$message = plcl_interpolate( ''
@@ -19,7 +19,7 @@ function plcl_mail( $which, $content_id, $type = 'ad' ) {
 /**
  * Interpolates replacement tags in email templates.
  */
-function plcl_interpolate( $template, $content_id, $type = 'ad' ) {
+function plcl_interpolate( $template, $content_id, $type = 'classified' ) {
 
 	$content = get_post( $content_id );
 
