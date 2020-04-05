@@ -20,20 +20,23 @@ class PLCLNotifierEmail {
 			$this->notify( 'classified_rejected', $post_id );
 		} );
 		add_action( 'plcl_comment_approved', function( $comment_id ) {
-			$this->notify( 'comment_approved', $comment_id );
+			$this->notify( 'comment_approved', $comment_id, 'comment' );
 		} );
 	}
 
 	private function notify( $which, $content_id, $type = 'classified' ) {
-		$to = get_post_meta( $content_id, 'email', true );
-		$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id );
+		$to = 'classified' === $type
+			? get_post_meta( $content_id, 'email', true )
+			: get_comment_author_email( $content_id )
+		;
+		$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id, $type );
 		$message = plcl_interpolate( ''
 			. plcl_get_option( 'email_global_header' )
 			. "\n\n"
 			. plcl_get_option( 'email_' . $which . '_message' )
 			. "\n\n"
 			. plcl_get_option( 'email_global_footer' )
-		, $content_id );
+		, $content_id, $type );
 		wp_mail( $to, $subject, $message );
 	}
 }
