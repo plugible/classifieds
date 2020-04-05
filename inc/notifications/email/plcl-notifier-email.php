@@ -19,6 +19,9 @@ class PLCLNotifierEmail {
 		add_action( 'plcl_classified_rejected', function( $post_id ) {
 			$this->notify( 'ad_rejected', $post_id );
 		} );
+		add_action( 'plcl_comment_approved', function( $comment_id ) {
+			$this->notify( 'comment_approved', $comment_id );
+		} );
 	}
 
 	private function notify( $which, $content_id, $type = 'ad' ) {
