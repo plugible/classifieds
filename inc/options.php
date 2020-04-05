@@ -104,6 +104,32 @@ add_action( 'cmb2_init', function() {
 		'type' => 'textarea_small',
 	] );
 
+	/**
+	 * Email: Comment Approved.
+	 */
+	$options->add_field( [
+		'id' => wp_generate_password( 12, false ),
+		'name' => plcl_get_translation( __( 'Email: Comment Approved', 'classfieds-by-plugible' ) ),
+		'type' => 'title',
+	] );
+	$options->add_field( [
+		'id' => plcl_get_option_id( 'email_comment_approved_enabled', false ),
+		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+		'type' => 'checkbox',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( '[{site}] Comment Approved', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_comment_approved_subject' ),
+		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
+		'type' => 'text',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( "Congratulations! Your comment has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_comment_approved_message' ),
+		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
+		'type' => 'textarea_small',
+	] );
+
 	add_action( 'admin_footer', function() {
 		?><script>
 			jQuery( function( $ ) {
