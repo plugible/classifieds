@@ -216,7 +216,7 @@ add_action( 'cmb2_admin_init', function() {
 		'object_types' => [ 'pl_classified' ],
 		'show_names' => false,
 	] )->add_field( [
-		'id' => 'plcl_image',
+		'id' => 'image',
 		'name' => esc_html__( 'Images' ),
 		'type' => 'file_list',
 	] );
@@ -238,9 +238,9 @@ add_action( 'before_delete_post', function( $post_id ) {
 } );
 
 /**
- * Sync attachments to 'plcl_image' meta.
+ * Sync attachments to 'image' meta.
  */
-add_action( 'cmb2_save_field_' . 'plcl_image', function( $updated, $action, $field ) {
+add_action( 'cmb2_save_field_' . 'image', function( $updated, $action, $field ) {
 
 	$post_id = $field->object_id;
 

@@ -179,7 +179,7 @@ Class Form {
 		/**
 		 * Attach images to ad.
 		 */
-		$attachments_old = get_post_meta( $post_id, 'plcl_image' ) ?? [];
+		$attachments_old = get_post_meta( $post_id, 'image' ) ?? [];
 		$attachments_new = get_posts( [
 			'post_type' => 'attachment',
 			'meta_key' => 'salt',
@@ -203,10 +203,10 @@ Class Form {
 			delete_post_meta( $attachment_new->ID, 'salt' );
 		}
 		/**
-		 * Save to 'plcl_image' meta.
+		 * Save to 'image' meta.
 		 */
-		delete_post_meta( $post_id, 'plcl_image' );
-		add_post_meta( $post_id, 'plcl_image', $attachments_old );
+		delete_post_meta( $post_id, 'image' );
+		add_post_meta( $post_id, 'image', $attachments_old );
 
 		/**
 		 * Done.
