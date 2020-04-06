@@ -4,10 +4,7 @@
  */
 function plcl_interpolate( $template, $content_id, $type = 'classified' ) {
 	$replacements = [
-		'link' => 'classified' === $type
-			? get_permalink( $content_id )
-			: get_comment_link( $content_id )
-		,
+		'link' => plcl_get_link_with_hash( $content_id, $type ),
 		'name' => 'meta:name',
 		'site' => get_bloginfo( 'name' ),
 		'title' => 'classified' === $type
@@ -31,4 +28,14 @@ function plcl_interpolate( $template, $content_id, $type = 'classified' ) {
 	}, $template );
 
 	return $result;
+}
+
+/**
+ * Get link with hash.
+ */
+function plcl_get_link_with_hash( $content_id, $type = 'classified' ) {
+	return 'classified' === $type
+		? add_query_arg( 'classified_hash', get_post_meta( $content_id, 'comment_hash_shared', true ), get_permalink( $content_id ) )
+		: add_query_arg( 'comment_hash_shared', get_comment_meta( $content_id, 'comment_hash_shared', true ), get_comment_link( $content_id ) )
+	;
 }
