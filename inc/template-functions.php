@@ -316,7 +316,7 @@ function plcl_interpolate( $template, $content_id, $type = 'classified' ) {
  */
 function plcl_get_link_with_hash( $content_id, $type = 'classified' ) {
 	return 'classified' === $type
-		? add_query_arg( 'classified_hash', get_post_meta( $content_id, 'comment_hash_shared', true ), get_permalink( $content_id ) )
+		? add_query_arg( 'classified_hash_shared', get_post_meta( $content_id, 'classified_hash_shared', true ), get_permalink( $content_id ) )
 		: add_query_arg( 'comment_hash_shared', get_comment_meta( $content_id, 'comment_hash_shared', true ), get_comment_link( $content_id ) )
 	;
 }

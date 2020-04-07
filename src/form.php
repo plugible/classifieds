@@ -130,6 +130,14 @@ Class Form {
 		$description =    $_REQUEST[  $this->formElementId . '-description' ]    ?? '';
 
 		/**
+		 * Prepare email.
+		 *
+		 * - Verify
+		 * - Use all-lowercase
+		 */
+		$email = is_email( $email ) ? strtolower( $email ) : '';
+
+		/**
 		 * Validation.
 		 */
 		$required = [
