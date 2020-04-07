@@ -217,6 +217,14 @@ Class Form {
 		add_post_meta( $post_id, 'image', $attachments_old );
 
 		/**
+		 * Add unique hash.
+		 */
+		$hashes = [
+			'unique' => substr( hash( 'sha256', sprintf( '%1$s:%2$s:%3$s', $email, $post_id, wp_generate_password() ) ), 0, 12 ),
+		];
+		add_post_meta( $id, 'comment_hash_unique', $hashes[ 'unique' ], true );
+
+		/**
 		 * Done.
 		 */
 		do_action( 'plcl_classified_inserted', $post_id );
