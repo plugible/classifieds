@@ -30,12 +30,13 @@ add_action( 'plcl_classified_inserted_draft', function( $post_id ) {
 /**
  * plcl_classified_rejected
  *
- * - Classified deleted.
+ * - Unpublished classified deleted.
  */
 add_action( 'transition_post_status', function( $new_status, $old_status, $post ) {
 	if ( $old_status !== $new_status
 		&& 'pl_classified' === $post->post_type
 		&& 'trash' === $new_status
+		&& 'publish' !== $old_status
 	) {
 		do_action( 'plcl_classified_rejected', $post->ID );
 	}
