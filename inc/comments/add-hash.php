@@ -1,21 +1,6 @@
 <?php
 
 /**
- * Create hooks.
- */
-add_action( 'init', function() {
-	$hook_update_hashes = function( $comment_id ) {
-		if ( 'pl_classified' === get_post_type( get_comment( $comment_id )->comment_post_ID ) ) {
-			do_action( 'plcl_comment_update_hashes', $comment_id );
-		}
-	};
-
-	add_action( 'edit_comment', $hook_update_hashes );
-	add_action( 'wp_insert_comment', $hook_update_hashes );
-	add_action( 'wp_set_comment_status', $hook_update_hashes );
-} );
-
-/**
  * Add hashes to new comments.
  *
  * - Add a shared hash to the comment and its post ( `comment_email:post_id` )
