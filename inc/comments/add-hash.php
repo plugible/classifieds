@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Add hashes to new comments.
+ * Update comment hashes.
  *
  * - Add a shared hash to the comment and its post ( `comment_email:post_id` )
  * - Add a unique hash to the comment ( `comment_email:post_id:random` )
