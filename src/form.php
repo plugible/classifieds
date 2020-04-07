@@ -222,7 +222,7 @@ Class Form {
 		$hashes = [
 			'unique' => substr( hash( 'sha256', sprintf( '%1$s:%2$s:%3$s', $email, $post_id, wp_generate_password() ) ), 0, 12 ),
 		];
-		add_post_meta( $id, 'comment_hash_unique', $hashes[ 'unique' ], true );
+		add_post_meta( $post_id, 'classified_hash_unique', $hashes[ 'unique' ], true );
 
 		/**
 		 * Done.
