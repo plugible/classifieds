@@ -25,15 +25,23 @@ function plcl_load_template( $template, $data = [], $return = false ) {
 }
 
 function plcl_get_the_category() {
-	return is_single()
-		? get_the_terms( $GLOBALS[ 'post' ], 'pl_classified_category' )[0]
-		: get_queried_object();
-	;
+	if ( is_single() ) {
+		$categories = get_the_terms( $GLOBALS[ 'post' ], 'pl_classified_category' );
+		return is_array( $categories )
+			? $categories[0]
+			: false
+		;
+	} else {
+		return get_queried_object();
+	}
 }
 
 function plcl_get_the_category_link( $page = 1, $text = '', $include_filters = false ) {
-
 	$category = plcl_get_the_category();
+	if ( ! $category ) {
+		return '';
+	}
+
 	$text = $text ? $text : $category->name;
 	$link = plcl_get_the_category_url( $page, $include_filters );
 
@@ -44,6 +52,10 @@ function plcl_get_the_category_link( $page = 1, $text = '', $include_filters = f
 
 function plcl_get_the_category_url( $page = 1, $include_filters =false ) {
 	$category = plcl_get_the_category();
+	if ( ! $category ) {
+		return '';
+	}
+
 	$url = get_term_link( $category->slug, 'pl_classified_category' );
 	$filters = $_REQUEST[ 'filters' ] ?? [];
 	if ( $page > 1 ) {
@@ -186,7 +198,6 @@ function plcl_classified_terms( $post_id, $taxonomy, $format = 'linear' ) {
 }
 
 function plcl_breadcrumbs( $open, $close ) {
-
 	$paths = [];
 
 	/**
@@ -238,16 +249,17 @@ function plcl_breadcrumbs( $open, $close ) {
 	 * Add classified.
 	 */
 	if ( is_singular( 'pl_classified' ) ) {
-		$paths[] = [
-			'text' => plcl_get_the_category()->name,
-			'url'  => plcl_get_the_category_url(),
-		];
-		$paths[] = [
-			'text' => get_the_title(),
-			'url'  => get_the_permalink(),
-		];
+		if ( plcl_get_the_category() ) {
+			$paths[] = [
+				'text' => plcl_get_the_category()->name,
+				'url'  => plcl_get_the_category_url(),
+			];
+			$paths[] = [
+				'text' => get_the_title(),
+				'url'  => get_the_permalink(),
+			];
+		}
 	}
-
 
 	/**
 	 * Display.
@@ -260,7 +272,6 @@ function plcl_breadcrumbs( $open, $close ) {
 	echo $paths[ $i ][ 'text' ];
 	echo '</span>';
 	echo $close;
-
 }
 
 function plcl_get_breadcrumbs( $open, $close ) {
