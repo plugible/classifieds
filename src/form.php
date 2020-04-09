@@ -101,7 +101,25 @@ Class Form {
 
 	public function ajaxAdSubmission() {
 
+		/**
+		 * Default status.
+		 */
 		$status = 'draft';
+
+		/**
+		 * Required.
+		 */
+		$required = [
+			'name',
+			'phone',
+			'title',
+			'location',
+			'category',
+			'description',
+		];
+		if ( ! is_user_logged_in() ) {
+			$required[] = 'email';
+		}
 
 		/**
 		 * Verify salt.
@@ -120,43 +138,48 @@ Class Form {
 			die( '-' . __LINE__ );
 		}
 
-		$name =           $_REQUEST[  $this->formElementId . '-name' ]           ?? '';
-		$email =          $_REQUEST[  $this->formElementId . '-email' ]          ?? '';
-		$phone =          $_REQUEST[  $this->formElementId . '-phone' ]          ?? '';
-		$title =          $_REQUEST[  $this->formElementId . '-title' ]          ?? '';
-		$location =       $_REQUEST[  $this->formElementId . '-location' ]       ?? '';
-		$category =       $_REQUEST[  $this->formElementId . '-category' ]       ?? '';
-		$specifications = $_REQUEST[  $this->formElementId . '-specifications' ] ?? [];
-		$description =    $_REQUEST[  $this->formElementId . '-description' ]    ?? '';
+		/**
+		 * Populate variables.
+		 */
+		$name =           trim( $_REQUEST[  $this->formElementId . '-name' ] )        ?? '';
+		$phone =          trim( $_REQUEST[  $this->formElementId . '-phone' ] )       ?? '';
+		$title =          trim( $_REQUEST[  $this->formElementId . '-title' ] )       ?? '';
+		$location =       trim( $_REQUEST[  $this->formElementId . '-location' ] )    ?? '';
+		$category =       trim( $_REQUEST[  $this->formElementId . '-category' ] )    ?? '';
+		$description =    trim( $_REQUEST[  $this->formElementId . '-description' ] ) ?? '';
+		$specifications = $_REQUEST[  $this->formElementId . '-specifications' ]      ?? [];
 
 		/**
 		 * Prepare email.
 		 *
-		 * - Verify
-		 * - Use all-lowercase
+		 * - Get from account if user is logged in
+		 * - Otherwhise verify validity
 		 */
-		$email = is_email( $email ) ? strtolower( $email ) : '';
+		if ( ! is_user_logged_in() ) {
+			$email = trim( strtolower( $_REQUEST[  $this->formElementId . '-email' ] ) ) ?? '';
+		}
 
 		/**
-		 * Validation.
+		 * Verify required fields.
 		 */
-		$required = [
-			'name',
-			'email',
-			'phone',
-			'title',
-			'location',
-			'category',
-			'description',
-		];
-
 		foreach ( $required as $r ) {
-			if ( false
-				|| ! array_key_exists( $this->formElementId . '-' . $r, $_REQUEST )
-				|| empty( trim( $_REQUEST[ $this->formElementId . '-' .$r ] ) )
-			) {
-				die( '-' . __LINE__ );
+			if ( empty( $$r ) ) {
+				die( $$r . '-' . __LINE__ );
 			}
+		}
+
+		/**
+		 * Get or create user.
+		 */
+		if ( is_user_logged_in() ) {
+			$user = wp_get_current_user();
+		} elseif ( email_exists( $email ) ) {
+			$user = get_user_by( 'email', $email );
+		} else {
+			$user = get_user_by( 'id', plcl_create_user( $email ) );
+		}
+		if ( ! is_a( $user, 'WP_User' ) ) {
+			die( '-' . __LINE__ );
 		}
 
 		/**
@@ -164,9 +187,10 @@ Class Form {
 		 */
 		$post_id = wp_insert_post( [
 			'post_content' => $description,
-			'post_status' => $status,
-			'post_title' => $title,
-			'post_type' => 'pl_classified',
+			'post_status'  => $status,
+			'post_title'   => $title,
+			'post_type'    => 'pl_classified',
+			'post_author'  => $user->ID,
 		], true );
 
 		if ( is_wp_error( $post_id ) ) {
@@ -175,7 +199,6 @@ Class Form {
 
 		add_post_meta( $post_id, 'name', $name, true );
 		add_post_meta( $post_id, 'phone', $phone, true );
-		add_post_meta( $post_id, 'email', $email, true );
 		add_post_meta( $post_id, 'salt', $salt, true );
 
 		wp_set_post_terms( $post_id, $location, 'pl_classified_location' );
@@ -204,6 +227,7 @@ Class Form {
 			wp_update_post( [
 				'ID' => $attachment_new->ID,
 				'post_parent' => $post_id,
+				'post_author' => $user->ID,
 			] );
 			/**
 			 * Remove salt.
@@ -220,7 +244,7 @@ Class Form {
 		 * Add unique hash.
 		 */
 		$hashes = [
-			'unique' => substr( hash( 'sha256', sprintf( '%1$s:%2$s:%3$s', $email, $post_id, wp_generate_password() ) ), 0, 12 ),
+			'unique' => substr( hash( 'sha256', sprintf( '%1$s:%2$s:%3$s', $user->ID, $post_id, wp_generate_password() ) ), 0, 12 ),
 		];
 		add_post_meta( $post_id, 'classified_hash_unique', $hashes[ 'unique' ], true );
 
@@ -265,12 +289,18 @@ Class Form {
 			. $this->heading( __( 'Contact Information', 'classifieds-by-plugible' ) )
 			. $this->text( 'name', __( 'Name*', 'classifieds-by-plugible' ), [
 				'required' => true,
+				'value' => is_user_logged_in()
+					? wp_get_current_user()->data->display_name
+					: ''
 			] )
-			. $this->email( 'email', __( 'Email*', 'classifieds-by-plugible' ), [
-				'data-disallow-space' => true,
-				'email' => true,
-				'required' => true,
-			] )
+			. ( ! is_user_logged_in()
+				? $this->email( 'email', __( 'Email*', 'classifieds-by-plugible' ), [
+					'data-disallow-space' => true,
+					'email' => true,
+					'required' => true,
+				] )
+				: ''
+			)
 			. $this->text( 'phone', __( 'Phone*', 'classifieds-by-plugible' ), [
 				'data-disallow-non-digit' => true,
 				'data-disallow-space' => true,
@@ -330,10 +360,11 @@ Class Form {
 	}
 
 	private function args2HtmlParameters( $args ) {
-		return $args
-			? str_replace( "=", '="', http_build_query( $args, null, '" ', PHP_QUERY_RFC3986 ) ) . '"'
-			: ''
-		;
+		$output = [];
+		foreach ( $args as $k => $v ) {
+			$output[] = sprintf( '%1$s="%2$s"', $k, esc_html( $v ) );
+		}
+		return implode( ' ', $output );
 	}
 
 	private function input( $name, $title, $type = 'text', $args = [] ) {
