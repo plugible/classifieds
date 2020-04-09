@@ -356,3 +356,21 @@ function plcl_decrypt( $string, $require_encryption = false ) {
 		: base64_decode( $string )
 	;
 }
+
+/**
+ * Creates a user.
+ *
+ * - Username is u{N} where N is a random number from 1 to twice the number or website users
+ */
+function plcl_create_user( $email ) {
+	$users_count = ( new \WP_User_Query( array( 'blog' => 0 ) ) )->get_total();
+	do {
+		$username = rand( 1, $users_count * 2 );
+	} while ( username_exists( $username ) );
+
+	return wp_insert_user( [
+		'user_email' => $email,
+		'user_login' => $username,
+		'user_pass'  => wp_generate_password(),
+	] );
+}
