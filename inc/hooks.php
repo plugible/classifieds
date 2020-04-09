@@ -53,12 +53,12 @@ add_action( 'transition_comment_status', function( $new_status, $old_status, $co
 		&& 'pl_classified' === get_post_type( $comment->comment_post_ID )
 		&& 'approved' === $new_status
 	) {
-		do_action( 'plcl_comment_approved', $comment );
+		do_action( 'plcl_comment_approved', $comment->comment_ID );
 	}
 }, 10, 3 );
 add_action( 'wp_insert_comment', function( $id, $comment ) {
 	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) && $comment->comment_approved) {
-		do_action( 'plcl_comment_approved', $comment );
+		do_action( 'plcl_comment_approved', $id );
 	}
 }, 10, 2 );
 
