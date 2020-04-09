@@ -320,3 +320,39 @@ function plcl_get_link_with_hash( $content_id, $type = 'classified' ) {
 		: add_query_arg( 'comment_hash_shared', get_comment_meta( $content_id, 'comment_hash_shared', true ), get_comment_link( $content_id ) )
 	;
 }
+
+/**
+ * Encrypts a string.
+ *
+ * Uses openssl with the AES-256-CBC method with a fallback to `base64_encode`.
+ *
+ * @param boolean  $secure  Require secure encryption.
+ */
+function plcl_encrypt( $string, $require_encryption = false ) {
+	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'AES-256-CBC', openssl_get_cipher_methods() );
+	if ( $require_encryption && ! $encryption_possible ) {
+		die( ( string ) __LINE__ );
+	}
+	return $encryption_possible
+		? base64_encode( openssl_encrypt( $string, 'AES-256-CBC', 'classifieds-by-plugible', 0, substr( AUTH_KEY, 0, 16 ) ) )
+		: base64_encode( $string )
+	;
+}
+
+/**
+ * Decrypts a string.
+ *
+ * Uses openssl with the AES-256-CBC method with a fallback to `base64_decode`.
+ *
+ * @param boolean  $secure  Require secure decryption.
+ */
+function plcl_decrypt( $string, $require_encryption = false ) {
+	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'AES-256-CBC', openssl_get_cipher_methods() );
+	if ( $require_encryption && ! $encryption_possible ) {
+		die( ( string ) __LINE__ );
+	}
+	return $encryption_possible
+		? openssl_decrypt( base64_decode( $string ), 'AES-256-CBC', 'classifieds-by-plugible', 0, substr( AUTH_KEY, 0, 16 ) )
+		: base64_decode( $string )
+	;
+}
