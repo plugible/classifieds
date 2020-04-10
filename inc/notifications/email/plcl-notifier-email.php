@@ -26,7 +26,7 @@ class PLCLNotifierEmail {
 
 	private function notify( $which, $content_id, $type = 'classified' ) {
 		$to = 'classified' === $type
-			? get_post_meta( $content_id, 'email', true )
+			? get_the_author_meta( 'email', get_post_field( 'post_author', $content_id ) )
 			: get_comment_author_email( $content_id )
 		;
 		$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id, $type );
