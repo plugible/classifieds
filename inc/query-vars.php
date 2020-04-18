@@ -1,8 +1,7 @@
 <?php
 
 add_filter( 'query_vars', function ( $vars ) {
-	$vars[] = 'comment_hash_shared';
-	$vars[] = 'comment_hash_unique';
-	$vars[] = 'classified_hash_unique';
-	return $vars;
+	return array_merge( $vars, [
+		plcl_get_hash_param(),
+	] );
 } );
