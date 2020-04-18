@@ -20,23 +20,49 @@ class PLCLNotifierEmail {
 			$this->notify( 'classified_rejected', $post_id );
 		} );
 		add_action( 'plcl_comment_approved', function( $comment_id ) {
-			$this->notify( 'comment_approved', $comment_id, 'comment' );
+			$this->notify( 'comment_approved', $comment_id );
+			$this->notify( 'comment_received', $comment_id );
+		} );
+		add_action( 'plcl_comment_rejected', function( $comment_id ) {
+			$this->notify( 'comment_rejected', $comment_id );
 		} );
 	}
+	private function notify( $which, $content_id ) {
+		/**
+		 * Prepare recepient email address.
+		 */
+		switch ( $which ) {
+		case( 'classified_approved' ) :
+		case( 'classified_pending' ) :
+		case( 'classified_rejected' ) :
+			$to = get_the_author_meta( 'email', get_post_field( 'post_author', $content_id ) );
+			break;
+		case( 'comment_received' ) :
+			$to = get_the_author_meta( 'email', get_post_field( 'post_author', get_comment( $comment_id )->comment_post_ID ) );
+			break;
+		case( 'comment_approved' ) :
+		case( 'comment_rejected' ) :
+			$to = get_comment_author_email( $content_id );
+			break;
+		default:
+			die( ( string ) __LINE__ );
+		}
 
-	private function notify( $which, $content_id, $type = 'classified' ) {
-		$to = 'classified' === $type
-			? get_the_author_meta( 'email', get_post_field( 'post_author', $content_id ) )
-			: get_comment_author_email( $content_id )
-		;
-		$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id, $type );
+		/**
+		 * Prepare message.
+		 */
+		$subject = plcl_interpolate( plcl_get_option( 'email_' . $which . '_subject' ), $content_id, $which );
 		$message = plcl_interpolate( ''
 			. plcl_get_option( 'email_global_header' )
 			. "\n\n"
 			. plcl_get_option( 'email_' . $which . '_message' )
 			. "\n\n"
 			. plcl_get_option( 'email_global_footer' )
-		, $content_id, $type );
+		, $content_id, $which );
+
+		/**
+		 * Send email.
+		 */
 		wp_mail( $to, $subject, $message );
 	}
 }
