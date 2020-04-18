@@ -139,12 +139,12 @@ Class Form {
 		/**
 		 * Populate variables.
 		 */
-		$name           = trim( $_REQUEST[  $this->formElementId . '-name' ] ) ?? '';
-		$phone          = trim( $_REQUEST[  $this->formElementId . '-phone' ] ) ?? '';
-		$title          = trim( $_REQUEST[  $this->formElementId . '-title' ] ) ?? '';
+		$name           = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-name' ] ) ?? '';
+		$phone          = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-phone' ] ) ?? '';
+		$title          = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-title' ] ) ?? '';
 		$description    = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-description' ] ) ?? '';
-		$location       = trim( $_REQUEST[  $this->formElementId . '-location' ] ) ?? '';
-		$category       = trim( $_REQUEST[  $this->formElementId . '-category' ] ) ?? '';
+		$location       = trim( $_REQUEST[ $this->formElementId . '-location' ] ) ?? '';
+		$category       = trim( $_REQUEST[ $this->formElementId . '-category' ] ) ?? '';
 		$specifications = $_REQUEST[ $this->formElementId . '-specifications' ] ?? [];
 
 		/**
