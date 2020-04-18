@@ -21,11 +21,11 @@ add_action( 'manage_comments_custom_column', function( $column, $comment_ID ) {
 		return;
 	}
 
-	$link_responder = plcl_get_link_with_hash( $comment_ID, 'comment' );
-	$link_author    = add_query_arg( 'op', 1, $link_responder );
+	$link    = plcl_get_comment_link( $comment_ID );
+	$link_op = plcl_get_comment_link( $comment_ID, true );
 
 	?>
-		<a href="<?php echo $link_author; ?>"><span class="dashicons dashicons-megaphone"></span></a>
-		<a href="<?php echo $link_responder; ?>"><span class="dashicons dashicons-admin-comments"></span></a>
+		<a href="<?php echo $link; ?>"><span class="dashicons dashicons-megaphone"></span></a>
+		<a href="<?php echo $link_op; ?>"><span class="dashicons dashicons-admin-comments"></span></a>
 	<?php
 }, 10, 2 );

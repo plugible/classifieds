@@ -10,8 +10,8 @@ add_action( 'plcl_comment_update_hashes', function( $id ) {
 	$comment = get_comment( $id );
 
 	$hashes = [
-		'shared' => substr( hash( 'sha256', sprintf( '%1$s:%2$s', get_comment_author_email( $id ), $comment->comment_post_ID ) ), 0, 12 ),
-		'unique' => substr( hash( 'sha256', sprintf( '%1$s:%2$s:%3$s', get_comment_author_email( $id ), $comment->comment_post_ID, wp_generate_password() ) ), 0, 12 ),
+		'shared' => plcl_hash( get_comment_author_email( $id ) . $comment->comment_post_ID ),
+		'unique' => plcl_hash( get_comment_author_email( $id ) . $comment->comment_post_ID, true ),
 	];
 	/**
 	 * Add shared hash to comment.
