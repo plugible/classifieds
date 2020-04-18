@@ -2,8 +2,6 @@
 
 namespace Plugible\Classifieds;
 
-use Intervention\Image\ImageManagerStatic as Image;
-
 Class Form {
 
 	private $ajaxActionForAdSubmission = 'classifieds-ad-submission';
@@ -141,13 +139,13 @@ Class Form {
 		/**
 		 * Populate variables.
 		 */
-		$name =           trim( $_REQUEST[  $this->formElementId . '-name' ] )        ?? '';
-		$phone =          trim( $_REQUEST[  $this->formElementId . '-phone' ] )       ?? '';
-		$title =          trim( $_REQUEST[  $this->formElementId . '-title' ] )       ?? '';
-		$location =       trim( $_REQUEST[  $this->formElementId . '-location' ] )    ?? '';
-		$category =       trim( $_REQUEST[  $this->formElementId . '-category' ] )    ?? '';
-		$description =    trim( $_REQUEST[  $this->formElementId . '-description' ] ) ?? '';
-		$specifications = $_REQUEST[  $this->formElementId . '-specifications' ]      ?? [];
+		$name           = trim( $_REQUEST[  $this->formElementId . '-name' ] ) ?? '';
+		$phone          = trim( $_REQUEST[  $this->formElementId . '-phone' ] ) ?? '';
+		$title          = trim( $_REQUEST[  $this->formElementId . '-title' ] ) ?? '';
+		$description    = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-description' ] ) ?? '';
+		$location       = trim( $_REQUEST[  $this->formElementId . '-location' ] ) ?? '';
+		$category       = trim( $_REQUEST[  $this->formElementId . '-category' ] ) ?? '';
+		$specifications = $_REQUEST[  $this->formElementId . '-specifications' ] ?? [];
 
 		/**
 		 * Prepare email.
@@ -234,19 +232,13 @@ Class Form {
 			 */
 			delete_post_meta( $attachment_new->ID, 'salt' );
 		}
+		delete_post_meta( $post_id, 'salt' );
+
 		/**
 		 * Save to 'image' meta.
 		 */
 		delete_post_meta( $post_id, 'image' );
 		add_post_meta( $post_id, 'image', $attachments_old );
-
-		/**
-		 * Add unique hash.
-		 */
-		$hashes = [
-			'unique' => substr( hash( 'sha256', sprintf( '%1$s:%2$s:%3$s', $user->ID, $post_id, wp_generate_password() ) ), 0, 12 ),
-		];
-		add_post_meta( $post_id, 'classified_hash_unique', $hashes[ 'unique' ], true );
 
 		/**
 		 * Done.
@@ -382,7 +374,7 @@ Class Form {
 	}
 
 	private function salt( $name, $raw = false ) {
-		return $this->hidden( $name, wp_generate_password( 12, false ), $raw );
+		return $this->hidden( $name, wp_generate_password( 8, false ), $raw );
 	}
 
 	private function textarea( $name, $title, $args ) {
