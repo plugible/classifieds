@@ -182,7 +182,6 @@ add_action( 'admin_init', function() {
 	] );
 } );
 
-
 /**
  * Classifieds attached images column.
  */
