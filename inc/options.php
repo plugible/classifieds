@@ -46,7 +46,7 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( "We've received your Classified \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "We've received your classified \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_classified_pending_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
@@ -72,7 +72,7 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( "Congratulations! Your Classified \"{title}\" has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Your Classified \"{title}\" has been approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_classified_approved_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
@@ -98,7 +98,7 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( 'We apologize! Your Classified "{title}" was rejected.', 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( 'Your classified "{title}" was rejected.', 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_classified_rejected_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
@@ -124,8 +124,60 @@ add_action( 'cmb2_init', function() {
 		'type' => 'text',
 	] );
 	$options->add_field( [
-		'default' => plcl_get_translation( __( "Congratulations! Your comment on \"{title}\" has been approved and published. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Your comment on \"{title}\" has been approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
 		'id' => plcl_get_option_id( 'email_comment_approved_message' ),
+		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
+		'type' => 'textarea_small',
+	] );
+
+	/**
+	 * Email: Comment Rejected.
+	 */
+	$options->add_field( [
+		'id' => wp_generate_password( 12, false ),
+		'name' => plcl_get_translation( __( 'Email: Comment Rejected', 'classfieds-by-plugible' ) ),
+		'type' => 'title',
+	] );
+	$options->add_field( [
+		'id' => plcl_get_option_id( 'email_comment_rejected_enabled', false ),
+		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+		'type' => 'checkbox',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( '[{site}] Comment Rejected', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_comment_rejected_subject' ),
+		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
+		'type' => 'text',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( "Your comment on \"{title}\" has been rejected.", 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_comment_rejected_message' ),
+		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
+		'type' => 'textarea_small',
+	] );
+
+	/**
+	 * Email: Comment Received.
+	 */
+	$options->add_field( [
+		'id' => wp_generate_password( 12, false ),
+		'name' => plcl_get_translation( __( 'Email: Comment Received', 'classfieds-by-plugible' ) ),
+		'type' => 'title',
+	] );
+	$options->add_field( [
+		'id' => plcl_get_option_id( 'email_comment_received_enabled', false ),
+		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+		'type' => 'checkbox',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( '[{site}] Comment Received', 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_comment_received_subject' ),
+		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
+		'type' => 'text',
+	] );
+	$options->add_field( [
+		'default' => plcl_get_translation( __( "Your received a new comment on \"{title}\". You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
+		'id' => plcl_get_option_id( 'email_comment_received_message' ),
 		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
 		'type' => 'textarea_small',
 	] );
@@ -134,9 +186,11 @@ add_action( 'cmb2_init', function() {
 		?><script>
 			jQuery( function( $ ) {
 				$('')
-					.add( '.cmb2-id-email-classified-pending-enabled' )
 					.add( '.cmb2-id-email-classified-approved-enabled' )
+					.add( '.cmb2-id-email-classified-pending-enabled' )
 					.add( '.cmb2-id-email-classified-rejected-enabled' )
+					.add( '.cmb2-id-email-comment-approved-enabled' )
+					.add( '.cmb2-id-email-comment-received-enabled' )
 				.change( function() {
 					var $this = $( this );
 					var $next2 = $this.nextAll( ':lt(2)' );
