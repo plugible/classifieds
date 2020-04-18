@@ -145,7 +145,7 @@ Class Form {
 		$description    = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-description' ] ) ?? '';
 		$location       = trim( $_REQUEST[  $this->formElementId . '-location' ] ) ?? '';
 		$category       = trim( $_REQUEST[  $this->formElementId . '-category' ] ) ?? '';
-		$specifications = $_REQUEST[  $this->formElementId . '-specifications' ] ?? [];
+		$specifications = $_REQUEST[ $this->formElementId . '-specifications' ] ?? [];
 
 		/**
 		 * Prepare email.
