@@ -283,42 +283,77 @@ function plcl_get_breadcrumbs( $open, $close ) {
 /**
  * Interpolates replacement tags in email templates.
  */
-function plcl_interpolate( $template, $content_id, $type = 'classified' ) {
+function plcl_interpolate( $template, $content_id, $context ) {
 	$replacements = [
-		'link' => plcl_get_link_with_hash( $content_id, $type ),
-		'name' => 'meta:name',
-		'site' => get_bloginfo( 'name' ),
-		'title' => 'classified' === $type
-			? get_the_title( $content_id )
-			: get_the_title( get_comment( $content_id )->comment_post_ID )
-		,
+		'site'             => get_bloginfo( 'name' ),
+		'post_meta:foo'    => 'foo',
+		'comment_meta:bar' => 'bar',
 	];
+	switch ( $context ) {
+	case( 'classified_approved' ) :
+	case( 'classified_pending' ) :
+	case( 'classified_rejected' ) :
+		$replacements[ 'name' ]  = get_userdata( get_post_field( 'post_author', $content_id ) )->display_name;
+		$replacements[ 'link' ]  = plcl_get_classified_link( $content_id );
+		$replacements[ 'title' ] = get_the_title( $content_id );
+		break;
+	case( 'comment_received' ) :
+		$replacements[ 'name' ]  = get_userdata( get_post_field( 'post_author', get_comment( $content_id )->comment_post_ID ) )->display_name;
+		$replacements[ 'link' ]  = plcl_get_comment_link( $content_id, true );
+		$replacements[ 'title' ] = get_the_title( get_comment( $content_id )->comment_post_ID );
+		break;
+	case( 'comment_approved' ) :
+	case( 'comment_rejected' ) :
+		$replacements[ 'name' ]  = get_comment_author( $content_id );
+		$replacements[ 'link' ]  = plcl_get_comment_link( $content_id );
+		$replacements[ 'title' ] = get_the_title( get_comment( $content_id )->comment_post_ID );
+		break;
+	default:
+		break;
+	}
 
+	/**
+	 * Interpolate.
+	 */
 	$result = $template;
-
-	preg_replace_callback ( '/{([a-z_-]+)}/i' , function( $matches ) use ( $replacements, &$result, $content_id, $type ) {
+	preg_replace_callback ( '/{([a-z:_-]+)}/i' , function( $matches ) use ( $replacements, &$result, $content_id, $type ) {
 		$tag = $matches[ 0 ];
 		$replacement = $replacements[ $matches[1] ];
-		if ( 'meta:' === substr( $replacement, 0, 5) ) {
-			$replacement = 'classified' === $type
-				? get_post_meta( $content_id, substr( $replacement, 5), true )
-				: get_comment_meta( $content_id, substr( $replacement, 5), true )
-			;
+		if ( 'post_meta:' === substr( $replacement, 0, 10 ) ) {
+			$replacement = get_post_meta( $content_id, substr( $replacement, 10 ), true );
+		}
+		if ( 'comment_meta:' === substr( $replacement, 0, 13 ) ) {
+			$replacement = get_comment_meta( $content_id, substr( $replacement, 13 ), true );
 		}
 		$result = str_replace( $tag, $replacement, $result );
 	}, $template );
 
+	/**
+	 * Done.
+	 */
 	return $result;
 }
 
-/**
- * Get link with hash.
- */
-function plcl_get_link_with_hash( $content_id, $type = 'classified' ) {
-	return 'classified' === $type
-		? add_query_arg( 'classified_hash_unique', get_post_meta( $content_id, 'classified_hash_unique', true ), get_permalink( $content_id ) )
-		: add_query_arg( 'comment_hash_shared', get_comment_meta( $content_id, 'comment_hash_shared', true ), get_comment_link( $content_id ) )
-	;
+function plcl_get_classified_link( $post_id ) {
+	$hashes = [
+		'classified_hash_unique' => get_post_meta( $post_id, 'classified_hash_unique', true ),
+	];
+	return add_query_arg( plcl_get_hash_param(), plcl_encrypt( json_encode( $hashes ) ), get_permalink( $post_id ) );
+}
+
+function plcl_get_comment_link( $comment_id, $op = false ) {
+	if ( $op ) {
+		$hashes = [
+			'classified_hash_unique' => get_post_meta( get_comment( $comment_id )->comment_post_ID , 'classified_hash_unique', true ),
+			'comment_hash_shared'    => get_comment_meta( $comment_id, 'comment_hash_shared', true ),
+		];
+	} else {
+		$hashes = [
+			'comment_hash_shared' => get_comment_meta( $comment_id, 'comment_hash_shared', true ),
+			'comment_hash_unique' => get_comment_meta( $comment_id, 'comment_hash_unique', true ),
+		];
+	}
+	return add_query_arg( plcl_get_hash_param(), plcl_encrypt( json_encode( $hashes ) ), get_comment_link( $comment_id ) );
 }
 
 /**
@@ -329,6 +364,7 @@ function plcl_get_link_with_hash( $content_id, $type = 'classified' ) {
  * @param boolean  $secure  Require secure encryption.
  */
 function plcl_encrypt( $string, $require_encryption = false ) {
+	return $string;
 	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'AES-256-CBC', openssl_get_cipher_methods() );
 	if ( $require_encryption && ! $encryption_possible ) {
 		die( ( string ) __LINE__ );
@@ -373,4 +409,23 @@ function plcl_create_user( $email ) {
 		'user_login' => $username,
 		'user_pass'  => wp_generate_password(),
 	] );
+}
+
+/**
+ * Gets query string key.
+ */
+function plcl_get_hash_param() {
+	return trim( plcl_encrypt( 'hash' ), '=' );
+}
+
+/**
+ * Hash a string.
+ * 
+ * - Length is 8
+ */
+function plcl_hash( $string, $with_salt = false ) {
+	if ( $with_salt ) {
+		$string .= wp_generate_password();
+	}
+	return substr( hash( 'sha256', $string ), 0, 8 );
 }
