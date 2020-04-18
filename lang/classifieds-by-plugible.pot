@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-03-26 07:22+0100\n"
+"POT-Creation-Date: 2020-04-18 22:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: inc/comments/columns.php:8
+msgid "Links"
+msgstr ""
 
 #: inc/cpt.php:75
 msgid "Classifieds"
@@ -84,7 +88,7 @@ msgstr ""
 msgid "Go to <a href=\"%s\">locations</a>."
 msgstr ""
 
-#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220 src/form.php:263
+#: inc/cpt.php:203 inc/cpt.php:214 inc/cpt.php:219 src/form.php:304
 msgid "Images"
 msgstr ""
 
@@ -110,6 +114,23 @@ msgstr ""
 #: inc/csv-import.php:173
 #, php-format
 msgid "<strong>%s</strong></a> ignored"
+msgstr ""
+
+#: inc/debug/meta.php:22 inc/debug/meta.php:30
+msgid "Meta"
+msgstr ""
+
+#: inc/functions.php:195
+msgid ", "
+msgstr ""
+
+#: inc/functions.php:232 plcl-templates/filters.php:95
+msgid "Search"
+msgstr ""
+
+#: inc/functions.php:242
+#, php-format
+msgid "Page %s"
 msgstr ""
 
 #: inc/options.php:7
@@ -142,69 +163,92 @@ msgid ""
 "{site}"
 msgstr ""
 
-#: inc/options.php:34
-msgid "Email: Ad Pending"
+#: inc/options.php:31
+msgid "Classified Pending"
 msgstr ""
 
-#: inc/options.php:39 inc/options.php:65 inc/options.php:91
-msgid "Enabled"
-msgstr ""
-
-#: inc/options.php:43
-msgid "[{site}] Ad Pending"
-msgstr ""
-
-#: inc/options.php:45 inc/options.php:71 inc/options.php:97
-msgid "Subject"
-msgstr ""
-
-#: inc/options.php:49
+#: inc/options.php:32
 msgid ""
-"We've received your ad \"{title}\". It will become visible once approved."
+"We've received your classified \"{title}\". It will become visible once "
+"approved."
 msgstr ""
 
-#: inc/options.php:51 inc/options.php:77 inc/options.php:103
-msgid "Body"
+#: inc/options.php:35
+msgid "Classified Received"
 msgstr ""
 
-#: inc/options.php:60
-msgid "Email: Ad Approved"
-msgstr ""
-
-#: inc/options.php:69
-msgid "[{site}] Ad Approved"
-msgstr ""
-
-#: inc/options.php:75
+#: inc/options.php:36
 msgid ""
-"Congratulations! Your ad has been approved and published. You can view it "
-"here:\n"
+"The classified \"{title}\" was submitted. You can view it here:\n"
 "- {link}"
 msgstr ""
 
-#: inc/options.php:86
-msgid "Email: Ad Rejected"
+#: inc/options.php:39
+msgid "Classified Approved"
 msgstr ""
 
-#: inc/options.php:95
-msgid "[{site}] Ad Rejected"
+#: inc/options.php:40
+msgid ""
+"Your Classified \"{title}\" was approved. You can view it here:\n"
+"- {link}"
 msgstr ""
 
-#: inc/options.php:101
-msgid "We apologize! Your ad \"{title}\" was rejected."
+#: inc/options.php:43
+msgid "Classified Rejected"
 msgstr ""
 
-#: inc/template-functions.php:183
-msgid ", "
+#: inc/options.php:44
+msgid "Your classified \"{title}\" was rejected."
 msgstr ""
 
-#: inc/template-functions.php:221 plcl-templates/filters.php:95
-msgid "Search"
+#: inc/options.php:47
+msgid "Comment Pending"
 msgstr ""
 
-#: inc/template-functions.php:231
-#, php-format
-msgid "Page %s"
+#: inc/options.php:48
+msgid ""
+"We've received your comment on \"{title}\". It will become visible once "
+"approved."
+msgstr ""
+
+#: inc/options.php:51
+msgid "Comment Received"
+msgstr ""
+
+#: inc/options.php:52
+msgid ""
+"You received a comment on \"{title}\". You can view it here:\n"
+"- {link}"
+msgstr ""
+
+#: inc/options.php:55
+msgid "Comment Approved"
+msgstr ""
+
+#: inc/options.php:56
+msgid ""
+"Your comment on \"{title}\" was approved. You can view it here:\n"
+"- {link}"
+msgstr ""
+
+#: inc/options.php:59
+msgid "Comment Rejected"
+msgstr ""
+
+#: inc/options.php:60
+msgid "Your comment on \"{title}\" was rejected."
+msgstr ""
+
+#: inc/options.php:72
+msgid "Enabled"
+msgstr ""
+
+#: inc/options.php:78
+msgid "Subject"
+msgstr ""
+
+#: inc/options.php:84
+msgid "Body"
 msgstr ""
 
 #: plcl-templates/404.php:1
@@ -228,78 +272,78 @@ msgstr ""
 msgid "Specs"
 msgstr ""
 
-#: src/form.php:50 src/form.php:292
+#: src/form.php:48 src/form.php:333
 msgid "Submit"
 msgstr ""
 
-#: src/form.php:51
+#: src/form.php:49
 msgid "Submitting... Please wait"
 msgstr ""
 
-#: src/form.php:52
+#: src/form.php:50
 msgid "Errors detected. Please fix errors and submit again"
 msgstr ""
 
-#: src/form.php:53
+#: src/form.php:51
 msgid "Please wait for the image(s) upload to finish"
 msgstr ""
 
-#: src/form.php:54 src/form.php:55
+#: src/form.php:52 src/form.php:53
 msgid "Submission was completed successfully"
 msgstr ""
 
-#: src/form.php:223
+#: src/form.php:258
 msgid "Error: Login Required"
 msgstr ""
 
-#: src/form.php:239
+#: src/form.php:274
 msgid "→"
 msgstr ""
 
-#: src/form.php:246
+#: src/form.php:281
 msgid "Contact Information"
 msgstr ""
 
-#: src/form.php:247
+#: src/form.php:282
 msgid "Name*"
 msgstr ""
 
-#: src/form.php:250
+#: src/form.php:289
 msgid "Email*"
 msgstr ""
 
-#: src/form.php:255
+#: src/form.php:296
 msgid "Phone*"
 msgstr ""
 
-#: src/form.php:264
+#: src/form.php:305
 msgid "Images*"
 msgstr ""
 
-#: src/form.php:266
+#: src/form.php:307
 msgid "Ad Information"
 msgstr ""
 
-#: src/form.php:267
+#: src/form.php:308
 msgid "Title*"
 msgstr ""
 
-#: src/form.php:270 src/form.php:274
+#: src/form.php:311 src/form.php:315
 msgid "Choose..."
 msgstr ""
 
-#: src/form.php:270
+#: src/form.php:311
 msgid "Location*"
 msgstr ""
 
-#: src/form.php:274
+#: src/form.php:315
 msgid "Category*"
 msgstr ""
 
-#: src/form.php:279
+#: src/form.php:320
 msgid "Specifications*"
 msgstr ""
 
-#: src/form.php:285
+#: src/form.php:326
 msgid "Description*"
 msgstr ""

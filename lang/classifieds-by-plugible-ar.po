@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-03-26 07:22+0100\n"
-"PO-Revision-Date: 2020-03-26 07:24+0100\n"
+"POT-Creation-Date: 2020-04-18 22:45+0100\n"
+"PO-Revision-Date: 2020-04-18 22:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
+
+#: inc/comments/columns.php:8
+msgid "Links"
+msgstr "روابط"
 
 #: inc/cpt.php:75
 msgid "Classifieds"
@@ -84,7 +88,7 @@ msgstr "أماكن الإعلانات"
 msgid "Go to <a href=\"%s\">locations</a>."
 msgstr "اِذهب إلي <a href=\"%s\">الأماكن</a>."
 
-#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220 src/form.php:263
+#: inc/cpt.php:203 inc/cpt.php:214 inc/cpt.php:219 src/form.php:304
 msgid "Images"
 msgstr "الصور"
 
@@ -111,6 +115,23 @@ msgstr "<strong>%s</strong></a> تم تعديله"
 #, php-format
 msgid "<strong>%s</strong></a> ignored"
 msgstr "<strong>%s</strong></a> تم تجاهله"
+
+#: inc/debug/meta.php:22 inc/debug/meta.php:30
+msgid "Meta"
+msgstr "فوقي"
+
+#: inc/functions.php:195
+msgid ", "
+msgstr "، "
+
+#: inc/functions.php:232 plcl-templates/filters.php:95
+msgid "Search"
+msgstr "بحث"
+
+#: inc/functions.php:242
+#, php-format
+msgid "Page %s"
+msgstr "صفحة %s"
 
 #: inc/options.php:7
 msgid "Settings"
@@ -144,72 +165,101 @@ msgstr ""
 "شكرا،\n"
 "{site}"
 
-#: inc/options.php:34
-msgid "Email: Ad Pending"
-msgstr "بريد إلكتروني: إعلان معلّق"
+#: inc/options.php:31
+msgid "Classified Pending"
+msgstr "إعلان معلّق"
 
-#: inc/options.php:39 inc/options.php:65 inc/options.php:91
+#: inc/options.php:32
+msgid ""
+"We've received your classified \"{title}\". It will become visible once "
+"approved."
+msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
+
+#: inc/options.php:35
+msgid "Classified Received"
+msgstr "إعلان تم استقباله"
+
+#: inc/options.php:36
+msgid ""
+"The classified \"{title}\" was submitted. You can view it here:\n"
+"- {link}"
+msgstr ""
+"تم إرسال الإعلانك \"{title}\". يمكنك مشاهدته هنا:\n"
+"- {link}"
+
+#: inc/options.php:39
+msgid "Classified Approved"
+msgstr "إعلان مقبول"
+
+#: inc/options.php:40
+msgid ""
+"Your Classified \"{title}\" was approved. You can view it here:\n"
+"- {link}"
+msgstr ""
+"تم قبول إعلانك \"{title}\". يمكنك مشاهدته هنا:\n"
+"- {link}"
+
+#: inc/options.php:43
+msgid "Classified Rejected"
+msgstr "إعلان مرفوض"
+
+#: inc/options.php:44
+msgid "Your classified \"{title}\" was rejected."
+msgstr "تم رفض إعلانك \"{title}\"."
+
+#: inc/options.php:47
+msgid "Comment Pending"
+msgstr "تعليق معلّق"
+
+#: inc/options.php:48
+msgid ""
+"We've received your comment on \"{title}\". It will become visible once "
+"approved."
+msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
+
+#: inc/options.php:51
+msgid "Comment Received"
+msgstr "تعليق تم استقباله"
+
+#: inc/options.php:52
+msgid ""
+"You received a comment on \"{title}\". You can view it here:\n"
+"- {link}"
+msgstr ""
+"لقد توصلت بتعليق على \"{title}\". يمكنك مشاهدته هنا:\n"
+"- {link}"
+
+#: inc/options.php:55
+msgid "Comment Approved"
+msgstr "تعليق مقبول"
+
+#: inc/options.php:56
+msgid ""
+"Your comment on \"{title}\" was approved. You can view it here:\n"
+"- {link}"
+msgstr ""
+"تم قبول تعليقك على \"{title}\". يمكنك مشاهدته هنا:\n"
+"- {link}"
+
+#: inc/options.php:59
+msgid "Comment Rejected"
+msgstr "تعليق مرفوض"
+
+#: inc/options.php:60
+msgid "Your comment on \"{title}\" was rejected."
+msgstr "تم رفض تعليقك على \"{title}\"."
+
+#: inc/options.php:72
 msgid "Enabled"
 msgstr "مفعّل"
 
-#: inc/options.php:43
-msgid "[{site}] Ad Pending"
-msgstr "[{site}] إعلان معلّق"
-
-#: inc/options.php:45 inc/options.php:71 inc/options.php:97
+#: inc/options.php:78
 msgid "Subject"
 msgstr "الموضوع"
 
-#: inc/options.php:49
-msgid ""
-"We've received your ad \"{title}\". It will become visible once approved."
-msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
-
-#: inc/options.php:51 inc/options.php:77 inc/options.php:103
+#: inc/options.php:84
 msgid "Body"
 msgstr "النص"
-
-#: inc/options.php:60
-msgid "Email: Ad Approved"
-msgstr "بريد إلكتروني: إعلان مقبول"
-
-#: inc/options.php:69
-msgid "[{site}] Ad Approved"
-msgstr "[{site}] إعلان مقبول"
-
-#: inc/options.php:75
-msgid ""
-"Congratulations! Your ad has been approved and published. You can view it "
-"here:\n"
-"- {link}"
-msgstr ""
-"هنيئا لك! لقد قٌبِل إعلانك ونُشِر. يمكنك مشاهدته هنا:\n"
-"- {link}"
-
-#: inc/options.php:86
-msgid "Email: Ad Rejected"
-msgstr "بريد إلكتروني: إعلان مرفوض"
-
-#: inc/options.php:95
-msgid "[{site}] Ad Rejected"
-msgstr "[{site}] إعلان مرفوض"
-
-#: inc/options.php:101
-msgid "We apologize! Your ad \"{title}\" was rejected."
-msgstr "نعتذر. لقد رُفِض إعلانك \"{title}\"."
-
-#: inc/template-functions.php:183
-msgid ", "
-msgstr "، "
-
-#: inc/template-functions.php:221 plcl-templates/filters.php:95
-msgid "Search"
-msgstr "بحث"
-
-#: inc/template-functions.php:231
-#, php-format
-msgid "Page %s"
-msgstr "صفحة %s"
 
 #: plcl-templates/404.php:1
 msgid "Nothing Found"
@@ -232,81 +282,99 @@ msgstr "الوصف"
 msgid "Specs"
 msgstr "الخصائص"
 
-#: src/form.php:50 src/form.php:292
+#: src/form.php:48 src/form.php:333
 msgid "Submit"
 msgstr "إرسال"
 
-#: src/form.php:51
+#: src/form.php:49
 msgid "Submitting... Please wait"
 msgstr "يجري الإرسال...المرجو الانتظار"
 
-#: src/form.php:52
+#: src/form.php:50
 msgid "Errors detected. Please fix errors and submit again"
 msgstr "هناك أخطاء. المرجو تصحيح الأخطاء تم الإرسال من حديد"
 
-#: src/form.php:53
+#: src/form.php:51
 msgid "Please wait for the image(s) upload to finish"
 msgstr "المرجو الانتظار ريثما ينتهي رفع الصور"
 
-#: src/form.php:54 src/form.php:55
+#: src/form.php:52 src/form.php:53
 msgid "Submission was completed successfully"
 msgstr "تم الإرسال بنجاح"
 
-#: src/form.php:223
+#: src/form.php:258
 msgid "Error: Login Required"
 msgstr "خطأ: تسجيل الدخول مطلوب"
 
-#: src/form.php:239
+#: src/form.php:274
 msgid "→"
 msgstr "←"
 
-#: src/form.php:246
+#: src/form.php:281
 msgid "Contact Information"
 msgstr "بيانات الاتصال"
 
-#: src/form.php:247
+#: src/form.php:282
 msgid "Name*"
 msgstr "الاسم*"
 
-#: src/form.php:250
+#: src/form.php:289
 msgid "Email*"
 msgstr "البريد الإلكتروني*"
 
-#: src/form.php:255
+#: src/form.php:296
 msgid "Phone*"
 msgstr "الهاتف*"
 
-#: src/form.php:264
+#: src/form.php:305
 msgid "Images*"
 msgstr "الصور*"
 
-#: src/form.php:266
+#: src/form.php:307
 msgid "Ad Information"
 msgstr "معلومات الإعلان"
 
-#: src/form.php:267
+#: src/form.php:308
 msgid "Title*"
 msgstr "العنوان*"
 
-#: src/form.php:270 src/form.php:274
+#: src/form.php:311 src/form.php:315
 msgid "Choose..."
 msgstr "اِخترْ..."
 
-#: src/form.php:270
+#: src/form.php:311
 msgid "Location*"
 msgstr "المكان*"
 
-#: src/form.php:274
+#: src/form.php:315
 msgid "Category*"
 msgstr "التصنيف*"
 
-#: src/form.php:279
+#: src/form.php:320
 msgid "Specifications*"
 msgstr "الخصائص*"
 
-#: src/form.php:285
+#: src/form.php:326
 msgid "Description*"
 msgstr "الوصف*"
+
+#~ msgid "Email: Ad Pending"
+#~ msgstr "بريد إلكتروني: إعلان معلّق"
+
+#~ msgid "[{site}] Ad Pending"
+#~ msgstr "[{site}] إعلان معلّق"
+
+#~ msgid "Email: Ad Approved"
+#~ msgstr "بريد إلكتروني: إعلان مقبول"
+
+#~ msgid "[{site}] Ad Approved"
+#~ msgstr "[{site}] إعلان مقبول"
+
+#~ msgid "Email: Ad Rejected"
+#~ msgstr "بريد إلكتروني: إعلان مرفوض"
+
+#~ msgid "[{site}] Ad Rejected"
+#~ msgstr "[{site}] إعلان مرفوض"
 
 #~ msgid "Sorry, there has been an error."
 #~ msgstr "عذرا. وقع خطأ ما."

@@ -26,185 +26,88 @@ add_action( 'cmb2_init', function() {
 		'type' => 'textarea_small',
 	] );
 
-	/**
-	 * Email: Classified Pending.
-	 */
-	$options->add_field( [
-		'id' => wp_generate_password( 12, false ),
-		'name' => plcl_get_translation( __( 'Email: Classified Pending', 'classfieds-by-plugible' ) ),
-		'type' => 'title',
-	] );
-	$options->add_field( [
-		'id' => plcl_get_option_id( 'email_classified_pending_enabled', false ),
-		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
-		'type' => 'checkbox',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( '[{site}] Classified Pending', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_classified_pending_subject' ),
-		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
-		'type' => 'text',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( "We've received your classified \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_classified_pending_message' ),
-		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
-		'type' => 'textarea_small',
-	] );
+	$emails_options = [
+		'classified_pending' => [
+			'title' => __( 'Classified Pending', 'classfieds-by-plugible' ),
+			'body'  => __( "We've received your classified \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ),
+		],
+		'classified_received' => [
+			'title' => __( 'Classified Received', 'classfieds-by-plugible' ),
+			'body'  => __( "The classified \"{title}\" was submitted. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+		],
+		'classified_approved' => [
+			'title' => __( 'Classified Approved', 'classfieds-by-plugible' ),
+			'body'  => __( "Your Classified \"{title}\" was approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+		],
+		'classified_rejected' => [
+			'title' => __( 'Classified Rejected', 'classfieds-by-plugible' ),
+			'body'  => __( 'Your classified "{title}" was rejected.', 'classifieds-by-plugible' ),
+		],
+		'comment_pending' => [
+			'title' => __( 'Comment Pending', 'classfieds-by-plugible' ),
+			'body'  => __( "We've received your comment on \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ),
+		],
+		'comment_received' => [
+			'title' => __( 'Comment Received', 'classfieds-by-plugible' ),
+			'body'  => __( "You received a comment on \"{title}\". You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+		],
+		'comment_approved' => [
+			'title' => __( 'Comment Approved', 'classfieds-by-plugible' ),
+			'body'  => __( "Your comment on \"{title}\" was approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+		],
+		'comment_rejected' => [
+			'title' => __( 'Comment Rejected', 'classfieds-by-plugible' ),
+			'body'  => __( "Your comment on \"{title}\" was rejected.", 'classifieds-by-plugible' ),
+		],
+	];
 
-	/**
-	 * Email: Classified Approved.
-	 */
-	$options->add_field( [
-		'id' => wp_generate_password( 12, false ),
-		'name' => plcl_get_translation( __( 'Email: Classified Approved', 'classfieds-by-plugible' ) ),
-		'type' => 'title',
-	] );
-	$options->add_field( [
-		'id' => plcl_get_option_id( 'email_classified_approved_enabled', false ),
-		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
-		'type' => 'checkbox',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( '[{site}] Classified Approved', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_classified_approved_subject' ),
-		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
-		'type' => 'text',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( "Your Classified \"{title}\" has been approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_classified_approved_message' ),
-		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
-		'type' => 'textarea_small',
-	] );
+	foreach ( $emails_options as $email => $o ) {
+		$options->add_field( [
+			'id' => wp_generate_password( 12, false ),
+			'name' => plcl_get_translation( $o[ 'title' ] ),
+			'type' => 'title',
+		] );
+		$options->add_field( [
+			'id' => plcl_get_option_id( 'email_' . $email . '_enabled', false ),
+			'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+			'type' => 'checkbox',
+		] );
+		$options->add_field( [
+			'default' => '[{site}] ' . plcl_get_translation( $o[ 'title' ] ),
+			'id' => plcl_get_option_id( 'email_' . $email . '_subject' ),
+			'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
+			'type' => 'text',
+		] );
+		$options->add_field( [
+			'default' => plcl_get_translation( $o[ 'body' ] ),
+			'id' => plcl_get_option_id( 'email_' . $email . '_message' ),
+			'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
+			'type' => 'textarea_small',
+		] );
+	}
 
-	/**
-	 * Email: Classified Approved.
-	 */
-	$options->add_field( [
-		'id' => wp_generate_password( 12, false ),
-		'name' => plcl_get_translation( __( 'Email: Classified Rejected', 'classfieds-by-plugible' ) ),
-		'type' => 'title',
-	] );
-	$options->add_field( [
-		'id' => plcl_get_option_id( 'email_classified_rejected_enabled', false ),
-		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
-		'type' => 'checkbox',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( '[{site}] Classified Rejected', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_classified_rejected_subject' ),
-		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
-		'type' => 'text',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( 'Your classified "{title}" was rejected.', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_classified_rejected_message' ),
-		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
-		'type' => 'textarea_small',
-	] );
+	add_action( 'admin_footer', function() use( $emails_options ) {
+		$adds = '';
+		foreach ( $emails_options as $email => $o ) {
+			$class = sprintf( 'cmb2-id-email-%s-enabled', str_replace( '_' , '-', $email ) );
+			$adds .= ".add( '.$class' )";
+		}
+		?>
+		<script>
+		jQuery( function( $ ) {
+			$('')<?php echo $adds; ?>.change( function() {
+				var $this = $( this );
+				var $next2 = $this.nextAll( ':lt(2)' );
+				var $checked = ! ! $this.find( ':checked' ).length;
 
-	/**
-	 * Email: Comment Approved.
-	 */
-	$options->add_field( [
-		'id' => wp_generate_password( 12, false ),
-		'name' => plcl_get_translation( __( 'Email: Comment Approved', 'classfieds-by-plugible' ) ),
-		'type' => 'title',
-	] );
-	$options->add_field( [
-		'id' => plcl_get_option_id( 'email_comment_approved_enabled', false ),
-		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
-		'type' => 'checkbox',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( '[{site}] Comment Approved', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_comment_approved_subject' ),
-		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
-		'type' => 'text',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( "Your comment on \"{title}\" has been approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_comment_approved_message' ),
-		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
-		'type' => 'textarea_small',
-	] );
-
-	/**
-	 * Email: Comment Rejected.
-	 */
-	$options->add_field( [
-		'id' => wp_generate_password( 12, false ),
-		'name' => plcl_get_translation( __( 'Email: Comment Rejected', 'classfieds-by-plugible' ) ),
-		'type' => 'title',
-	] );
-	$options->add_field( [
-		'id' => plcl_get_option_id( 'email_comment_rejected_enabled', false ),
-		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
-		'type' => 'checkbox',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( '[{site}] Comment Rejected', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_comment_rejected_subject' ),
-		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
-		'type' => 'text',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( "Your comment on \"{title}\" has been rejected.", 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_comment_rejected_message' ),
-		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
-		'type' => 'textarea_small',
-	] );
-
-	/**
-	 * Email: Comment Received.
-	 */
-	$options->add_field( [
-		'id' => wp_generate_password( 12, false ),
-		'name' => plcl_get_translation( __( 'Email: Comment Received', 'classfieds-by-plugible' ) ),
-		'type' => 'title',
-	] );
-	$options->add_field( [
-		'id' => plcl_get_option_id( 'email_comment_received_enabled', false ),
-		'name' => __( 'Enabled', 'classifieds-by-plugible' ),
-		'type' => 'checkbox',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( '[{site}] Comment Received', 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_comment_received_subject' ),
-		'name' => plcl_get_translation( __( 'Subject', 'classfieds-by-plugible' ) ),
-		'type' => 'text',
-	] );
-	$options->add_field( [
-		'default' => plcl_get_translation( __( "Your received a new comment on \"{title}\". You can view it here:\n- {link}", 'classifieds-by-plugible' ) ),
-		'id' => plcl_get_option_id( 'email_comment_received_message' ),
-		'name' => plcl_get_translation( __( 'Body', 'classfieds-by-plugible' ) ),
-		'type' => 'textarea_small',
-	] );
-
-	add_action( 'admin_footer', function() {
-		?><script>
-			jQuery( function( $ ) {
-				$('')
-					.add( '.cmb2-id-email-classified-approved-enabled' )
-					.add( '.cmb2-id-email-classified-pending-enabled' )
-					.add( '.cmb2-id-email-classified-rejected-enabled' )
-					.add( '.cmb2-id-email-comment-approved-enabled' )
-					.add( '.cmb2-id-email-comment-received-enabled' )
-				.change( function() {
-					var $this = $( this );
-					var $next2 = $this.nextAll( ':lt(2)' );
-					var $checked = ! ! $this.find( ':checked' ).length;
-					if ( $checked ) {
-						$next2.fadeIn();
-					} else {
-						$next2.fadeOut();
-					}
-				} ).change();
-			} );
-		</script><?php
-	} );
-}, PHP_INT_MIN );
+				$checked && $next2.fadeIn() || $next2.fadeOut();
+			} )
+			.change();
+		} );
+		</script>
+		<?php
+	}, PHP_INT_MIN );
+} );
 
 function plcl_get_option( $option_id ) {
 	$option_id = plcl_get_option_id( $option_id );
