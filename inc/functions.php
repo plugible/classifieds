@@ -280,6 +280,11 @@ function plcl_get_breadcrumbs( $open, $close ) {
 	return ob_get_clean();
 }
 
+add_action( 'shutdown', function() {
+	$id = 741;
+	do_action( 'plcl_classified_pending', $id );
+} );
+
 /**
  * Interpolates replacement tags in email templates.
  */
@@ -290,6 +295,14 @@ function plcl_interpolate( $template, $content_id, $context ) {
 		'comment_meta:bar' => 'bar',
 	];
 	switch ( $context ) {
+	case( 'classified_received' ) :
+		$replacements[ 'name' ]  = get_bloginfo();
+		$replacements[ 'title' ] = get_the_title( $content_id );
+		$replacements[ 'link' ]  = add_query_arg( 's'
+			, $replacements[ 'title' ]
+			, admin_url( 'edit.php?post_type=pl_classified&post_status=draft' )
+		);
+		break;
 	case( 'classified_approved' ) :
 	case( 'classified_pending' ) :
 	case( 'classified_rejected' ) :

@@ -12,6 +12,7 @@ class PLCLNotifierEmail {
 	private function bind() {
 		add_action( 'plcl_classified_pending', function( $post_id ) {
 			$this->notify( 'classified_pending', $post_id );
+			$this->notify( 'classified_received', $post_id );
 		} );
 		add_action( 'plcl_classified_approved', function( $post_id ) {
 			$this->notify( 'classified_approved', $post_id );
@@ -32,6 +33,9 @@ class PLCLNotifierEmail {
 		 * Prepare recepient email address.
 		 */
 		switch ( $which ) {
+		case( 'classified_received' ) :
+			$to = get_bloginfo( 'admin_email' );
+			break;
 		case( 'classified_approved' ) :
 		case( 'classified_pending' ) :
 		case( 'classified_rejected' ) :
