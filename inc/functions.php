@@ -324,7 +324,7 @@ function plcl_interpolate( $template, $content_id, $context ) {
 	 * Interpolate.
 	 */
 	$result = $template;
-	preg_replace_callback ( '/{([a-z:_-]+)}/i' , function( $matches ) use ( $replacements, &$result, $content_id, $type ) {
+	preg_replace_callback ( '/{([a-z:_-]+)}/i' , function( $matches ) use ( $replacements, &$result, $content_id ) {
 		$tag = $matches[ 0 ];
 		$replacement = $replacements[ $matches[1] ];
 		if ( 'post_meta:' === substr( $replacement, 0, 10 ) ) {
