@@ -280,11 +280,6 @@ function plcl_get_breadcrumbs( $open, $close ) {
 	return ob_get_clean();
 }
 
-add_action( 'shutdown', function() {
-	$id = 741;
-	do_action( 'plcl_classified_pending', $id );
-} );
-
 /**
  * Interpolates replacement tags in email templates.
  */
