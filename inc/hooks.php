@@ -69,7 +69,7 @@ add_action( 'wp_insert_comment', function( $id, $comment ) {
 	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) ) {
 		do_action( 'plcl_comment_received', $id );
 	}
-} );
+}, 10, 2 );
 
 /**
  * plcl_comment_pending
@@ -80,7 +80,7 @@ add_action( 'wp_insert_comment', function( $id, $comment ) {
 	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) && ! $comment->comment_approved ) {
 		do_action( 'plcl_comment_pending', $id );
 	}
-} );
+}, 10, 2 );
 
 /**
  * plcl_comment_approved
