@@ -52,7 +52,11 @@ add_filter( 'manage_comments_custom_column', function( $column, $comment_id ) {
  * Show comment meta in frontend.
  */
 add_filter( 'comment_text', function( $comment_text, $comment, $args ) {
-	if ( !is_admin() && 'pl_classified' === get_post_type( $comment->comment_post_ID ) ) {
+	if ( 1
+		&& current_user_can( 'manage_options')
+		&& ! is_admin()
+		&& 'pl_classified' === get_post_type( $comment->comment_post_ID )
+	) {
 		$meta = array_filter( get_comment_meta( $comment->comment_ID ), function( $k ) {
 			return 'comment_hash' === substr( $k, 0, 12 );
 		}, ARRAY_FILTER_USE_KEY );
