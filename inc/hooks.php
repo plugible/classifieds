@@ -105,13 +105,14 @@ add_action( 'init', function() {
 		if ( ! in_array( $comment_id, $once ) ) {
 			$once[] = $comment_id;
 			if ( 'pl_classified' === get_post_type( get_comment( $comment_id )->comment_post_ID ) ) {
-				do_action( 'plcl_comment_update_hashes', $comment_id );
+				do_action( 'plcl_comment_hash_updated', $comment_id );
 			}
 		}
 	};
 	add_action( 'edit_comment', $hook_update_hashes );
 	add_action( 'wp_insert_comment', $hook_update_hashes );
 	add_action( 'wp_set_comment_status', $hook_update_hashes );
+	add_action( 'plcl_comment_hash_used', $hook_update_hashes );
 } );
 
 /**

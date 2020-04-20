@@ -6,7 +6,7 @@
  * - Add a shared hash to the comment and its post ( `comment_email:post_id` )
  * - Add a unique hash to the comment ( `comment_email:post_id:random` )
  */
-add_action( 'plcl_comment_update_hashes', function( $id ) {
+add_action( 'plcl_comment_hash_updated', function( $id ) {
 	$comment = get_comment( $id );
 
 	$hashes = [
