@@ -3,7 +3,7 @@
 /**
  * Prevent on frontend.
  */
-add_action( '0wp', function() {
+add_action( 'wp', function() {
 	global $post;
 
 	if ( 1
@@ -24,7 +24,7 @@ add_action( '0wp', function() {
 /**
  * Prevent other ways.
  */
-add_action( '0pre_comment_on_post', function( $comment_post_ID ) {
+add_action( 'pre_comment_on_post', function( $comment_post_ID ) {
 	$post = get_post( $comment_post_ID );
 
 	if ( 1
