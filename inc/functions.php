@@ -346,7 +346,7 @@ function plcl_get_classified_link( $post_id ) {
 	$hashes = [
 		'classified_hash_unique' => get_post_meta( $post_id, 'classified_hash_unique', true ),
 	];
-	return add_query_arg( plcl_get_hash_param(), plcl_encrypt( json_encode( $hashes ) ), get_permalink( $post_id ) );
+	return add_query_arg( plcl_get_param( 'hash' ), plcl_encrypt( json_encode( $hashes ) ), get_permalink( $post_id ) );
 }
 
 function plcl_get_comment_link( $comment_id, $op = false ) {
@@ -361,7 +361,7 @@ function plcl_get_comment_link( $comment_id, $op = false ) {
 			'comment_hash_unique' => get_comment_meta( $comment_id, 'comment_hash_unique', true ),
 		];
 	}
-	return add_query_arg( plcl_get_hash_param(), plcl_encrypt( json_encode( $hashes ) ), get_comment_link( $comment_id ) );
+	return add_query_arg( plcl_get_param( 'hash' ), plcl_encrypt( json_encode( $hashes ) ), get_comment_link( $comment_id ) );
 }
 
 /**
@@ -372,13 +372,12 @@ function plcl_get_comment_link( $comment_id, $op = false ) {
  * @param boolean  $secure  Require secure encryption.
  */
 function plcl_encrypt( $string, $require_encryption = false ) {
-	return $string;
-	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'AES-256-CBC', openssl_get_cipher_methods() );
+	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'aes-256-cbc', openssl_get_cipher_methods() );
 	if ( $require_encryption && ! $encryption_possible ) {
 		die( ( string ) __LINE__ );
 	}
 	return $encryption_possible
-		? base64_encode( openssl_encrypt( $string, 'AES-256-CBC', 'classifieds-by-plugible', 0, substr( AUTH_KEY, 0, 16 ) ) )
+		? base64_encode( openssl_encrypt( $string, 'aes-256-cbc', SECURE_AUTH_KEY, 0, substr( AUTH_KEY, 0, 16 ) ) )
 		: base64_encode( $string )
 	;
 }
@@ -391,12 +390,12 @@ function plcl_encrypt( $string, $require_encryption = false ) {
  * @param boolean  $secure  Require secure decryption.
  */
 function plcl_decrypt( $string, $require_encryption = false ) {
-	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'AES-256-CBC', openssl_get_cipher_methods() );
+	$encryption_possible = function_exists( 'openssl_get_cipher_methods' ) && in_array( 'aes-256-cbc', openssl_get_cipher_methods() );
 	if ( $require_encryption && ! $encryption_possible ) {
 		die( ( string ) __LINE__ );
 	}
 	return $encryption_possible
-		? openssl_decrypt( base64_decode( $string ), 'AES-256-CBC', 'classifieds-by-plugible', 0, substr( AUTH_KEY, 0, 16 ) )
+		? openssl_decrypt( base64_decode( $string ), 'aes-256-cbc', SECURE_AUTH_KEY, 0, substr( AUTH_KEY, 0, 16 ) )
 		: base64_decode( $string )
 	;
 }
@@ -412,18 +411,49 @@ function plcl_create_user( $email ) {
 		$username = rand( 1, $users_count * 2 );
 	} while ( username_exists( $username ) );
 
-	return wp_insert_user( [
+	$user_id = wp_insert_user( [
 		'user_email' => $email,
 		'user_login' => $username,
 		'user_pass'  => wp_generate_password(),
 	] );
+
+	/**
+	 * Attach execting comments to user. 
+	 */
+	if ( ! is_wp_error( $user_id ) ) {
+		$comments = get_comments( [
+			'author_email' => $email,
+			'include_unapproved' => 1,
+		] );
+		foreach ( $comments as $comment ) {
+			wp_update_comment( [
+				'comment_ID' => $comment->comment_ID,
+				'user_id' => $user_id,
+			] );
+		}
+	}
+
+	return $user_id;
+}
+
+/**
+ * Get user by email. Create if request.
+ */
+function plcl_get_user( $email, $create_if_not_exists = true ) {
+	if ( email_exists( $email ) ) {
+		return get_user_by( 'email', $email );
+	} else if ( $create_if_not_exists ) {
+		return get_user_by( 'id', plcl_create_user( $email ) );
+	} else {
+		return false;
+	}
 }
 
 /**
  * Gets query string key.
  */
-function plcl_get_hash_param() {
-	return trim( plcl_encrypt( 'hash' ), '=' );
+function plcl_get_param( $param ) {
+	return trim( plcl_encrypt( $param ), '=' );
 }
 
 /**
@@ -436,4 +466,22 @@ function plcl_hash( $string, $with_salt = false ) {
 		$string .= wp_generate_password();
 	}
 	return substr( hash( 'sha256', $string ), 0, 8 );
+}
+
+function plcl_auth( $user_id, $destination = null ) {
+	if ( ! $destination ) {
+		$destination = site_url();
+	}
+	if ( $user_id !== get_current_user_id() ) {
+		wp_set_auth_cookie( $user_id );
+	}
+	wp_safe_redirect( $destination );
+	exit;
+}
+
+function plcl_die() {
+	die( __( 'Application Error: ', 'classifieds-by-plugible' ) . plcl_encrypt( json_encode( [
+		'file' => debug_backtrace()[0][ 'file' ],
+		'line' => debug_backtrace()[0][ 'line' ],
+	] ) ) );
 }
