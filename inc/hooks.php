@@ -1,7 +1,25 @@
 <?php
 
 /**
- * plcl_classified_approved
+ * plcl_classified_received
+ *
+ * - Classified created.
+ */
+add_action( 'plcl_classified_inserted', function( $post_id ) {
+	do_action( 'plcl_classified_received', $post_id );
+} );
+
+/**
+ * plcl_classified_pending.
+ *
+ * - Classified created with status `draft`
+ */
+add_action( 'plcl_classified_inserted_draft', function( $post_id ) {
+	do_action( 'plcl_classified_pending', $post_id );
+} );
+
+/**
+ * plcl_classified_approved.
  *
  * - Classified published
  * - Classified created with status `publish`
@@ -28,15 +46,6 @@ add_action( 'init', function() {
 } );
 
 /**
- * plcl_classified_pending
- *
- * - Classified created with status `draft`
- */
-add_action( 'plcl_classified_inserted_draft', function( $post_id ) {
-	do_action( 'plcl_classified_pending', $post_id );
-} );
-
-/**
  * plcl_classified_rejected
  *
  * - Unpublished classified deleted.
@@ -52,10 +61,32 @@ add_action( 'transition_post_status', function( $new_status, $old_status, $post 
 }, 10, 3 );
 
 /**
+ * plcl_comment_received
+ *
+ * - Classified comment received
+ */
+add_action( 'wp_insert_comment', function( $id, $comment ) {
+	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) ) {
+		do_action( 'plcl_comment_received', $id );
+	}
+} );
+
+/**
+ * plcl_comment_pending
+ *
+ * - Classified comment inserted with status 'hold' or 0.
+ */
+add_action( 'wp_insert_comment', function( $id, $comment ) {
+	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) && ! $comment->comment_approved ) {
+		do_action( 'plcl_comment_pending', $id );
+	}
+} );
+
+/**
  * plcl_comment_approved
  *
- * - pl_classified comment approved
- * - pl_classified comment inserted with status `approve`
+ * - Classified comment approved
+ * - Classified comment inserted with status `approve`
  */
 add_action( 'init', function() {
 	static $once = [];	
@@ -83,8 +114,8 @@ add_action( 'init', function() {
 /**
  * plcl_comment_rejected
  *
- * - pl_classified comment rejected
- * - pl_classified comment inserted with status `approve`
+ * - Classified comment rejected
+ * - Classified comment inserted with status `approve`
  */
 add_action( 'comment_unapproved_to_trash', function( $comment ) {
 	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) ) {
