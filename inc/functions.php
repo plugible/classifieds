@@ -290,13 +290,13 @@ function plcl_interpolate( $template, $content_id, $context ) {
 		'comment_meta:bar' => 'bar',
 	];
 	switch ( $context ) {
-	case( 'classified_received' ) :
+	case( 'classified_created' ) :
 		$replacements[ 'name' ]  = get_bloginfo();
-		$replacements[ 'title' ] = get_the_title( $content_id );
 		$replacements[ 'link' ]  = add_query_arg( 's'
 			, $replacements[ 'title' ]
 			, admin_url( 'edit.php?post_type=pl_classified&post_status=draft' )
 		);
+		$replacements[ 'title' ] = get_the_title( $content_id );
 		break;
 	case( 'classified_approved' ) :
 	case( 'classified_pending' ) :
@@ -305,15 +305,25 @@ function plcl_interpolate( $template, $content_id, $context ) {
 		$replacements[ 'link' ]  = plcl_get_classified_link( $content_id );
 		$replacements[ 'title' ] = get_the_title( $content_id );
 		break;
-	case( 'comment_received' ) :
-		$replacements[ 'name' ]  = get_userdata( get_post_field( 'post_author', get_comment( $content_id )->comment_post_ID ) )->display_name;
-		$replacements[ 'link' ]  = plcl_get_comment_link( $content_id, true );
+	case( 'comment_created' ) :
+		$replacements[ 'name' ]  = get_bloginfo();
+		$replacements[ 'link' ]  = admin_url( 'edit-comments.php?post_type=pl_classified' );
+		$replacements[ 'title' ] = get_the_title( get_comment( $content_id )->comment_post_ID );
+		break;
+	case( 'comment_pending' ) :
+		$replacements[ 'name' ]  = get_comment_author( $content_id );
+		$replacements[ 'link' ]  = '';
 		$replacements[ 'title' ] = get_the_title( get_comment( $content_id )->comment_post_ID );
 		break;
 	case( 'comment_approved' ) :
 	case( 'comment_rejected' ) :
 		$replacements[ 'name' ]  = get_comment_author( $content_id );
 		$replacements[ 'link' ]  = plcl_get_comment_link( $content_id );
+		$replacements[ 'title' ] = get_the_title( get_comment( $content_id )->comment_post_ID );
+		break;
+	case( 'comment_received' ) :
+		$replacements[ 'name' ]  = get_userdata( get_post_field( 'post_author', get_comment( $content_id )->comment_post_ID ) )->display_name;
+		$replacements[ 'link' ]  = plcl_get_comment_link( $content_id, true );
 		$replacements[ 'title' ] = get_the_title( get_comment( $content_id )->comment_post_ID );
 		break;
 	default:
@@ -405,16 +415,33 @@ function plcl_decrypt( $string, $require_encryption = false ) {
  *
  * - Username is u{N} where N is a random number from 1 to twice the number or website users
  */
-function plcl_create_user( $email ) {
-	$users_count = ( new \WP_User_Query( array( 'blog' => 0 ) ) )->get_total();
-	do {
-		$username = rand( 1, $users_count * 2 );
-	} while ( username_exists( $username ) );
+function plcl_create_user( $email, $args = [] ) {
+	$defaults = [
+		'first_name' => __( 'Unnamed', 'classifieds-by-plugible' ),
+		'username_mode' => 'string',
+	];
+
+	$args = array_merge( $defaults, $args );
+
+	switch ( $args[ 'username_mode' ] ) {
+	case 'numeric':
+		$users_count = ( new \WP_User_Query( array( 'blog' => 0 ) ) )->get_total();
+		do {
+			$username = rand( 1, $users_count * 2 );
+		} while ( username_exists( $username ) );
+		break;		
+	default:
+		do {
+			$username = 'u-' . strtolower( wp_generate_password( 6, false ) );
+		} while ( username_exists( $username ) );
+		break;
+	}
 
 	$user_id = wp_insert_user( [
 		'user_email' => $email,
 		'user_login' => $username,
 		'user_pass'  => wp_generate_password(),
+		'first_name' => $args[ 'first_name' ],
 	] );
 
 	/**
@@ -439,11 +466,11 @@ function plcl_create_user( $email ) {
 /**
  * Get user by email. Create if request.
  */
-function plcl_get_user( $email, $create_if_not_exists = true ) {
+function plcl_get_user( $email, $create_if_not_exists = true, $args = [] ) {
 	if ( email_exists( $email ) ) {
 		return get_user_by( 'email', $email );
 	} else if ( $create_if_not_exists ) {
-		return get_user_by( 'id', plcl_create_user( $email ) );
+		return get_user_by( 'id', plcl_create_user( $email, $args ) );
 	} else {
 		return false;
 	}
@@ -474,9 +501,9 @@ function plcl_auth( $user_id, $destination = null ) {
 	}
 	if ( $user_id !== get_current_user_id() ) {
 		wp_set_auth_cookie( $user_id );
+		wp_safe_redirect( $destination );
+		exit;
 	}
-	wp_safe_redirect( $destination );
-	exit;
 }
 
 function plcl_die() {
