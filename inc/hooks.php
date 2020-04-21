@@ -1,12 +1,12 @@
 <?php
 
 /**
- * plcl_classified_received
+ * plcl_classified_created
  *
  * - Classified created.
  */
 add_action( 'plcl_classified_inserted', function( $post_id ) {
-	do_action( 'plcl_classified_received', $post_id );
+	do_action( 'plcl_classified_created', $post_id );
 } );
 
 /**
@@ -61,13 +61,13 @@ add_action( 'transition_post_status', function( $new_status, $old_status, $post 
 }, 10, 3 );
 
 /**
- * plcl_comment_received
+ * plcl_comment_created
  *
- * - Classified comment received
+ * - Classified comment created
  */
 add_action( 'wp_insert_comment', function( $id, $comment ) {
 	if ( 'pl_classified' === get_post_type( $comment->comment_post_ID ) ) {
-		do_action( 'plcl_comment_received', $id );
+		do_action( 'plcl_comment_created', $id );
 	}
 }, 10, 2 );
 
@@ -109,6 +109,15 @@ add_action( 'init', function() {
 			}
 		}
 	}, 10, 2 );
+} );
+
+/**
+ * plcl_comment_received
+ *
+ * - Classified comment approved
+ */
+add_action( 'plcl_comment_approved', function( $comment_ID ) {
+	do_action( 'plcl_comment_received', $comment_ID );
 } );
 
 /**
