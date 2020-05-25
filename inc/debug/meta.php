@@ -37,7 +37,11 @@ add_filter( 'manage_edit-comments_columns', function( $columns ) {
 add_filter( 'manage_comments_custom_column', function( $column, $comment_id ) {
 	if ( 'meta' === $column ) {
 		$meta = array_filter( get_comment_meta( $comment_id ), function( $k ) {
-			return 'comment_hash' === substr( $k, 0, 12 );
+			return in_array( $k, [
+				'comment_discussion',
+				'comment_hash_shared',
+				'comment_hash_unique',
+			] );
 		}, ARRAY_FILTER_USE_KEY );
 		foreach ( $meta as $k => $v) {
 			echo "$k:<br>";
@@ -58,7 +62,11 @@ add_filter( 'comment_text', function( $comment_text, $comment, $args ) {
 		&& 'pl_classified' === get_post_type( $comment->comment_post_ID )
 	) {
 		$meta = array_filter( get_comment_meta( $comment->comment_ID ), function( $k ) {
-			return 'comment_hash' === substr( $k, 0, 12 );
+			return in_array( $k, [
+				'comment_discussion',
+				'comment_hash_shared',
+				'comment_hash_unique',
+			] );
 		}, ARRAY_FILTER_USE_KEY );
 		$add_text = '';
 		foreach ( $meta as $k => $v) {

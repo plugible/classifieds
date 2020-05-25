@@ -27,13 +27,13 @@ add_action( 'cmb2_init', function() {
 	] );
 
 	$emails_options = [
+		'classified_created' => [
+			'title' => __( 'Classified Created', 'classfieds-by-plugible' ),
+			'body'  => __( "The classified \"{title}\" was created. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+		],
 		'classified_pending' => [
 			'title' => __( 'Classified Pending', 'classfieds-by-plugible' ),
 			'body'  => __( "We've received your classified \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ),
-		],
-		'classified_received' => [
-			'title' => __( 'Classified Received', 'classfieds-by-plugible' ),
-			'body'  => __( "The classified \"{title}\" was submitted. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
 		],
 		'classified_approved' => [
 			'title' => __( 'Classified Approved', 'classfieds-by-plugible' ),
@@ -42,6 +42,10 @@ add_action( 'cmb2_init', function() {
 		'classified_rejected' => [
 			'title' => __( 'Classified Rejected', 'classfieds-by-plugible' ),
 			'body'  => __( 'Your classified "{title}" was rejected.', 'classifieds-by-plugible' ),
+		],
+		'comment_created' => [
+			'title' => __( 'Comment Created', 'classfieds-by-plugible' ),
+			'body'  => __( "A comment on \"{title}\" was created. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
 		],
 		'comment_pending' => [
 			'title' => __( 'Comment Pending', 'classfieds-by-plugible' ),

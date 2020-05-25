@@ -1,6 +1,18 @@
 <?php
 
 /**
+ * pl_classified_loaded
+ *
+ * - Global `$post` filled with classified.
+ */
+add_action( 'wp', function() {
+	global $post;
+	if ( $post && 'pl_classified' === $post->post_type ) {
+		do_action( 'pl_classified_loaded' );
+	}
+} );
+
+/**
  * plcl_classified_created
  *
  * - Classified created.

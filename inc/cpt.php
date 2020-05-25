@@ -85,6 +85,7 @@ add_action( 'init', function() {
 			'editor',
 			'title',
 			'comments',
+			'thumbnail',
 		],
 	] );
 
@@ -215,7 +216,7 @@ add_action( 'cmb2_admin_init', function() {
 		'object_types' => [ 'pl_classified' ],
 		'show_names' => false,
 	] )->add_field( [
-		'id' => 'image',
+		'id' => 'images',
 		'name' => esc_html__( 'Images' ),
 		'type' => 'file_list',
 	] );
@@ -237,9 +238,9 @@ add_action( 'before_delete_post', function( $post_id ) {
 } );
 
 /**
- * Sync attachments to 'image' meta.
+ * Sync attachments to 'images' meta.
  */
-add_action( 'cmb2_save_field_' . 'image', function( $updated, $action, $field ) {
+add_action( 'cmb2_save_field_' . 'images', function( $updated, $action, $field ) {
 
 	$post_id = $field->object_id;
 

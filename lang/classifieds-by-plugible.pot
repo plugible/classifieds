@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-04-18 22:45+0100\n"
+"POT-Creation-Date: 2020-05-25 19:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,74 +21,107 @@ msgstr ""
 msgid "Links"
 msgstr ""
 
+#: inc/comments/columns.php:28
+msgid "Commentor"
+msgstr ""
+
+#: inc/comments/columns.php:29
+msgid "OP"
+msgstr ""
+
+#: inc/comments/labels.php:9
+msgid "Send a Private Message "
+msgstr ""
+
+#: inc/comments/labels.php:10
+msgid "Send"
+msgstr ""
+
+#: inc/comments/labels.php:22
+msgctxt "noun"
+msgid "Message"
+msgstr ""
+
+#: inc/comments/labels.php:43
+msgid "Private Discussion"
+msgstr ""
+
+#: inc/comments/no-op-guest-comment.php:23 inc/comments/tag-comment.php:71
+msgid "The comment is not valid."
+msgstr ""
+
+#: inc/comments/show-commenters.php:43
+msgid "Discussions"
+msgstr ""
+
 #: inc/cpt.php:75
 msgid "Classifieds"
 msgstr ""
 
-#: inc/cpt.php:96
+#: inc/cpt.php:97
 msgid "Locations"
 msgstr ""
 
-#: inc/cpt.php:105
+#: inc/cpt.php:106
 msgid "Latitude"
 msgstr ""
 
-#: inc/cpt.php:106
+#: inc/cpt.php:107
 msgid "Longitude"
 msgstr ""
 
-#: inc/cpt.php:114
+#: inc/cpt.php:115
 msgid "Categories"
 msgstr ""
 
-#: inc/cpt.php:128
+#: inc/cpt.php:129
 msgid "Specifications"
 msgstr ""
 
-#: inc/cpt.php:137
+#: inc/cpt.php:138
 msgid "Specification"
 msgstr ""
 
-#: inc/cpt.php:138
+#: inc/cpt.php:139
 msgid "Value"
 msgstr ""
 
-#: inc/cpt.php:139
+#: inc/cpt.php:140
 msgid "Scope"
 msgstr ""
 
-#: inc/cpt.php:155
+#: inc/cpt.php:156
 msgid "Classifieds Categories"
 msgstr ""
 
-#: inc/cpt.php:157 inc/cpt.php:171 inc/cpt.php:181
+#: inc/cpt.php:158 inc/cpt.php:172 inc/cpt.php:182
 msgid "All done."
 msgstr ""
 
-#: inc/cpt.php:157
+#: inc/cpt.php:158
 #, php-format
 msgid "Go to <a href=\"%s\">categories</a>."
 msgstr ""
 
-#: inc/cpt.php:165
+#: inc/cpt.php:166
 msgid "Classifieds Specifications"
 msgstr ""
 
-#: inc/cpt.php:171
+#: inc/cpt.php:172
 #, php-format
 msgid "Go to <a href=\"%s\">specifications</a>."
 msgstr ""
 
-#: inc/cpt.php:179
+#: inc/cpt.php:180
 msgid "Classifieds Locations"
 msgstr ""
 
-#: inc/cpt.php:181
+#: inc/cpt.php:182
 #, php-format
 msgid "Go to <a href=\"%s\">locations</a>."
 msgstr ""
 
-#: inc/cpt.php:203 inc/cpt.php:214 inc/cpt.php:219 src/form.php:304
+#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220 src/form.php:304
 msgid "Images"
 msgstr ""
 
@@ -116,7 +149,7 @@ msgstr ""
 msgid "<strong>%s</strong></a> ignored"
 msgstr ""
 
-#: inc/debug/meta.php:22 inc/debug/meta.php:30
+#: inc/debug/meta.php:27 inc/debug/meta.php:35
 msgid "Meta"
 msgstr ""
 
@@ -131,6 +164,14 @@ msgstr ""
 #: inc/functions.php:242
 #, php-format
 msgid "Page %s"
+msgstr ""
+
+#: inc/functions.php:420
+msgid "Unnamed"
+msgstr ""
+
+#: inc/functions.php:510
+msgid "Application Error: "
 msgstr ""
 
 #: inc/options.php:7
@@ -164,23 +205,23 @@ msgid ""
 msgstr ""
 
 #: inc/options.php:31
-msgid "Classified Pending"
+msgid "Classified Created"
 msgstr ""
 
 #: inc/options.php:32
 msgid ""
-"We've received your classified \"{title}\". It will become visible once "
-"approved."
+"The classified \"{title}\" was created. You can view it here:\n"
+"- {link}"
 msgstr ""
 
 #: inc/options.php:35
-msgid "Classified Received"
+msgid "Classified Pending"
 msgstr ""
 
 #: inc/options.php:36
 msgid ""
-"The classified \"{title}\" was submitted. You can view it here:\n"
-"- {link}"
+"We've received your classified \"{title}\". It will become visible once "
+"approved."
 msgstr ""
 
 #: inc/options.php:39
@@ -202,52 +243,62 @@ msgid "Your classified \"{title}\" was rejected."
 msgstr ""
 
 #: inc/options.php:47
-msgid "Comment Pending"
+msgid "Comment Created"
 msgstr ""
 
 #: inc/options.php:48
+msgid ""
+"A comment on \"{title}\" was created. You can view it here:\n"
+"- {link}"
+msgstr ""
+
+#: inc/options.php:51
+msgid "Comment Pending"
+msgstr ""
+
+#: inc/options.php:52
 msgid ""
 "We've received your comment on \"{title}\". It will become visible once "
 "approved."
 msgstr ""
 
-#: inc/options.php:51
+#: inc/options.php:55
 msgid "Comment Received"
 msgstr ""
 
-#: inc/options.php:52
+#: inc/options.php:56
 msgid ""
 "You received a comment on \"{title}\". You can view it here:\n"
 "- {link}"
 msgstr ""
 
-#: inc/options.php:55
+#: inc/options.php:59
 msgid "Comment Approved"
 msgstr ""
 
-#: inc/options.php:56
+#: inc/options.php:60
 msgid ""
 "Your comment on \"{title}\" was approved. You can view it here:\n"
 "- {link}"
 msgstr ""
 
-#: inc/options.php:59
+#: inc/options.php:63
 msgid "Comment Rejected"
 msgstr ""
 
-#: inc/options.php:60
+#: inc/options.php:64
 msgid "Your comment on \"{title}\" was rejected."
 msgstr ""
 
-#: inc/options.php:72
+#: inc/options.php:76
 msgid "Enabled"
 msgstr ""
 
-#: inc/options.php:78
+#: inc/options.php:82
 msgid "Subject"
 msgstr ""
 
-#: inc/options.php:84
+#: inc/options.php:88
 msgid "Body"
 msgstr ""
 

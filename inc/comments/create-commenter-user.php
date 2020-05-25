@@ -1,7 +1,6 @@
 <?php
 
 add_filter( 'preprocess_comment', function( $commentdata ) {
-
 	/**
 	 * Vefirfy post.
 	 */
@@ -14,7 +13,7 @@ add_filter( 'preprocess_comment', function( $commentdata ) {
 	 * Verify `user_id` is not set already.
 	 */
 	if ( $commentdata[ 'user_id' ] ) {
-		return;
+		return $commentdata;
 	}
 
 	/**
@@ -25,7 +24,7 @@ add_filter( 'preprocess_comment', function( $commentdata ) {
 	] );
 
 	/**
-	 * Set.
+	 * Set user ID.
 	 */
 	$commentdata[ 'user_id' ] = $user->ID;
 	$commentdata[ 'user_ID' ] = $user->ID;

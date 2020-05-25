@@ -9,11 +9,9 @@
     ],
     "autoload": {
         "files": [
-            "vendor/cmb2/cmb2/init.php"
-        ],
-        "psr-4": {
-            "Plugible\\Classifieds\\": "src/"
-        }
+            "vendor/cmb2/cmb2/init.php",
+            "src/form.php"
+        ]
     },
     "require": {
         "tgmpa/tgm-plugin-activation": "^2.5",

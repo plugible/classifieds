@@ -1,12 +1,6 @@
 <?php
 
-add_action( 'wp', function() {
-	global $post;
-
-	if ( ! $post || 'pl_classified' !== $post->post_type ) {
-		return;
-	}
-
+add_action( 'pl_classified_loaded', function() {
 	/**
 	 * Comment form title.
 	 */

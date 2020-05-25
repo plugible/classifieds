@@ -65,8 +65,8 @@ Class Form {
 		/**
 		 * Verify salt.
 		 */
-		if ( ! preg_match( '/^[0-9a-z]{12}$/i', $salt ) ) {
-			die( -1 );
+		if ( ! preg_match( '/^[0-9a-z]+$/i', $salt ) ) {
+			die( '-' . __LINE__ );
 		}
 
 		/**
@@ -208,7 +208,7 @@ Class Form {
 		/**
 		 * Attach images to ad.
 		 */
-		$attachments_old = get_post_meta( $post_id, 'image' ) ?? [];
+		$attachments_old = get_post_meta( $post_id, 'images' ) ?? [];
 		$attachments_new = get_posts( [
 			'post_type' => 'attachment',
 			'meta_key' => 'salt',
@@ -235,10 +235,10 @@ Class Form {
 		delete_post_meta( $post_id, 'salt' );
 
 		/**
-		 * Save to 'image' meta.
+		 * Save to 'images' meta.
 		 */
-		delete_post_meta( $post_id, 'image' );
-		add_post_meta( $post_id, 'image', $attachments_old );
+		delete_post_meta( $post_id, 'images' );
+		add_post_meta( $post_id, 'images', $attachments_old );
 
 		/**
 		 * Done.

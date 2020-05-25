@@ -26,7 +26,7 @@ add_action( 'plcl_comment_hash_updated', function( $id ) {
 	add_comment_meta( $id, 'comment_hash_unique', $hashes[ 'unique' ], true );
 
 	/**
-	 * Add share hash to post.
+	 * Add shared hash to post.
 	 */
 	add_post_meta( $comment->comment_post_ID, 'comment_hash_shared', $hashes[ 'shared' ] );
 
