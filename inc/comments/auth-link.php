@@ -2,7 +2,7 @@
 
 add_action( 'pl_classified_loaded', function() {
 	/**
-	 * Determin type of request or exist function.
+	 * Determine type of request or exist function.
 	 *
 	 * Possible types:
 	 * - op        : classified and comment author
@@ -20,6 +20,26 @@ add_action( 'pl_classified_loaded', function() {
 			$type = 'author';
 		}
 	}
+
+	/**
+	 * Flashes an error message.
+	 */
+	$flash_error = function( $content ) {
+		if ( is_main_query() ) {
+			global $wp;
+			$login_url = wp_login_url( home_url( $wp->request ) );
+			$content =  ''
+				. '<p class="plcl_flash">'
+				. sprintf(
+					__( 'The link you used has expired. <strong><a href="%s">Log in</a></strong> to see any private discussion you started.', 'classifieds-by-plugible' )
+					, $login_url
+				)
+				. '</p>'
+				. $content
+			;
+		}
+		return $content;
+	};
 
 	/**
 	 * Handle hash(es).
@@ -51,6 +71,7 @@ add_action( 'pl_classified_loaded', function() {
 			$author = plcl_get_user( $comment->comment_author_email, true );
 			plcl_auth( $author->ID, get_comment_link( $comment->comment_ID ) );
 		}
+		add_action( 'the_content', $flash_error );
 		break;
 	case 'op':
 		$posts = get_posts( [
@@ -69,10 +90,24 @@ add_action( 'pl_classified_loaded', function() {
 		] );
 		if ( $posts && is_a( $posts[0], 'WP_Post' ) ) {
 			/**
+			 * Locate last comment with shared hash so we can get the author.
+			 */
+			$comments = get_comments( [
+				'meta_key' => 'comment_hash_shared',
+				'meta_value' => $hashes->comment_hash_shared ?? wp_generate_password(),
+			] );
+			$comment = array_pop( $comments );
+			$link = $comment
+				? add_query_arg( plcl_get_param( 'discussion' ), plcl_encrypt( plcl_get_user( $comment->comment_author_email, true )->ID ), get_comment_link( $comment ) )
+				: get_permalink( $posts[0] )
+			;
+			/**
 			 * Log OP in.
 			 */
-			plcl_auth( $posts[0]->post_author, get_permalink( $posts[0] ) );
+			do_action( 'plcl_classified_hash_used', $posts[0]->ID );
+			plcl_auth( $posts[0]->post_author, $link );
 		}
+		add_action( 'the_content', $flash_error );
 		break;
 	default:
 		break;

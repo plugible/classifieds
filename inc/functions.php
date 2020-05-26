@@ -20,8 +20,16 @@ function plcl_load_template( $template, $data = [], $return = false ) {
 			break;
 		}
 	}
+	$output = ob_get_clean();
 
-	return $return ? ob_get_clean() : print( ob_get_clean() );
+	/**
+	 * Done.
+	 */
+	if ( $return ) {
+		return $output;
+	} else {
+		echo $output;
+	}
 }
 
 function plcl_get_the_category() {

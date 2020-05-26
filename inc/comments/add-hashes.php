@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * Update classified hash.
+ *
+ * - Add a unique hash to the post ( `user_id:post_id:random` )
+ */
+add_action( 'plcl_classified_hash_updated', function( $post_id ) {
+	$hashes = [
+		'unique' => plcl_hash( get_post_field( 'post_author', $post_id ) . $post_id, true ),
+	];
+	delete_post_meta( $post_id, 'classified_hash_unique' );
+	add_post_meta( $post_id, 'classified_hash_unique', $hashes[ 'unique' ], true );
+} );
+
+/**
  * Update comment hashes.
  *
  * - Add a shared hash to the comment and its post ( `comment_email:post_id` )

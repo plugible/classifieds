@@ -168,7 +168,7 @@ add_action( 'init', function() {
 } );
 
 /**
- * plcl_classified_update_hashes
+ * plcl_classified_hash_updated
  *
  * - Classified created
  * - Classified updated
@@ -180,14 +180,17 @@ add_action( 'init', function() {
 		if ( 'pl_classified' === $post->post_type ) {
 			if ( ! in_array( $post->ID, $once ) ) {
 				$once[] = $post->ID;
-				do_action( 'plcl_classified_update_hashes', $post->ID );
+				do_action( 'plcl_classified_hash_updated', $post->ID );
 			}
 		};
 	}, 9, 3 );
 	add_action( 'save_post_pl_classified', function( $post_id ) use( &$once ) {
 		if ( ! in_array( $post_id, $once ) ) {
 			$once[] = $post_id;
-			do_action( 'plcl_classified_update_hashes', $post_id );
+			do_action( 'plcl_classified_hash_updated', $post_id );
 		}
 	}, 9 );
+	add_action( 'plcl_classified_hash_used', function( $post_id ) {
+		do_action( 'plcl_classified_hash_updated', $post_id );
+	} );
 } );
