@@ -122,7 +122,7 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 			<div data-src="<?php echo wp_get_attachment_url( $image->ID ) ?>">
 
 				<?php if ( $args[ 'linked' ] ) { ?>
-					<a href="<?php echo $permalink; ?>"><?php wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?></a>
+					<a href="<?php echo $permalink; ?>"><?php wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
 				<?php } ?>
 
 				<?php echo wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
