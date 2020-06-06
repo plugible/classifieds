@@ -284,6 +284,9 @@ $( 'html > head').append( `<style>
 		border-color: rgba( 255, 255, 255, 0.25);
 		border-style: solid;
 	}
+	.lg-outer {
+		z-index: 100000;
+	}
 	html[dir=rtl] .lg-icon {
 		float: left;
 	}
