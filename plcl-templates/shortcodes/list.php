@@ -1,6 +1,7 @@
 <?php 
 
 if  ( ! $data ) {
+	plcl_load_template( 'shortcodes/list-empty.php' );
 	return;
 }
 
