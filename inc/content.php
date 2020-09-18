@@ -8,11 +8,9 @@ add_filter( 'the_content', function( $content ) {
 		return $content;
 	}
 
-	ob_start();
 	if ( is_singular( 'pl_classified' ) ) {
-		plcl_load_template( 'single.php' );
+		return plcl_load_template( 'single.php', true );
 	} else if ( is_archive( 'pl_classified' ) ) {
-		plcl_load_template( $post->ID > 0 ? 'archive.php' : '404.php' );
+		return plcl_load_template( $post->ID > 0 ? 'archive.php' : '404.php', true );
 	}
-	return ob_get_clean();
 } );
