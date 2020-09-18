@@ -520,3 +520,46 @@ function plcl_die() {
 		'line' => debug_backtrace()[0][ 'line' ],
 	] ) ) );
 }
+
+/**
+ * Gets discussion participants user IDs.
+ * @param   integer  $discussion_id  Discussion ID (usually matches the first comment author ID
+ * @param   array    $args           Arguments:
+ *                                   - `( array ) excludes`: ids to exclude. This takes precedence over includes. 
+ *                                   - `( array ) includes`: ids to include.
+ * @return  array                    Discussion participants user IDs.
+ */
+function plcl_get_discussion_participants( $discussion_id, $args = [] ) {
+	$participants = $args[ 'includes' ] ?? [];
+	$comments = get_comments( [
+		'meta_key' => 'comment_discussion',
+		'meta_value' => $discussion_id,
+	] );
+	foreach ( $comments as $comment ) {
+		$participants[] = $comment->user_id;
+	}
+
+	/**
+	 * Remove duplicates, excludes and reset indexes.
+	 */
+	$participants = array_values( array_diff( array_unique( $participants ), $args[ 'excludes' ] ?? [] ) );
+
+	/**
+	 * Done!
+	 */
+	return $participants;
+}
+
+/**
+ * Gets a parameter from $_REQUEST
+ *
+ * @param  string $parameter The parameter name.
+ * @param  string $default   The default value.
+ * @return string            The value.
+ */
+function plcl_get_request_parameter( $parameter, $default = '' ) {
+	return ! empty( $_REQUEST[ $parameter ] )
+		? $_REQUEST[ $parameter ]
+		: $default
+	;
+}
