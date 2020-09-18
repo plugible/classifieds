@@ -8,7 +8,7 @@ add_action( 'pl_classified_loaded', function() {
 		 * Prepare discussion number (commenter user ID).
 		 */
 		$discussion = get_current_user_id() == $post->post_author
-			? plcl_decrypt( get_query_var( plcl_get_param( 'discussion' ) ) )
+			? plcl_decrypt( plcl_get_request_parameter( plcl_get_param( 'discussion' ) ) )
 			: get_current_user_id()
 		;
 		/**

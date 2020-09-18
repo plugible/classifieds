@@ -9,7 +9,7 @@ add_action( 'pl_classified_loaded', function() {
 	 * - author    : Classified author
 	 * - commenter : Comment author
 	 */
-	$hashes = json_decode( plcl_decrypt( get_query_var( plcl_get_param( 'hash' ) ) ) );
+	$hashes = json_decode( plcl_decrypt( plcl_get_request_parameter( plcl_get_param( 'hash' ) ) ) );
 	$type = false;
 	if ( $hashes ) {
 		if ( isset( $hashes->comment_hash_unique[0], $hashes->comment_hash_shared[0] ) ) {

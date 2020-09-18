@@ -17,7 +17,7 @@ add_action( 'pl_classified_loaded', function() {
 		'status'  => 'approve',
 		'post_id' => $post->ID,
 	] );
-	$current_discussion = plcl_decrypt( get_query_var( plcl_get_param( 'discussion' ) ) );
+	$current_discussion = plcl_decrypt( plcl_get_request_parameter( plcl_get_param( 'discussion' ) ) );
 	$commenters = [];
 	foreach ( $comments as $comment ) {
 		/**
@@ -29,7 +29,7 @@ add_action( 'pl_classified_loaded', function() {
 		$commenters[ $comment->user_id ] = [
 			'name'   => $comment->comment_author,
 			'link'   => add_query_arg( plcl_get_param( 'discussion' ), plcl_encrypt( $comment->user_id ), get_comment_link( $comment ) ),
-			'active' => plcl_decrypt( get_query_var( plcl_get_param( 'discussion' ) ) ) == $comment->user_id,
+			'active' => plcl_decrypt( plcl_get_request_parameter( plcl_get_param( 'discussion' ) ) ) == $comment->user_id,
 		];
 	}
 	if ( $commenters ) {
