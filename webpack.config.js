@@ -2,11 +2,11 @@ const path = require( 'path' );
 
 module.exports = {
 	mode: 'development',
-	entry: "./",
+	entry: "./src/js/main.js",
 	output: {
-		filename: "classifieds.js",
-		path: path.resolve( __dirname, 'dist' ),
-		publicPath: '/wp-content/plugins/classifieds-by-plugible/dist/',
+		filename: "main.js",
+		path: path.resolve( __dirname, 'dist/js' ),
+		publicPath: '/wp-content/plugins/classifieds-by-plugible/dist/js/',
 	},
 	module: {
 		rules: [
