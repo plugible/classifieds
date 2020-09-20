@@ -301,7 +301,7 @@ Class Form {
 				'required' => true,
 			] )
 			. $this->separator()
-			. $this->heading( __( 'Images', 'classifieds-by-plugible' ) )
+			. $this->heading( __( 'Media', 'classifieds-by-plugible' ) )
 			. $this->uppy( $this->uploadElementId, __( 'Images*', 'classifieds-by-plugible' ) )
 			. $this->separator()
 			. $this->heading( __( 'Ad Information', 'classifieds-by-plugible' ) )
