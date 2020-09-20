@@ -1,5 +1,5 @@
 const appSettings = window[ require( './settings.js' ).settingsObjectName ];
-const $ = require( 'jquery');
+const $ = window.jQuery;
 
 /**
  * Form.
