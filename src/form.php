@@ -34,7 +34,7 @@ Class Form {
 	}
 
 	private function scripts() {
-		$this->plugin->enqueue_asset( 'dist/js/main.js', [
+		$this->plugin->enqueue_asset( 'dist/js/main.bundle.js', [
 			'in_footer' => true,
 			'object_name' => $this->settingsObjectName,
 			'l10n' => [

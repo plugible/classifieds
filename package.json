@@ -10,6 +10,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "jquery": "^3.5.1",
     "jquery-validation": "^1.19.2",
     "lg-fullscreen.js": "^1.2.0",

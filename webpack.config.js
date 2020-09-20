@@ -1,10 +1,19 @@
 const path = require( 'path' );
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+const {mode} = require( './src/js/settings.js' );
+const devtool = (mode === 'development')
+	? 'eval'
+	: 'source-map'
+;
 
 module.exports = {
-	mode: 'development',
+	mode,
+	devtool,
 	entry: "./src/js/main.js",
 	output: {
-		filename: "main.js",
+		filename: '[name].bundle.js',
+		chunkFilename: '[name].bundle.js',
 		path: path.resolve( __dirname, 'dist/js' ),
 		publicPath: '/wp-content/plugins/classifieds-by-plugible/dist/js/',
 	},
@@ -30,4 +39,7 @@ module.exports = {
 			},
 		],
 	},
+	plugins: [
+		new CleanWebpackPlugin(),
+	],
 };
