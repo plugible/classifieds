@@ -1,6 +1,6 @@
 <?php
 
-use Plugible\Classifieds\{Form};
+use Plugible\Classifieds\Form;
 
 /**
  * The submission form.

@@ -7,7 +7,6 @@
  * Plugin URI: https://www.github.com/plugible/classifieds
  * Author: Plugible
  * Author URI: https://plugible.com
- * Plugin Type: Piklist
  *
  * @package Plugible\Classifieds
  */
