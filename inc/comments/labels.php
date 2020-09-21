@@ -6,8 +6,8 @@ add_action( 'pl_classified_loaded', function() {
 	 */
 	add_filter( 'comment_form_defaults', function( $defaults ) {
 		$defaults[ 'comment_notes_before' ] = '';
-		$defaults[ 'title_reply' ] = __( 'Send a Private Message ', 'classifieds-by-plugible' );
-		$defaults[ 'label_submit' ] = __( 'Send', 'classifieds-by-plugible' );
+		$defaults[ 'title_reply' ] = __( 'Send a Private Message ', 'wpmyads' );
+		$defaults[ 'label_submit' ] = __( 'Send', 'wpmyads' );
 		return $defaults;
 	}, 20 );
 
@@ -19,7 +19,7 @@ add_action( 'pl_classified_loaded', function() {
 			&& $text === 'Comment'
 			&& $context === 'noun'
 		) {
-			return _x( 'Message', 'noun', 'classifieds-by-plugible' );
+			return _x( 'Message', 'noun', 'wpmyads' );
 		}
 		return $translation;
 	};
@@ -40,7 +40,7 @@ add_action( 'pl_classified_loaded', function() {
 		return $_unused;
 	} );
 	add_action( 'wp_list_comments_args', function( $_unused) {
-		echo preg_replace( '/<h2 class="comments-title">.*?<\/h2>/s', sprintf( '<h2 class="comments-title">%s</h2>', __( 'Private Discussion', 'classifieds-by-plugible' ) ), ob_get_clean() );
+		echo preg_replace( '/<h2 class="comments-title">.*?<\/h2>/s', sprintf( '<h2 class="comments-title">%s</h2>', __( 'Private Discussion', 'wpmyads' ) ), ob_get_clean() );
 		return $_unused;
 	} );
 } );

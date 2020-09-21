@@ -20,7 +20,7 @@ add_filter( 'pre_comment_approved', function( $approved, $commentdata ) {
 	 */
 	$op_email = get_the_author_meta( 'user_email', get_post( $commentdata[ 'comment_post_ID' ] )->post_author );
 	if ( $commentdata[ 'comment_author_email' ] === $op_email ) {
-		return new WP_Error( 'plcl_error_comment_invalid', __( 'The comment is not valid.', 'classifieds-by-plugible' ), 429 );
+		return new WP_Error( 'plcl_error_comment_invalid', __( 'The comment is not valid.', 'wpmyads' ), 429 );
 	}
 
 	/**

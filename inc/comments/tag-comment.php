@@ -68,7 +68,7 @@ add_filter( 'pre_comment_approved', function( $approved, $commentdata ) {
 	 * Validate discussion.
 	 */
 	if ( empty( $discussion ) ) {
-		return new WP_Error( 'plcl_error_comment_invalid', __( 'The comment is not valid.', 'classifieds-by-plugible' ), 429 );
+		return new WP_Error( 'plcl_error_comment_invalid', __( 'The comment is not valid.', 'wpmyads' ), 429 );
 	}
 
 	/**

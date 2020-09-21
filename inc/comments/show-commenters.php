@@ -40,7 +40,7 @@ add_action( 'pl_classified_loaded', function() {
 				: sprintf( '<a href="%1$s">%2$s</a>', $commenter[ 'link' ], $commenter[ 'name' ] )
 			;
 		};
-		$links = sprintf( '<p>%1$s: %2$s</p>', __( 'Discussions', 'classifieds-by-plugible' ), implode( ' | ', $links ) );
+		$links = sprintf( '<p>%1$s: %2$s</p>', __( 'Discussions', 'wpmyads' ), implode( ' | ', $links ) );
 	} else {
 		return;
 	}

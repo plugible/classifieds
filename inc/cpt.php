@@ -72,7 +72,7 @@ add_action( 'init', function() {
 	 */
 	register_post_type( 'pl_classified', [
 		'labels' => [
-			'name' => __( 'Classifieds', 'classifieds-by-plugible' ),
+			'name' => __( 'Classifieds', 'wpmyads' ),
 		],
 		'menu_icon' => 'dashicons-megaphone',
 		'public' => true,
@@ -94,7 +94,7 @@ add_action( 'init', function() {
 	 */
 	register_taxonomy( 'pl_classified_location', [ 'pl_classified' ], [
 		'labels' => [
-			'name' => __( 'Locations', 'classifieds-by-plugible' ),
+			'name' => __( 'Locations', 'wpmyads' ),
 		],
 		'show_admin_column' => true,
 		'hierarchical' => true,
@@ -103,8 +103,8 @@ add_action( 'init', function() {
 		],
 	] );
 	$register_taxonomy_fields( 'pl_classified_location', [
-		'_latitude' => __( 'Latitude', 'classifieds-by-plugible' ),
-		'_longitude' => __( 'Longitude', 'classifieds-by-plugible' ),
+		'_latitude' => __( 'Latitude', 'wpmyads' ),
+		'_longitude' => __( 'Longitude', 'wpmyads' ),
 	] );
  
 	/**
@@ -112,7 +112,7 @@ add_action( 'init', function() {
 	 */
 	register_taxonomy( 'pl_classified_category', [ 'pl_classified' ], [
 		'labels' => [
-			'name' => __( 'Categories', 'classifieds-by-plugible' ),
+			'name' => __( 'Categories', 'wpmyads' ),
 		],
 		'show_admin_column' => true,
 		'hierarchical' => true,
@@ -126,7 +126,7 @@ add_action( 'init', function() {
 	 */
 	register_taxonomy( 'pl_classified_specification', [ 'pl_classified' ], [
 		'labels' => [
-			'name' => __( 'Specifications', 'classifieds-by-plugible' ),
+			'name' => __( 'Specifications', 'wpmyads' ),
 		],
 		'show_admin_column' => true,
 		// 'hierarchical' => true,
@@ -135,9 +135,9 @@ add_action( 'init', function() {
 		],
 	] );
 	$register_taxonomy_fields( 'pl_classified_specification', [
-		'specification' => __( 'Specification', 'classifieds-by-plugible' ),
-		'value' => __( 'Value', 'classifieds-by-plugible' ),
-		'scope' => __( 'Scope', 'classifieds-by-plugible' ),
+		'specification' => __( 'Specification', 'wpmyads' ),
+		'value' => __( 'Value', 'wpmyads' ),
+		'scope' => __( 'Scope', 'wpmyads' ),
 	] );
 
 } );
@@ -153,9 +153,9 @@ add_action( 'admin_init', function() {
 	 */
 	plcl_register_taxonomy_importer( [
 		'taxonomy'    => 'pl_classified_category',
-		'name'        => __( 'Classifieds Categories', 'classifieds-by-plugible' ),
+		'name'        => __( 'Classifieds Categories', 'wpmyads' ),
 		'options'     => [],
-		'success'     => __( 'All done.', 'classifieds-by-plugible' ). ' ' . __( 'Go to <a href="%s">categories</a>.', 'classifieds-by-plugible' ),
+		'success'     => __( 'All done.', 'wpmyads' ). ' ' . __( 'Go to <a href="%s">categories</a>.', 'wpmyads' ),
 	] );
 
 	/**
@@ -163,13 +163,13 @@ add_action( 'admin_init', function() {
 	 */
 	plcl_register_taxonomy_importer( [
 		'taxonomy'    => 'pl_classified_specification',
-		'name'        => __( 'Classifieds Specifications', 'classifieds-by-plugible' ),
+		'name'        => __( 'Classifieds Specifications', 'wpmyads' ),
 		'options'     => [
 			'scope',
 			'specification',
 			'value',
 		],
-		'success'     => __( 'All done.', 'classifieds-by-plugible' ). ' ' . __( 'Go to <a href="%s">specifications</a>.', 'classifieds-by-plugible' ),
+		'success'     => __( 'All done.', 'wpmyads' ). ' ' . __( 'Go to <a href="%s">specifications</a>.', 'wpmyads' ),
 	] );
 
 	/**
@@ -177,9 +177,9 @@ add_action( 'admin_init', function() {
 	 */
 	plcl_register_taxonomy_importer( [
 		'taxonomy'    => 'pl_classified_location',
-		'name'        => __( 'Classifieds Locations', 'classifieds-by-plugible' ),
+		'name'        => __( 'Classifieds Locations', 'wpmyads' ),
 		'options'     => [],
-		'success'     => __( 'All done.', 'classifieds-by-plugible' ). ' ' . __( 'Go to <a href="%s">locations</a>.', 'classifieds-by-plugible' ),
+		'success'     => __( 'All done.', 'wpmyads' ). ' ' . __( 'Go to <a href="%s">locations</a>.', 'wpmyads' ),
 	] );
 } );
 

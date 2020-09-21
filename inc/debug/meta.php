@@ -24,7 +24,7 @@ add_action( 'manage_pl_classified_posts_custom_column', function( $column_name, 
 	}
 }, 10, 2 );
 add_filter( 'manage_pl_classified_posts_columns', function ( $columns ) {
-	$columns['meta'] = __( 'Meta', 'classifieds-by-plugible' );
+	$columns['meta'] = __( 'Meta', 'wpmyads' );
 	return $columns;
 } );
 
@@ -32,7 +32,7 @@ add_filter( 'manage_pl_classified_posts_columns', function ( $columns ) {
  * Show comment meta in admin table.
  */
 add_filter( 'manage_edit-comments_columns', function( $columns ) {
-	return array_merge( $columns, [ 'meta' => __( 'Meta', 'classifieds-by-plugible' ) ] );
+	return array_merge( $columns, [ 'meta' => __( 'Meta', 'wpmyads' ) ] );
 } );
 add_filter( 'manage_comments_custom_column', function( $column, $comment_id ) {
 	if ( 'meta' === $column ) {

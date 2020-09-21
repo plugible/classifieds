@@ -25,7 +25,7 @@ add_action( 'manage_comments_custom_column', function( $column, $comment_ID ) {
 	$link_op = plcl_get_comment_link( $comment_ID, true );
 
 	?>
-		<a href="<?php echo $link; ?>" title="<?php _e( 'Commentor', 'classifieds-by-plugible' ); ?>"><span class="dashicons dashicons-megaphone"></span></a>
-		<a href="<?php echo $link_op; ?>" title="<?php _e( 'OP', 'classifieds-by-plugible' ); ?>"><span class="dashicons dashicons-admin-comments"></span></a>
+		<a href="<?php echo $link; ?>" title="<?php _e( 'Commentor', 'wpmyads' ); ?>"><span class="dashicons dashicons-megaphone"></span></a>
+		<a href="<?php echo $link_op; ?>" title="<?php _e( 'OP', 'wpmyads' ); ?>"><span class="dashicons dashicons-admin-comments"></span></a>
 	<?php
 }, 10, 2 );

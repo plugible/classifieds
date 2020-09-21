@@ -45,12 +45,12 @@ Class Form {
 				'saltElementId' => $this->formElementId . '-' .$this->saltElementId,
 				'uploadElementId' => $this->formElementId . '-' .$this->uploadElementId,
 				'text' => [
-					'submit' => __( 'Submit', 'classifieds-by-plugible' ),
-					'submitting' => __( 'Submitting... Please wait', 'classifieds-by-plugible' ),
-					'fixErrors' => __( 'Errors detected. Please fix errors and submit again', 'classifieds-by-plugible' ),
-					'waitForImageUpload' => __( 'Please wait for the image(s) upload to finish', 'classifieds-by-plugible' ),
-					'submitSuccessTitleHtml' => '<h2>' . __( 'Submission was completed successfully', 'classifieds-by-plugible' ) . '</h2>',
-					'submitSuccessContentHtml' => '<p>'. __( 'Submission was completed successfully', 'classifieds-by-plugible' ) . '</p>',
+					'submit' => __( 'Submit', 'wpmyads' ),
+					'submitting' => __( 'Submitting... Please wait', 'wpmyads' ),
+					'fixErrors' => __( 'Errors detected. Please fix errors and submit again', 'wpmyads' ),
+					'waitForImageUpload' => __( 'Please wait for the image(s) upload to finish', 'wpmyads' ),
+					'submitSuccessTitleHtml' => '<h2>' . __( 'Submission was completed successfully', 'wpmyads' ) . '</h2>',
+					'submitSuccessContentHtml' => '<p>'. __( 'Submission was completed successfully', 'wpmyads' ) . '</p>',
 				],
 			],
 		] );
@@ -255,7 +255,7 @@ Class Form {
 		 */
 		$require_login = apply_filters( 'pl_claassifieds_require_login', false );
 		if ( $require_login ) {
-			return apply_filters( 'pl_claassifieds_required_login', __( 'Error: Login Required', 'classifieds-by-plugible' ) );
+			return apply_filters( 'pl_claassifieds_required_login', __( 'Error: Login Required', 'wpmyads' ) );
 		}
 
 		/**
@@ -271,29 +271,29 @@ Class Form {
 			if ( array_key_exists( 'specification', $term_options ) && array_key_exists( 'value', $term_options ) ) {
 				return sprintf( '%1$s %2$s %3$s'
 					, $term_options[ 'specification' ]
-					, __( '→', 'classifieds-by-plugible' )
+					, __( '→', 'wpmyads' )
 					, $term_options[ 'value' ]
 				);
 			}
 		} );
 		return $this->form( ''
 			. $this->separator()
-			. $this->heading( __( 'Contact Information', 'classifieds-by-plugible' ) )
-			. $this->text( 'name', __( 'Name*', 'classifieds-by-plugible' ), [
+			. $this->heading( __( 'Contact Information', 'wpmyads' ) )
+			. $this->text( 'name', __( 'Name*', 'wpmyads' ), [
 				'required' => true,
 				'value' => is_user_logged_in()
 					? wp_get_current_user()->data->display_name
 					: ''
 			] )
 			. ( ! is_user_logged_in()
-				? $this->email( 'email', __( 'Email*', 'classifieds-by-plugible' ), [
+				? $this->email( 'email', __( 'Email*', 'wpmyads' ), [
 					'data-disallow-space' => true,
 					'email' => true,
 					'required' => true,
 				] )
 				: ''
 			)
-			. $this->text( 'phone', __( 'Phone*', 'classifieds-by-plugible' ), [
+			. $this->text( 'phone', __( 'Phone*', 'wpmyads' ), [
 				'data-disallow-non-digit' => true,
 				'data-disallow-space' => true,
 				'maxlength' => 10,
@@ -301,36 +301,36 @@ Class Form {
 				'required' => true,
 			] )
 			. $this->separator()
-			. $this->heading( __( 'Media', 'classifieds-by-plugible' ) )
-			. $this->uppy( $this->uploadElementId, __( 'Images*', 'classifieds-by-plugible' ) )
+			. $this->heading( __( 'Media', 'wpmyads' ) )
+			. $this->uppy( $this->uploadElementId, __( 'Images*', 'wpmyads' ) )
 			. $this->separator()
-			. $this->heading( __( 'Ad Information', 'classifieds-by-plugible' ) )
-			. $this->text( 'title', __( 'Title*', 'classifieds-by-plugible' ), [
+			. $this->heading( __( 'Ad Information', 'wpmyads' ) )
+			. $this->text( 'title', __( 'Title*', 'wpmyads' ), [
 				'required' => true,
 			] )
-			. $this->select( 'location', __( 'Location*', 'classifieds-by-plugible' ), $locations, __( 'Choose...', 'classifieds-by-plugible' ), [
+			. $this->select( 'location', __( 'Location*', 'wpmyads' ), $locations, __( 'Choose...', 'wpmyads' ), [
 				'data-use-select2' => true,
 				'required' => true,
 			] )
-			. $this->select( 'category', __( 'Category*', 'classifieds-by-plugible' ), $categories, __( 'Choose...', 'classifieds-by-plugible' ), [
+			. $this->select( 'category', __( 'Category*', 'wpmyads' ), $categories, __( 'Choose...', 'wpmyads' ), [
 				'required' => true,
 				'data-controls' => $this->formElementId . '-specifications',
 				'data-use-select2' => true,
 			] )
-			. $this->select( 'specifications', __( 'Specifications*', 'classifieds-by-plugible' ), $specifications, null, [
+			. $this->select( 'specifications', __( 'Specifications*', 'wpmyads' ), $specifications, null, [
 				'data-use-select2' => true,
 				'data-group-by' => 'specification',
 				// 'required' => true,
 				'multiple' => true,
 			] )
-			. $this->textarea( 'description', __( 'Description*', 'classifieds-by-plugible' ), [
+			. $this->textarea( 'description', __( 'Description*', 'wpmyads' ), [
 				'minlength' => 50,
 				'required' => true,
 			] )
 			. $this->separator()
 			. $this->salt( 'salt' )
 			. $this->hidden( 'action', $this->ajaxActionForAdSubmission, true )
-			. $this->submit( 'submit', __( 'Submit', 'classifieds-by-plugible' ) )
+			. $this->submit( 'submit', __( 'Submit', 'wpmyads' ) )
 		);
 	}
 

@@ -31,7 +31,7 @@ add_action( 'pl_classified_loaded', function() {
 			$content =  ''
 				. '<p class="plcl_flash">'
 				. sprintf(
-					__( 'The link you used has expired. <strong><a href="%s">Log in</a></strong> to see any private discussion you started.', 'classifieds-by-plugible' )
+					__( 'The link you used has expired. <strong><a href="%s">Log in</a></strong> to see any private discussion you started.', 'wpmyads' )
 					, $login_url
 				)
 				. '</p>'

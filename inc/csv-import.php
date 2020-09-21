@@ -45,12 +45,12 @@ function plcl_register_taxonomy_importer( $args ) {
 				 */
 				$file = wp_import_handle_upload();
 				if ( isset( $file['error'] ) ) {
-					echo '<p><strong>' . __( 'An error happened.', 'classifieds-by-plugible' ) . '</strong><br />';
+					echo '<p><strong>' . __( 'An error happened.', 'wpmyads' ) . '</strong><br />';
 					echo esc_html( $file[ 'error' ] ) . '</p>';
 					return false;
 				} else if ( ! file_exists( $file[ 'file' ] ) ) {
-					echo '<p><strong>' . __( 'An error happened.', 'classifieds-by-plugible' ) . '</strong><br />';
-					printf( __( 'The export file could not be found at <code>%s</code>.', 'classifieds-by-plugible' ), esc_html( $file['file'] ) );
+					echo '<p><strong>' . __( 'An error happened.', 'wpmyads' ) . '</strong><br />';
+					printf( __( 'The export file could not be found at <code>%s</code>.', 'wpmyads' ), esc_html( $file['file'] ) );
 					echo '</p>';
 					return false;
 				}

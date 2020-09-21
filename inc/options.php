@@ -4,7 +4,7 @@ add_action( 'cmb2_init', function() {
 
 	$options = new_cmb2_box( [
 		'id' => plcl_get_box_id(),
-		'menu_title' => __( 'Settings', 'classifieds-by-plugible' ),
+		'menu_title' => __( 'Settings', 'wpmyads' ),
 		'object_types' => [ 'options-page' ],
 		'option_key' => plcl_get_box_id(),
 		'parent_slug' => 'edit.php?post_type=pl_classified',
@@ -15,53 +15,53 @@ add_action( 'cmb2_init', function() {
 	$options->add_field( [
 		'id' => plcl_get_option_id( 'email_global_header' ),
 		'name' => plcl_get_translation( __( 'Email Global Header', 'classfieds-by-plugible' ) ),
-		'default' => plcl_get_translation( __( 'Hello {name},', 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( 'Hello {name},', 'wpmyads' ) ),
 		'type' => 'textarea_small',
 	] );
 
 	$options->add_field( [
 		'id' => plcl_get_option_id( 'email_global_footer' ),
 		'name' => plcl_get_translation( __( 'Email Global Footer', 'classfieds-by-plugible' ) ),
-		'default' => plcl_get_translation( __( "Thanks,\n{site}", 'classifieds-by-plugible' ) ),
+		'default' => plcl_get_translation( __( "Thanks,\n{site}", 'wpmyads' ) ),
 		'type' => 'textarea_small',
 	] );
 
 	$emails_options = [
 		'classified_created' => [
 			'title' => __( 'Classified Created', 'classfieds-by-plugible' ),
-			'body'  => __( "The classified \"{title}\" was created. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+			'body'  => __( "The classified \"{title}\" was created. You can view it here:\n- {link}", 'wpmyads' ),
 		],
 		'classified_pending' => [
 			'title' => __( 'Classified Pending', 'classfieds-by-plugible' ),
-			'body'  => __( "We've received your classified \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ),
+			'body'  => __( "We've received your classified \"{title}\". It will become visible once approved.", 'wpmyads' ),
 		],
 		'classified_approved' => [
 			'title' => __( 'Classified Approved', 'classfieds-by-plugible' ),
-			'body'  => __( "Your Classified \"{title}\" was approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+			'body'  => __( "Your Classified \"{title}\" was approved. You can view it here:\n- {link}", 'wpmyads' ),
 		],
 		'classified_rejected' => [
 			'title' => __( 'Classified Rejected', 'classfieds-by-plugible' ),
-			'body'  => __( 'Your classified "{title}" was rejected.', 'classifieds-by-plugible' ),
+			'body'  => __( 'Your classified "{title}" was rejected.', 'wpmyads' ),
 		],
 		'comment_created' => [
 			'title' => __( 'Comment Created', 'classfieds-by-plugible' ),
-			'body'  => __( "A comment on \"{title}\" was created. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+			'body'  => __( "A comment on \"{title}\" was created. You can view it here:\n- {link}", 'wpmyads' ),
 		],
 		'comment_pending' => [
 			'title' => __( 'Comment Pending', 'classfieds-by-plugible' ),
-			'body'  => __( "We've received your comment on \"{title}\". It will become visible once approved.", 'classifieds-by-plugible' ),
+			'body'  => __( "We've received your comment on \"{title}\". It will become visible once approved.", 'wpmyads' ),
 		],
 		'comment_received' => [
 			'title' => __( 'Comment Received', 'classfieds-by-plugible' ),
-			'body'  => __( "You received a comment on \"{title}\". You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+			'body'  => __( "You received a comment on \"{title}\". You can view it here:\n- {link}", 'wpmyads' ),
 		],
 		'comment_approved' => [
 			'title' => __( 'Comment Approved', 'classfieds-by-plugible' ),
-			'body'  => __( "Your comment on \"{title}\" was approved. You can view it here:\n- {link}", 'classifieds-by-plugible' ),
+			'body'  => __( "Your comment on \"{title}\" was approved. You can view it here:\n- {link}", 'wpmyads' ),
 		],
 		'comment_rejected' => [
 			'title' => __( 'Comment Rejected', 'classfieds-by-plugible' ),
-			'body'  => __( "Your comment on \"{title}\" was rejected.", 'classifieds-by-plugible' ),
+			'body'  => __( "Your comment on \"{title}\" was rejected.", 'wpmyads' ),
 		],
 	];
 
@@ -73,7 +73,7 @@ add_action( 'cmb2_init', function() {
 		] );
 		$options->add_field( [
 			'id' => plcl_get_option_id( 'email_' . $email . '_enabled', false ),
-			'name' => __( 'Enabled', 'classifieds-by-plugible' ),
+			'name' => __( 'Enabled', 'wpmyads' ),
 			'type' => 'checkbox',
 		] );
 		$options->add_field( [

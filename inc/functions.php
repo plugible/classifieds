@@ -425,7 +425,7 @@ function plcl_decrypt( $string, $require_encryption = false ) {
  */
 function plcl_create_user( $email, $args = [] ) {
 	$defaults = [
-		'first_name' => __( 'Unnamed', 'classifieds-by-plugible' ),
+		'first_name' => __( 'Unnamed', 'wpmyads' ),
 		'username_mode' => 'string',
 	];
 
@@ -515,7 +515,7 @@ function plcl_auth( $user_id, $destination = null ) {
 }
 
 function plcl_die() {
-	die( __( 'Application Error: ', 'classifieds-by-plugible' ) . plcl_encrypt( json_encode( [
+	die( __( 'Application Error: ', 'wpmyads' ) . plcl_encrypt( json_encode( [
 		'file' => debug_backtrace()[0][ 'file' ],
 		'line' => debug_backtrace()[0][ 'line' ],
 	] ) ) );

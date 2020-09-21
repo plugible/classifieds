@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Classifieds by Plugible
- * Description: Classifieds by Plugible.
- * Text Domain: classifieds-by-plugible
+ * Plugin Name: WP My Ads
+ * Description: Classifieds Ads Plugin.
+ * Text Domain: wpmyads
  * Version: 1.0.0
  * Plugin URI: https://www.github.com/plugible/classifieds
  * Author: Plugible
