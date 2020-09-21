@@ -4,17 +4,19 @@ namespace Plugible\Classifieds;
 
 Class Form {
 
-	private $ajaxActionForAdSubmission = 'classifieds-ad-submission';
+	private $ajaxActionForAdSubmission = 'wpmyads-action-submit-ad';
 
-	private $ajaxActionForImageUpload = 'classifieds-image-upload';
+	private $ajaxActionForImageUpload = 'wpmyads-action-upload-image';
 
 	private $dubug = false;
 
-	private $shortcode = 'classified-form';
+	private $shortcode = 'wpmyads-form';
 
 	private $formElementId = 'classified-form';
 
-	private $uploadElementId = 'images';
+	private $uploadElementId;
+
+	private $uploadElementSuffix = 'images';
 
 	private $plugin;
 
@@ -25,6 +27,7 @@ Class Form {
 	public function __construct( $plugin ) {
 		$this->debug = ( boolean ) constant( 'WP_DEBUG' );
 		$this->plugin = $plugin;
+		$this->uploadElementId = sprintf( '%1$s-%2$s', $this->formElementId, $this->uploadElementSuffix );
 		$this->scripts();
 		add_shortcode( $this->shortcode, [ $this, 'output' ] );
 		add_action( 'wp_ajax_' . $this->ajaxActionForAdSubmission , [ $this, 'ajaxAdSubmission' ] );
@@ -43,7 +46,7 @@ Class Form {
 				'endpoint' => admin_url( 'admin-ajax.php' ),
 				'formElementId' => $this->formElementId,
 				'saltElementId' => $this->formElementId . '-' .$this->saltElementId,
-				'uploadElementId' => $this->formElementId . '-' .$this->uploadElementId,
+				'uploadElementId' => $this->uploadElementId,
 				'text' => [
 					'submit' => __( 'Submit', 'wpmyads' ),
 					'submitting' => __( 'Submitting... Please wait', 'wpmyads' ),
@@ -82,7 +85,7 @@ Class Form {
 			],
 		] );
 		if ( is_wp_error( $attachment_id ) ) {
-			status_header( 415 ); // So that Uppy treat it as an error.
+			status_header( 415 ); // So that Uppy treats it as an error.
 			die( '-' . __LINE__);
 		}
 
@@ -432,7 +435,6 @@ Class Form {
 	} 
 
 	private function uppy( $name, $title ) {
-		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_uppy_format', '<div><label for="%1$s">%2$s<br><div id="%1$s"></div></label></div>' );
 		return sprintf( $format, $name, $title );
 	}
