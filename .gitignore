@@ -1,5 +1,6 @@
 composer.lock
 package-lock.json
+yarn.lock
 build/releases/
 dist/
 node_modules/

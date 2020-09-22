@@ -14,7 +14,6 @@
         ]
     },
     "require": {
-        "tgmpa/tgm-plugin-activation": "^2.5",
         "kadimi/wpstarter": "^1.0",
         "jwage/easy-csv": "^1.0",
         "cmb2/cmb2": "^2.7"
