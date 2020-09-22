@@ -5,7 +5,7 @@
  */
 add_filter( 'manage_edit-comments_columns', function( $columns ){
 	return array_merge( $columns, [
-		'plcl_links'    => __( 'Links', 'classifieds-by-codeable' ),
+		'plcl_links'    => __( 'Links', 'wpmyads' ),
 	] );
 } );
 

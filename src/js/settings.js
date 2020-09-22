@@ -13,5 +13,5 @@ module.exports = {
 	 * It should be the same as the one used with `wp_localize_script` or
 	 * `WPMyAds::enqueue_asset`
 	 */
-	settingsObjectName: 'classifieds',
+	settingsObjectName: require('../../package.json').name,
 }

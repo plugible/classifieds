@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: WP My Ads
- * Description: Classifieds Ads Plugin.
+ * Description: A Classifieds Ads Plugin.
  * Text Domain: wpmyads
  * Version: 1.0.0
- * Plugin URI: https://www.github.com/plugible/classifieds
+ * Plugin URI: https://kadimi.com/
  * Author: Plugible
- * Author URI: https://plugible.com
+ * Author URI: https://kadimi.com/
  *
- * @package Plugible\Classifieds
+ * @package Plugible\WPMyAds
  */
 
 /**
@@ -25,16 +25,16 @@ require 'vendor/autoload.php';
 /**
  * The plugin class.
  */
-require 'class-classifieds.php';
+require 'class-wpmyads.php';
 
 /**
  * Helper function.
  */
-function classifieds_by_plugible() {
-	return ( new ClassifiedsByPlugible )::get_instance();
+function wpmyads() {
+	return ( new WPMyAds )::get_instance();
 }
 
 /**
  * Fire plugin.
  */
-classifieds_by_plugible();
+wpmyads();

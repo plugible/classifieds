@@ -1,4 +1,3 @@
-const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 
 (async function () {
 	const { default: $ } = await import(/* webpackChunkName: "jquery" */ 'jquery');
@@ -10,9 +9,10 @@ const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 	const { default: XHRUpload } = await import(/* webpackChunkName: "uppy.all" */ '@uppy/xhr-upload');
 	const { default: validate }  = await import(/* webpackChunkName: "jquery-validation" */ 'jquery-validation' );
 
-	const appText = appSettings.text;
-	const $form = $( '#' + appSettings.formElementId );
-	const $submit = $( `#${appSettings.formElementId}-submit` );
+	const formSettings = window[ require( './settings.js' ).settingsObjectName ].form;
+	const formText     = formSettings.text;
+	const $form        = $( `#${formSettings.formElementId}` );
+	const $submit      = $( `#${formSettings.formElementId}-submit` );
 
 	/**
 	 * General form fields enhancements.
@@ -45,27 +45,27 @@ const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 		disableStatusBar: true,
 		inline: true,
 		proudlyDisplayPoweredByUppy: false,
-		target: `#${appSettings.uploadElementId}`,
+		target: `#${formSettings.uploadElementId}`,
 		height: 300,
 		width: '100%',
 	} );
 
 	uppy.use( XHRUpload, {
-		endpoint: appSettings.endpoint,
+		endpoint: formSettings.endpoint,
 		fieldName: 'files',
 		formData: true,
 	} );
 
 	uppy.setMeta( {
-		action: appSettings.ajaxActionForImageUpload,
-		salt: document.getElementById( appSettings.saltElementId ).value,
+		action: formSettings.ajaxActionForImageUpload,
+		salt: document.getElementById( formSettings.saltElementId ).value,
 	} );
 
 	uppy.on( 'upload', ( result ) => {
 		$form.attr( 'data-image-upload-status', 'uploading' );
 		$submit
 			.data( 'data-previous-value', $submit.val() )
-			.val( appText.waitForImageUpload )
+			.val( formText.waitForImageUpload )
 		;
 	} );
 
@@ -81,7 +81,7 @@ const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 		submitHandler: () => {
 			// Do nothing if images upload not completed.
 			if ( 'uploading' === $form.attr( 'data-image-upload-status' ) ) {
-				$submit.val( appText.waitForImageUpload );
+				$submit.val( formText.waitForImageUpload );
 				return;
 			}
 
@@ -100,7 +100,7 @@ const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 			// Submit form.
 			$form.animate( { opacity : .5 } );
 			$submit
-				.val( appText.submitting )
+				.val( formText.submitting )
 				.addClass( 'btn-info' )
 				.removeClass( 'btn-primary' )
 				.removeClass( 'btn-danger' )
@@ -110,19 +110,19 @@ const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 			var serialized = $form.serialize();
 			disabled.prop( 'disabled', true );
 			// The actual submission.
-			$.post( appSettings.endpoint, serialized )
+			$.post( formSettings.endpoint, serialized )
 				.done( function( response ) {
 					if( response < 0 ) {
 						$form.attr( 'data-ad-submission-status', 'failed' );
 						$form.animate( { opacity : 1 } );
 						$submit
-							.val( appText.fixErrors )
+							.val( formText.fixErrors )
 							.addClass( 'btn-danger' )
 							.removeClass( 'btn-primary' )
 						;
 					} else {
 						$form.attr( 'data-ad-submission-status', 'complete' );
-						$form.replaceWith( `<div>${appText.submitSuccessTitleHtml}${appText.submitSuccessContentHtml}</div>` );
+						$form.replaceWith( `<div>${formText.submitSuccessTitleHtml}${formText.submitSuccessContentHtml}</div>` );
 					}
 				} )
 				.fail( function() {
@@ -156,7 +156,7 @@ const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 		$( this ).valid();
 		if ( ! validator.numberOfInvalids() ) {
 			$submit
-				.val( appText.submit )
+				.val( formText.submit )
 				.addClass( 'btn-primary' )
 				.removeClass( 'btn-danger' )
 				.removeClass( 'btn-info' )

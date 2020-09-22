@@ -7,88 +7,130 @@ msgid ""
 msgstr ""
 "Project-Id-Version: classifieds-by-plugible 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-04-18 22:45+0100\n"
-"PO-Revision-Date: 2020-04-18 22:56+0100\n"
+"POT-Creation-Date: 2020-09-22 02:56+0100\n"
+"PO-Revision-Date: 2020-09-22 02:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
+
+#: inc/comments/auth-link.php:34
+#, php-format
+msgid ""
+"The link you used has expired. <strong><a href=\"%s\">Log in</a></strong> to "
+"see any private discussion you started."
+msgstr ""
 
 #: inc/comments/columns.php:8
 msgid "Links"
 msgstr "روابط"
 
+#: inc/comments/columns.php:28
+#, fuzzy
+#| msgid "Comment Approved"
+msgid "Commentor"
+msgstr "تعليق مقبول"
+
+#: inc/comments/columns.php:29
+msgid "OP"
+msgstr ""
+
+#: inc/comments/labels.php:9
+msgid "Send a Private Message "
+msgstr ""
+
+#: inc/comments/labels.php:10
+msgid "Send"
+msgstr ""
+
+#: inc/comments/labels.php:22
+msgctxt "noun"
+msgid "Message"
+msgstr ""
+
+#: inc/comments/labels.php:43
+msgid "Private Discussion"
+msgstr ""
+
+#: inc/comments/no-op-guest-comment.php:23 inc/comments/tag-comment.php:71
+msgid "The comment is not valid."
+msgstr ""
+
+#: inc/comments/show-commenters.php:43
+msgid "Discussions"
+msgstr ""
+
 #: inc/cpt.php:75
 msgid "Classifieds"
 msgstr "الإعلانات"
 
-#: inc/cpt.php:96
+#: inc/cpt.php:97
 msgid "Locations"
 msgstr "الأماكن"
 
-#: inc/cpt.php:105
+#: inc/cpt.php:106
 msgid "Latitude"
 msgstr "خط العرض"
 
-#: inc/cpt.php:106
+#: inc/cpt.php:107
 msgid "Longitude"
 msgstr "خط الطول"
 
-#: inc/cpt.php:114
+#: inc/cpt.php:115
 msgid "Categories"
 msgstr "الأقسام"
 
-#: inc/cpt.php:128
+#: inc/cpt.php:129
 msgid "Specifications"
 msgstr "المواصفات"
 
-#: inc/cpt.php:137
+#: inc/cpt.php:138
 msgid "Specification"
 msgstr "المواصفة"
 
-#: inc/cpt.php:138
+#: inc/cpt.php:139
 msgid "Value"
 msgstr "القيمة"
 
-#: inc/cpt.php:139
+#: inc/cpt.php:140
 msgid "Scope"
 msgstr "النطاق"
 
-#: inc/cpt.php:155
+#: inc/cpt.php:156
 msgid "Classifieds Categories"
 msgstr "أقسام الإعلانات"
 
-#: inc/cpt.php:157 inc/cpt.php:171 inc/cpt.php:181
+#: inc/cpt.php:158 inc/cpt.php:172 inc/cpt.php:182
 msgid "All done."
 msgstr "تم."
 
-#: inc/cpt.php:157
+#: inc/cpt.php:158
 #, php-format
 msgid "Go to <a href=\"%s\">categories</a>."
 msgstr "اِذهب إلي <a href=\"%s\">الأقسام</a>."
 
-#: inc/cpt.php:165
+#: inc/cpt.php:166
 msgid "Classifieds Specifications"
 msgstr "مواصفات الإعلانات"
 
-#: inc/cpt.php:171
+#: inc/cpt.php:172
 #, php-format
 msgid "Go to <a href=\"%s\">specifications</a>."
 msgstr "اِذهب إلي <a href=\"%s\">المواصفات</a>."
 
-#: inc/cpt.php:179
+#: inc/cpt.php:180
 msgid "Classifieds Locations"
 msgstr "أماكن الإعلانات"
 
-#: inc/cpt.php:181
+#: inc/cpt.php:182
 #, php-format
 msgid "Go to <a href=\"%s\">locations</a>."
 msgstr "اِذهب إلي <a href=\"%s\">الأماكن</a>."
 
-#: inc/cpt.php:203 inc/cpt.php:214 inc/cpt.php:219 src/form.php:304
+#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220
 msgid "Images"
 msgstr "الصور"
 
@@ -116,22 +158,30 @@ msgstr "<strong>%s</strong></a> تم تعديله"
 msgid "<strong>%s</strong></a> ignored"
 msgstr "<strong>%s</strong></a> تم تجاهله"
 
-#: inc/debug/meta.php:22 inc/debug/meta.php:30
+#: inc/debug/meta.php:27 inc/debug/meta.php:35
 msgid "Meta"
 msgstr "فوقي"
 
-#: inc/functions.php:195
+#: inc/functions.php:203
 msgid ", "
 msgstr "، "
 
-#: inc/functions.php:232 plcl-templates/filters.php:95
+#: inc/functions.php:240 plcl-templates/filters.php:95
 msgid "Search"
 msgstr "بحث"
 
-#: inc/functions.php:242
+#: inc/functions.php:250
 #, php-format
 msgid "Page %s"
 msgstr "صفحة %s"
+
+#: inc/functions.php:428
+msgid "Unnamed"
+msgstr ""
+
+#: inc/functions.php:518
+msgid "Application Error: "
+msgstr ""
 
 #: inc/options.php:7
 msgid "Settings"
@@ -166,26 +216,32 @@ msgstr ""
 "{site}"
 
 #: inc/options.php:31
-msgid "Classified Pending"
-msgstr "إعلان معلّق"
+#, fuzzy
+#| msgid "Classified Rejected"
+msgid "Classified Created"
+msgstr "إعلان مرفوض"
 
 #: inc/options.php:32
+#, fuzzy
+#| msgid ""
+#| "The classified \"{title}\" was submitted. You can view it here:\n"
+#| "- {link}"
 msgid ""
-"We've received your classified \"{title}\". It will become visible once "
-"approved."
-msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
-
-#: inc/options.php:35
-msgid "Classified Received"
-msgstr "إعلان تم استقباله"
-
-#: inc/options.php:36
-msgid ""
-"The classified \"{title}\" was submitted. You can view it here:\n"
+"The classified \"{title}\" was created. You can view it here:\n"
 "- {link}"
 msgstr ""
 "تم إرسال الإعلانك \"{title}\". يمكنك مشاهدته هنا:\n"
 "- {link}"
+
+#: inc/options.php:35
+msgid "Classified Pending"
+msgstr "إعلان معلّق"
+
+#: inc/options.php:36
+msgid ""
+"We've received your classified \"{title}\". It will become visible once "
+"approved."
+msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
 
 #: inc/options.php:39
 msgid "Classified Approved"
@@ -208,20 +264,38 @@ msgid "Your classified \"{title}\" was rejected."
 msgstr "تم رفض إعلانك \"{title}\"."
 
 #: inc/options.php:47
+#, fuzzy
+#| msgid "Comment Rejected"
+msgid "Comment Created"
+msgstr "تعليق مرفوض"
+
+#: inc/options.php:48
+#, fuzzy
+#| msgid ""
+#| "Your comment on \"{title}\" was approved. You can view it here:\n"
+#| "- {link}"
+msgid ""
+"A comment on \"{title}\" was created. You can view it here:\n"
+"- {link}"
+msgstr ""
+"تم قبول تعليقك على \"{title}\". يمكنك مشاهدته هنا:\n"
+"- {link}"
+
+#: inc/options.php:51
 msgid "Comment Pending"
 msgstr "تعليق معلّق"
 
-#: inc/options.php:48
+#: inc/options.php:52
 msgid ""
 "We've received your comment on \"{title}\". It will become visible once "
 "approved."
 msgstr "لقد توصلنا بإعلانك \"{title}\". سيُنشر بعد الموافقة."
 
-#: inc/options.php:51
+#: inc/options.php:55
 msgid "Comment Received"
 msgstr "تعليق تم استقباله"
 
-#: inc/options.php:52
+#: inc/options.php:56
 msgid ""
 "You received a comment on \"{title}\". You can view it here:\n"
 "- {link}"
@@ -229,11 +303,11 @@ msgstr ""
 "لقد توصلت بتعليق على \"{title}\". يمكنك مشاهدته هنا:\n"
 "- {link}"
 
-#: inc/options.php:55
+#: inc/options.php:59
 msgid "Comment Approved"
 msgstr "تعليق مقبول"
 
-#: inc/options.php:56
+#: inc/options.php:60
 msgid ""
 "Your comment on \"{title}\" was approved. You can view it here:\n"
 "- {link}"
@@ -241,25 +315,33 @@ msgstr ""
 "تم قبول تعليقك على \"{title}\". يمكنك مشاهدته هنا:\n"
 "- {link}"
 
-#: inc/options.php:59
+#: inc/options.php:63
 msgid "Comment Rejected"
 msgstr "تعليق مرفوض"
 
-#: inc/options.php:60
+#: inc/options.php:64
 msgid "Your comment on \"{title}\" was rejected."
 msgstr "تم رفض تعليقك على \"{title}\"."
 
-#: inc/options.php:72
+#: inc/options.php:76
 msgid "Enabled"
 msgstr "مفعّل"
 
-#: inc/options.php:78
+#: inc/options.php:82
 msgid "Subject"
 msgstr "الموضوع"
 
-#: inc/options.php:84
+#: inc/options.php:88
 msgid "Body"
 msgstr "النص"
+
+#: inc/shortcodes/plcl-user-inbox.php:14 plcl-templates/inbox/header.php:14
+msgid "Inbox"
+msgstr ""
+
+#: inc/shortcodes/plcl-user-inbox.php:21 plcl-templates/inbox/header.php:14
+msgid "Sent"
+msgstr ""
 
 #: plcl-templates/404.php:1
 msgid "Nothing Found"
@@ -269,10 +351,51 @@ msgstr "لا يوجد شيء"
 msgid "Nothing found. Please update the search criteria."
 msgstr "لا يوجد شيء. المرجو تعديل معايير البحث."
 
+#: plcl-templates/inbox/header.php:12
+msgid "Folder"
+msgstr ""
+
+#: plcl-templates/inbox/header.php:13
+msgid ": "
+msgstr ""
+
+#: plcl-templates/inbox/list.php:7
+msgid "From"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:8
+msgid "To"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:9
+msgid "Ad"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:10
+msgid "Message"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:11
+msgid "Date"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:12
+msgid "Read"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:17
+msgid "This folder is empty."
+msgstr ""
+
+#: plcl-templates/inbox/list.php:35 plcl-templates/inbox/list.php:41
 #: plcl-templates/shortcodes/list-item.php:18
 #, php-format
 msgid "%s ago"
 msgstr "منذ %s"
+
+#: plcl-templates/shortcodes/list-empty.php:1
+msgid "The list is empty."
+msgstr ""
 
 #: plcl-templates/single.php:5
 msgid "Description"
@@ -282,81 +405,88 @@ msgstr "الوصف"
 msgid "Specs"
 msgstr "الخصائص"
 
-#: src/form.php:48 src/form.php:333
+#: src/form.php:72 src/form.php:362
 msgid "Submit"
 msgstr "إرسال"
 
-#: src/form.php:49
+#: src/form.php:73
 msgid "Submitting... Please wait"
 msgstr "يجري الإرسال...المرجو الانتظار"
 
-#: src/form.php:50
+#: src/form.php:74
 msgid "Errors detected. Please fix errors and submit again"
 msgstr "هناك أخطاء. المرجو تصحيح الأخطاء تم الإرسال من حديد"
 
-#: src/form.php:51
+#: src/form.php:75
 msgid "Please wait for the image(s) upload to finish"
 msgstr "المرجو الانتظار ريثما ينتهي رفع الصور"
 
-#: src/form.php:52 src/form.php:53
+#: src/form.php:76 src/form.php:77
 msgid "Submission was completed successfully"
 msgstr "تم الإرسال بنجاح"
 
-#: src/form.php:258
+#: src/form.php:287
 msgid "Error: Login Required"
 msgstr "خطأ: تسجيل الدخول مطلوب"
 
-#: src/form.php:274
+#: src/form.php:303
 msgid "→"
 msgstr "←"
 
-#: src/form.php:281
+#: src/form.php:310
 msgid "Contact Information"
 msgstr "بيانات الاتصال"
 
-#: src/form.php:282
+#: src/form.php:311
 msgid "Name*"
 msgstr "الاسم*"
 
-#: src/form.php:289
+#: src/form.php:318
 msgid "Email*"
 msgstr "البريد الإلكتروني*"
 
-#: src/form.php:296
+#: src/form.php:325
 msgid "Phone*"
 msgstr "الهاتف*"
 
-#: src/form.php:305
+#: src/form.php:333
+msgid "Media"
+msgstr "الوسائط"
+
+#: src/form.php:334
 msgid "Images*"
 msgstr "الصور*"
 
-#: src/form.php:307
+#: src/form.php:336
 msgid "Ad Information"
 msgstr "معلومات الإعلان"
 
-#: src/form.php:308
+#: src/form.php:337
 msgid "Title*"
 msgstr "العنوان*"
 
-#: src/form.php:311 src/form.php:315
+#: src/form.php:340 src/form.php:344
 msgid "Choose..."
 msgstr "اِخترْ..."
 
-#: src/form.php:311
+#: src/form.php:340
 msgid "Location*"
 msgstr "المكان*"
 
-#: src/form.php:315
+#: src/form.php:344
 msgid "Category*"
 msgstr "التصنيف*"
 
-#: src/form.php:320
+#: src/form.php:349
 msgid "Specifications*"
 msgstr "الخصائص*"
 
-#: src/form.php:326
+#: src/form.php:355
 msgid "Description*"
 msgstr "الوصف*"
+
+#~ msgid "Classified Received"
+#~ msgstr "إعلان تم استقباله"
 
 #~ msgid "Email: Ad Pending"
 #~ msgstr "بريد إلكتروني: إعلان معلّق"

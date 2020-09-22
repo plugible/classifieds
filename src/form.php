@@ -4,15 +4,15 @@ namespace Plugible\Classifieds;
 
 Class Form {
 
-	private $ajaxActionForAdSubmission = 'wpmyads-action-submit-ad';
+	private $ajaxActionForAdSubmission;
 
-	private $ajaxActionForImageUpload = 'wpmyads-action-upload-image';
+	private $ajaxActionForImageUpload;
 
 	private $dubug = false;
 
-	private $shortcode = 'wpmyads-form';
+	private $shortcode;
 
-	private $formElementId = 'classified-form';
+	private $formElementId;
 
 	private $uploadElementId;
 
@@ -22,25 +22,46 @@ Class Form {
 
 	private $saltElementId = 'salt';
 
-	private $settingsObjectName = 'classifieds';
+	private $settingsObjectName;
 
 	public function __construct( $plugin ) {
-		$this->debug = ( boolean ) constant( 'WP_DEBUG' );
-		$this->plugin = $plugin;
-		$this->uploadElementId = sprintf( '%1$s-%2$s', $this->formElementId, $this->uploadElementSuffix );
-		$this->scripts();
+
+		$this->debug                     = ( boolean ) constant( 'WP_DEBUG' );
+		$this->plugin                    = $plugin;
+		$this->settingsObjectName        = $plugin->plugin_slug;
+		$this->ajaxActionForAdSubmission = $plugin->plugin_slug . '-action-submit-ad';
+		$this->ajaxActionForImageUpload  = $plugin->plugin_slug . '-action-upload-image';
+		$this->formElementId             = $plugin->plugin_slug . '-form';
+		$this->uploadElementId           = sprintf( '%1$s-%2$s', $this->formElementId, $this->uploadElementSuffix );
+		$this->shortcode                 = $plugin->plugin_slug . '-form';
+
+		/**
+		 * Register shortcode.
+		 */
 		add_shortcode( $this->shortcode, [ $this, 'output' ] );
+
+		/**
+		 * Ajax.
+		 */
 		add_action( 'wp_ajax_' . $this->ajaxActionForAdSubmission , [ $this, 'ajaxAdSubmission' ] );
 		add_action( 'wp_ajax_' . $this->ajaxActionForImageUpload , [ $this, 'ajaxImageUpload' ] );
 		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForAdSubmission , [ $this, 'ajaxAdSubmission' ] );
 		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForImageUpload , [ $this, 'ajaxImageUpload' ] );
+
+		/**
+		 * Localize.
+		 */
+		add_filter( sprintf( '%s::enqueue-asset', wpmyads()->plugin_slug ), [ $this, 'localize' ], 10, 2 );
 	}
 
-	private function scripts() {
-		$this->plugin->enqueue_asset( 'dist/js/main.bundle.js', [
-			'in_footer' => true,
-			'object_name' => $this->settingsObjectName,
-			'l10n' => [
+	public function localize( $args, $path ) {
+
+		if ( 'dist/js/main.bundle.js' !== $path ) {
+			return $args;
+		}
+
+		$args[ 'l10n' ] = array_merge( $args[ 'l10n' ] ?? [], [
+			'form' => [
 				'ajaxActionForImageUpload' => $this->ajaxActionForImageUpload,
 				'debug' => $this->debug,
 				'endpoint' => admin_url( 'admin-ajax.php' ),
@@ -57,6 +78,11 @@ Class Form {
 				],
 			],
 		] );
+
+		/**
+		 * Done.
+		 */
+		return $args;
 	}
 
 	public function ajaxImageUpload() {

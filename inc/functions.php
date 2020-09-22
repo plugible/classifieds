@@ -8,7 +8,7 @@ function plcl_load_template( $template, $data = [], $return = false ) {
 		$include_paths = [
 			'stylesheet' => trailingslashit( get_stylesheet_directory() ) . 'plcl-templates' . DIRECTORY_SEPARATOR,
 			'template' => trailingslashit( get_template_directory() ) . 'plcl-templates' . DIRECTORY_SEPARATOR,
-			'local' => classifieds_by_plugible()->plugin_dir_path . 'plcl-templates' . DIRECTORY_SEPARATOR,
+			'local' => wpmyads()->plugin_dir_path . 'plcl-templates' . DIRECTORY_SEPARATOR,
 		];
 	}
 

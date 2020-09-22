@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Nabil Kadimi
-# This file is distributed under the same license as the classifieds-by-plugible package.
+# This file is distributed under the same license as the wpmyads package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: classifieds-by-plugible 1.0.0\n"
+"Project-Id-Version: wpmyads 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/kadimi/starter/issues/new\n"
-"POT-Creation-Date: 2020-05-25 19:15+0000\n"
+"POT-Creation-Date: 2020-09-22 02:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: inc/comments/auth-link.php:34
+#, php-format
+msgid ""
+"The link you used has expired. <strong><a href=\"%s\">Log in</a></strong> to "
+"see any private discussion you started."
+msgstr ""
 
 #: inc/comments/columns.php:8
 msgid "Links"
@@ -121,7 +128,7 @@ msgstr ""
 msgid "Go to <a href=\"%s\">locations</a>."
 msgstr ""
 
-#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220 src/form.php:304
+#: inc/cpt.php:204 inc/cpt.php:215 inc/cpt.php:220
 msgid "Images"
 msgstr ""
 
@@ -153,24 +160,24 @@ msgstr ""
 msgid "Meta"
 msgstr ""
 
-#: inc/functions.php:195
+#: inc/functions.php:203
 msgid ", "
 msgstr ""
 
-#: inc/functions.php:232 plcl-templates/filters.php:95
+#: inc/functions.php:240 plcl-templates/filters.php:95
 msgid "Search"
 msgstr ""
 
-#: inc/functions.php:242
+#: inc/functions.php:250
 #, php-format
 msgid "Page %s"
 msgstr ""
 
-#: inc/functions.php:420
+#: inc/functions.php:428
 msgid "Unnamed"
 msgstr ""
 
-#: inc/functions.php:510
+#: inc/functions.php:518
 msgid "Application Error: "
 msgstr ""
 
@@ -302,6 +309,14 @@ msgstr ""
 msgid "Body"
 msgstr ""
 
+#: inc/shortcodes/plcl-user-inbox.php:14 plcl-templates/inbox/header.php:14
+msgid "Inbox"
+msgstr ""
+
+#: inc/shortcodes/plcl-user-inbox.php:21 plcl-templates/inbox/header.php:14
+msgid "Sent"
+msgstr ""
+
 #: plcl-templates/404.php:1
 msgid "Nothing Found"
 msgstr ""
@@ -310,9 +325,50 @@ msgstr ""
 msgid "Nothing found. Please update the search criteria."
 msgstr ""
 
+#: plcl-templates/inbox/header.php:12
+msgid "Folder"
+msgstr ""
+
+#: plcl-templates/inbox/header.php:13
+msgid ": "
+msgstr ""
+
+#: plcl-templates/inbox/list.php:7
+msgid "From"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:8
+msgid "To"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:9
+msgid "Ad"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:10
+msgid "Message"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:11
+msgid "Date"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:12
+msgid "Read"
+msgstr ""
+
+#: plcl-templates/inbox/list.php:17
+msgid "This folder is empty."
+msgstr ""
+
+#: plcl-templates/inbox/list.php:35 plcl-templates/inbox/list.php:41
 #: plcl-templates/shortcodes/list-item.php:18
 #, php-format
 msgid "%s ago"
+msgstr ""
+
+#: plcl-templates/shortcodes/list-empty.php:1
+msgid "The list is empty."
 msgstr ""
 
 #: plcl-templates/single.php:5
@@ -323,78 +379,82 @@ msgstr ""
 msgid "Specs"
 msgstr ""
 
-#: src/form.php:48 src/form.php:333
+#: src/form.php:72 src/form.php:362
 msgid "Submit"
 msgstr ""
 
-#: src/form.php:49
+#: src/form.php:73
 msgid "Submitting... Please wait"
 msgstr ""
 
-#: src/form.php:50
+#: src/form.php:74
 msgid "Errors detected. Please fix errors and submit again"
 msgstr ""
 
-#: src/form.php:51
+#: src/form.php:75
 msgid "Please wait for the image(s) upload to finish"
 msgstr ""
 
-#: src/form.php:52 src/form.php:53
+#: src/form.php:76 src/form.php:77
 msgid "Submission was completed successfully"
 msgstr ""
 
-#: src/form.php:258
+#: src/form.php:287
 msgid "Error: Login Required"
 msgstr ""
 
-#: src/form.php:274
+#: src/form.php:303
 msgid "→"
 msgstr ""
 
-#: src/form.php:281
+#: src/form.php:310
 msgid "Contact Information"
 msgstr ""
 
-#: src/form.php:282
+#: src/form.php:311
 msgid "Name*"
 msgstr ""
 
-#: src/form.php:289
+#: src/form.php:318
 msgid "Email*"
 msgstr ""
 
-#: src/form.php:296
+#: src/form.php:325
 msgid "Phone*"
 msgstr ""
 
-#: src/form.php:305
+#: src/form.php:333
+msgid "Media"
+msgstr ""
+
+#: src/form.php:334
 msgid "Images*"
 msgstr ""
 
-#: src/form.php:307
+#: src/form.php:336
 msgid "Ad Information"
 msgstr ""
 
-#: src/form.php:308
+#: src/form.php:337
 msgid "Title*"
 msgstr ""
 
-#: src/form.php:311 src/form.php:315
+#: src/form.php:340 src/form.php:344
 msgid "Choose..."
 msgstr ""
 
-#: src/form.php:311
+#: src/form.php:340
 msgid "Location*"
 msgstr ""
 
-#: src/form.php:315
+#: src/form.php:344
 msgid "Category*"
 msgstr ""
 
-#: src/form.php:320
+#: src/form.php:349
 msgid "Specifications*"
 msgstr ""
 
-#: src/form.php:326
+#: src/form.php:355
 msgid "Description*"
 msgstr ""

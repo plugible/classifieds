@@ -148,9 +148,9 @@ function plcl_get_translation( $text ) {
 	if ( function_exists( 'pll_current_language' ) ) {
 		if ( pll_current_language() && pll_default_language() !== pll_current_language() ) {
 			$lang_file = sprintf( '%1$s/%2$s/%3$s-%4$s.mo'
-				, classifieds_by_plugible()->plugin_dir_path
+				, wpmyads()->plugin_dir_path
 				, 'lang'
-				, classifieds_by_plugible()->plugin_slug
+				, wpmyads()->plugin_slug
 				, pll_current_language( 'locale' )
 			);
 			$translations = [];
