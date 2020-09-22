@@ -1,9 +1,11 @@
 (window.jQuery)( ( $ ) => {
 
+	const appSettings = window[ require( './settings.js' ).settingsObjectName ];
+
 	/**
 	 * Form.
 	 */
-	const $form = $( '#' + window[ require( './settings.js' ).settingsObjectName ].form.formElementId );
+	const $form = $( '#' + appSettings.form.formElementId );
 	if ( $form.length ) {
 		(async () => await import(/* webpackChunkName: "form" */ './form.js' ))();
 	}
@@ -19,7 +21,7 @@
 	/**
 	 * Gallery.
 	 */
-	const $gallery = $( '.pl_classified_gallery_enhanced' );
+	const $gallery = $( `.${appSettings.objectName}_gallery_enhanced` );
 	if ( $gallery.length ) {
 		( async () => await import(/* webpackChunkName: "gallery" */ './gallery.js' ))();
 	}

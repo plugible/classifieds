@@ -6,4 +6,7 @@ wpmyads()->enqueue_asset( 'dist/js/main.bundle.js', [
 	'deps' => [
 		'jquery'
 	],
+	'l10n' => [
+		'objectName' => wpmyads()->plugin_slug,
+	],
 ] );

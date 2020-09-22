@@ -1,5 +1,6 @@
 (async function () {
 	const $ = window.jQuery;
+	const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 
 	await import(/* webpackChunkName: "lightgallery.all" */ 'lightgallery.js/dist/css/lightgallery.min.css' );
 	await import(/* webpackChunkName: "lightgallery.all" */ 'lightgallery.js' );
@@ -8,7 +9,7 @@
 	await import(/* webpackChunkName: "lightgallery.all" */ 'lg-video.js' );
 	await import(/* webpackChunkName: "lightgallery.all" */ 'lg-zoom.js' );
 
-	const $gallery = $( '.pl_classified_gallery_enhanced' );
+	const $gallery = $( `.${appSettings.objectName}_gallery_enhanced` );
 
 	$gallery.each( function() {
 		lightGallery( this, {
@@ -20,6 +21,9 @@
 	} );
 
 	$( 'html > head').append( `<style>
+		.${appSettings.objectName}_gallery_enhanced > div {
+			cursor: pointer;
+		}
 		.lg  {
 			background: black;
 			border-width: 10px;

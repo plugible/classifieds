@@ -100,8 +100,6 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 		],
 	], $args );
 
-	$cssonce = false;
-
 	$images = get_posts( [ 
 		'post_type' => 'attachment',
 		'post_mime_type' => 'image',
@@ -115,9 +113,13 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 	}
 
 	$permalink = get_permalink( $post_id );
+	$classes = [ sprintf( '%s_gallery', wpmyads()->plugin_slug ) ];
+	if ( $args[ 'enhanced' ] ) {
+		$classes[] = sprintf( '%s_gallery_enhanced', wpmyads()->plugin_slug );
+	}
 
 	?>
-	<div class="pl_classified_gallery <?php echo $args[ 'enhanced' ] ? 'pl_classified_gallery_enhanced' : ''; ?>">
+	<div class="<?php echo implode( ' ', $classes ); ?>">
 		<?php foreach ( $images as $image ) { ?>
 			<div data-src="<?php echo wp_get_attachment_url( $image->ID ) ?>">
 
@@ -134,27 +136,6 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 		<?php } ?>
 	</div>
 	<?php
-
-	/**
-	 * Add CSS once. 
-	 */
-	if ( ! $cssonce ) {
-		?><style>
-			.pl_classified_gallery > div {
-				margin: 5px;
-			}
-			html:not([dir=rtl]) .pl_classified_gallery > div {
-				float:left;
-			}
-			html[dir=rtl] .pl_classified_gallery > div {
-				float:right;
-			}
-			.pl_classified_gallery_enhanced > div {
-				cursor: pointer;
-			}
-		</style><?php
-	}
-	$cssonce = true;
 }
 
 function plcl_classified_specs( $post_id ) {
