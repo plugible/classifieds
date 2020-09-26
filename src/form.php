@@ -353,6 +353,7 @@ Class Form {
 				'multiple' => true,
 			] )
 			. $this->textarea( 'description', __( 'Description*', 'wpmyads' ), [
+				'data-disallow-excessive-line-breaks' => true,
 				'minlength' => 50,
 				'required' => true,
 			] )
@@ -390,7 +391,7 @@ Class Form {
 
 	private function input( $name, $title, $type = 'text', $args = [] ) {
 		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
-		$format = apply_filters( 'pl_classifieds_form_input_format', '<p><label for="%1$s">%2$s<br><input type="%3$s" id="%1$s" name="%1$s" %3$s/></label></p>' );
+		$format = apply_filters( 'pl_classifieds_form_input_format', '<p><label for="%1$s">%2$s<br><input type="%3$s" id="%1$s" name="%1$s" %4$s/></label></p>' );
 		return sprintf( $format, $name, $title, $type, $this->args2HtmlParameters( $args ) );
 	}
 

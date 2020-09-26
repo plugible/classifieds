@@ -25,6 +25,10 @@
 		let $this = $( this );
 		$this.val( $this.val().replace( /\s/g, '' ) );
 	} );
+	$( '[data-disallow-excessive-line-breaks]' ).keyup( function() {
+		let $this = $( this );
+		$this.val( $this.val().replace( /([\r]?\n){3,}/g, "\n\n" ) );
+	} );
 	$( '[data-disallow-non-digit]' ).keyup( function() {
 		let $this = $( this );
 		$this.val( $this.val().replace( /[^0-9]/g, '' ) );
