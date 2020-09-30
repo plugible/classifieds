@@ -2,7 +2,7 @@
 
 namespace Plugible\Classifieds;
 
-Class Form {
+class Form {
 
 	private $ajaxActionForAdSubmission;
 
@@ -26,7 +26,7 @@ Class Form {
 
 	public function __construct( $plugin ) {
 
-		$this->debug                     = ( boolean ) constant( 'WP_DEBUG' );
+		$this->debug                     = (bool) constant( 'WP_DEBUG' );
 		$this->plugin                    = $plugin;
 		$this->settingsObjectName        = $plugin->plugin_slug;
 		$this->ajaxActionForAdSubmission = $plugin->plugin_slug . '-action-submit-ad';
@@ -38,20 +38,20 @@ Class Form {
 		/**
 		 * Register shortcode.
 		 */
-		add_shortcode( $this->shortcode, [ $this, 'output' ] );
+		add_shortcode( $this->shortcode, array( $this, 'output' ) );
 
 		/**
 		 * Ajax.
 		 */
-		add_action( 'wp_ajax_' . $this->ajaxActionForAdSubmission , [ $this, 'ajaxAdSubmission' ] );
-		add_action( 'wp_ajax_' . $this->ajaxActionForImageUpload , [ $this, 'ajaxImageUpload' ] );
-		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForAdSubmission , [ $this, 'ajaxAdSubmission' ] );
-		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForImageUpload , [ $this, 'ajaxImageUpload' ] );
+		add_action( 'wp_ajax_' . $this->ajaxActionForAdSubmission, array( $this, 'ajaxAdSubmission' ) );
+		add_action( 'wp_ajax_' . $this->ajaxActionForImageUpload, array( $this, 'ajaxImageUpload' ) );
+		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForAdSubmission, array( $this, 'ajaxAdSubmission' ) );
+		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForImageUpload, array( $this, 'ajaxImageUpload' ) );
 
 		/**
 		 * Localize.
 		 */
-		add_filter( sprintf( '%s::enqueue-asset', wpmyads()->plugin_slug ), [ $this, 'localize' ], 10, 2 );
+		add_filter( sprintf( '%s::enqueue-asset', wpmyads()->plugin_slug ), array( $this, 'localize' ), 10, 2 );
 	}
 
 	public function localize( $args, $path ) {
@@ -60,24 +60,27 @@ Class Form {
 			return $args;
 		}
 
-		$args[ 'l10n' ] = array_merge( $args[ 'l10n' ] ?? [], [
-			'form' => [
-				'ajaxActionForImageUpload' => $this->ajaxActionForImageUpload,
-				'debug' => $this->debug,
-				'endpoint' => admin_url( 'admin-ajax.php' ),
-				'formElementId' => $this->formElementId,
-				'saltElementId' => $this->formElementId . '-' .$this->saltElementId,
-				'uploadElementId' => $this->uploadElementId,
-				'text' => [
-					'submit' => __( 'Submit', 'wpmyads' ),
-					'submitting' => __( 'Submitting... Please wait', 'wpmyads' ),
-					'fixErrors' => __( 'Errors detected. Please fix errors and submit again', 'wpmyads' ),
-					'waitForImageUpload' => __( 'Please wait for the image(s) upload to finish', 'wpmyads' ),
-					'submitSuccessTitleHtml' => '<h2>' . __( 'Submission was completed successfully', 'wpmyads' ) . '</h2>',
-					'submitSuccessContentHtml' => '<p>'. __( 'Submission was completed successfully', 'wpmyads' ) . '</p>',
-				],
-			],
-		] );
+		$args['l10n'] = array_merge(
+			$args['l10n'] ?? array(),
+			array(
+				'form' => array(
+					'ajaxActionForImageUpload' => $this->ajaxActionForImageUpload,
+					'debug'                    => $this->debug,
+					'endpoint'                 => admin_url( 'admin-ajax.php' ),
+					'formElementId'            => $this->formElementId,
+					'saltElementId'            => $this->formElementId . '-' . $this->saltElementId,
+					'uploadElementId'          => $this->uploadElementId,
+					'text'                     => array(
+						'submit'                   => __( 'Submit', 'wpmyads' ),
+						'submitting'               => __( 'Submitting... Please wait', 'wpmyads' ),
+						'fixErrors'                => __( 'Errors detected. Please fix errors and submit again', 'wpmyads' ),
+						'waitForImageUpload'       => __( 'Please wait for the image(s) upload to finish', 'wpmyads' ),
+						'submitSuccessTitleHtml'   => '<h2>' . __( 'Submission was completed successfully', 'wpmyads' ) . '</h2>',
+						'submitSuccessContentHtml' => '<p>' . __( 'Submission was completed successfully', 'wpmyads' ) . '</p>',
+					),
+				),
+			)
+		);
 
 		/**
 		 * Done.
@@ -87,7 +90,7 @@ Class Form {
 
 	public function ajaxImageUpload() {
 
-		$nowDateTime = (new \DateTime())->format('YmdHis-u');
+		$nowDateTime = ( new \DateTime() )->format( 'YmdHis-u' );
 
 		$salt = $_REQUEST[ $this->saltElementId ];
 
@@ -101,18 +104,23 @@ Class Form {
 		/**
 		 * Upload file and check it's an image.
 		 */
-		$attachment_id = media_handle_upload( 'files', 0, [], [
-			'test_form' => false,
-			'test_type' => true,
-			'mimes' => [
-				'jpg|jpeg|jpe' => 'image/jpeg',
-				'gif'          => 'image/gif',
-				'png'          => 'image/png',
-			],
-		] );
+		$attachment_id = media_handle_upload(
+			'files',
+			0,
+			array(),
+			array(
+				'test_form' => false,
+				'test_type' => true,
+				'mimes'     => array(
+					'jpg|jpeg|jpe' => 'image/jpeg',
+					'gif'          => 'image/gif',
+					'png'          => 'image/png',
+				),
+			)
+		);
 		if ( is_wp_error( $attachment_id ) ) {
 			status_header( 415 ); // So that Uppy treats it as an error.
-			die( '-' . __LINE__);
+			die( '-' . __LINE__ );
 		}
 
 		/**
@@ -136,14 +144,14 @@ Class Form {
 		/**
 		 * Required.
 		 */
-		$required = [
+		$required = array(
 			'name',
 			'phone',
 			'title',
 			'location',
 			'category',
 			'description',
-		];
+		);
 		if ( ! is_user_logged_in() ) {
 			$required[] = 'email';
 		}
@@ -155,12 +163,14 @@ Class Form {
 		if ( ! $salt ) {
 			die( '-' . __LINE__ );
 		}
-		$saltUsed = ( bool ) get_posts( [
-			'post_type' => 'pl_classified',
-			'meta_key' => 'salt',
-			'meta_value' => $salt,
-			'post_status' => 'all',
-		] );
+		$saltUsed = (bool) get_posts(
+			array(
+				'post_type'   => 'pl_classified',
+				'meta_key'    => 'salt',
+				'meta_value'  => $salt,
+				'post_status' => 'all',
+			)
+		);
 		if ( $saltUsed ) {
 			die( '-' . __LINE__ );
 		}
@@ -168,13 +178,13 @@ Class Form {
 		/**
 		 * Populate variables.
 		 */
-		$name           = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-name' ] ) ?? '';
-		$phone          = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-phone' ] ) ?? '';
-		$title          = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-title' ] ) ?? '';
-		$description    = wp_strip_all_tags( $_REQUEST[  $this->formElementId . '-description' ] ) ?? '';
+		$name           = wp_strip_all_tags( $_REQUEST[ $this->formElementId . '-name' ] ) ?? '';
+		$phone          = wp_strip_all_tags( $_REQUEST[ $this->formElementId . '-phone' ] ) ?? '';
+		$title          = wp_strip_all_tags( $_REQUEST[ $this->formElementId . '-title' ] ) ?? '';
+		$description    = wp_strip_all_tags( $_REQUEST[ $this->formElementId . '-description' ] ) ?? '';
 		$location       = trim( $_REQUEST[ $this->formElementId . '-location' ] ) ?? '';
 		$category       = trim( $_REQUEST[ $this->formElementId . '-category' ] ) ?? '';
-		$specifications = $_REQUEST[ $this->formElementId . '-specifications' ] ?? [];
+		$specifications = $_REQUEST[ $this->formElementId . '-specifications' ] ?? array();
 
 		/**
 		 * Prepare email.
@@ -183,7 +193,7 @@ Class Form {
 		 * - Otherwhise verify validity
 		 */
 		if ( ! is_user_logged_in() ) {
-			$email = trim( strtolower( $_REQUEST[  $this->formElementId . '-email' ] ) ) ?? '';
+			$email = trim( strtolower( $_REQUEST[ $this->formElementId . '-email' ] ) ) ?? '';
 		}
 
 		/**
@@ -212,13 +222,16 @@ Class Form {
 		/**
 		 * Create ad.
 		 */
-		$post_id = wp_insert_post( [
-			'post_content' => $description,
-			'post_status'  => $status,
-			'post_title'   => $title,
-			'post_type'    => 'pl_classified',
-			'post_author'  => $user->ID,
-		], true );
+		$post_id = wp_insert_post(
+			array(
+				'post_content' => $description,
+				'post_status'  => $status,
+				'post_title'   => $title,
+				'post_type'    => 'pl_classified',
+				'post_author'  => $user->ID,
+			),
+			true
+		);
 
 		if ( is_wp_error( $post_id ) ) {
 			die( '-' . __LINE__ );
@@ -230,19 +243,24 @@ Class Form {
 
 		wp_set_post_terms( $post_id, $location, 'pl_classified_location' );
 		wp_set_post_terms( $post_id, $category, 'pl_classified_category' );
-		array_walk( $specifications, function( $term_id ) use ( $post_id ) {
-			wp_set_post_terms( $post_id, get_term( $term_id )->name, 'pl_classified_specification', true );
-		} );
+		array_walk(
+			$specifications,
+			function( $term_id ) use ( $post_id ) {
+				wp_set_post_terms( $post_id, get_term( $term_id )->name, 'pl_classified_specification', true );
+			}
+		);
 
 		/**
 		 * Attach images to ad.
 		 */
-		$attachments_old = get_post_meta( $post_id, 'images' ) ?? [];
-		$attachments_new = get_posts( [
-			'post_type' => 'attachment',
-			'meta_key' => 'salt',
-			'meta_value' => $salt,
-		] );
+		$attachments_old = get_post_meta( $post_id, 'images' ) ?? array();
+		$attachments_new = get_posts(
+			array(
+				'post_type'  => 'attachment',
+				'meta_key'   => 'salt',
+				'meta_value' => $salt,
+			)
+		);
 		foreach ( $attachments_new as $attachment_new ) {
 			/**
 			 * Add image.
@@ -251,11 +269,13 @@ Class Form {
 			/**
 			 * Attach to parent.
 			 */
-			wp_update_post( [
-				'ID' => $attachment_new->ID,
-				'post_parent' => $post_id,
-				'post_author' => $user->ID,
-			] );
+			wp_update_post(
+				array(
+					'ID'          => $attachment_new->ID,
+					'post_parent' => $post_id,
+					'post_author' => $user->ID,
+				)
+			);
 			/**
 			 * Remove salt.
 			 */
@@ -290,73 +310,118 @@ Class Form {
 		/**
 		 * Generate form.
 		 */
-		$locations = [];
+		$locations = array();
 		$this->getHierarchicalTerms( 'pl_classified_location', $locations );
-		$categories = [];
+		$categories = array();
 		$this->getHierarchicalTerms( 'pl_classified_category', $categories );
-		$specifications = [];
-		$this->getHierarchicalTerms( 'pl_classified_specification', $specifications, 0, function( $term ) {
-			$term_options = get_option( 'taxonomy_term_' . $term->term_id );
-			if ( array_key_exists( 'specification', $term_options ) && array_key_exists( 'value', $term_options ) ) {
-				return sprintf( '%1$s %2$s %3$s'
-					, $term_options[ 'specification' ]
-					, __( '→', 'wpmyads' )
-					, $term_options[ 'value' ]
-				);
+		$specifications = array();
+		$this->getHierarchicalTerms(
+			'pl_classified_specification',
+			$specifications,
+			0,
+			function( $term ) {
+				$term_options = get_option( 'taxonomy_term_' . $term->term_id );
+				if ( array_key_exists( 'specification', $term_options ) && array_key_exists( 'value', $term_options ) ) {
+					return sprintf(
+						'%1$s %2$s %3$s',
+						$term_options['specification'],
+						__( '→', 'wpmyads' ),
+						$term_options['value']
+					);
+				}
 			}
-		} );
-		return $this->form( ''
+		);
+		return $this->form(
+			''
 			. $this->separator()
 			. $this->heading( __( 'Contact Information', 'wpmyads' ) )
-			. $this->text( 'name', __( 'Name*', 'wpmyads' ), [
-				'required' => true,
-				'value' => is_user_logged_in()
-					? wp_get_current_user()->data->display_name
-					: ''
-			] )
-			. ( ! is_user_logged_in()
-				? $this->email( 'email', __( 'Email*', 'wpmyads' ), [
-					'data-disallow-space' => true,
-					'email' => true,
+			. $this->text(
+				'name',
+				__( 'Name*', 'wpmyads' ),
+				array(
 					'required' => true,
-				] )
+					'value'    => is_user_logged_in()
+						? wp_get_current_user()->data->display_name
+						: '',
+				)
+			)
+			. ( ! is_user_logged_in()
+				? $this->email(
+					'email',
+					__( 'Email*', 'wpmyads' ),
+					array(
+						'data-disallow-space' => true,
+						'email'               => true,
+						'required'            => true,
+					)
+				)
 				: ''
 			)
-			. $this->text( 'phone', __( 'Phone*', 'wpmyads' ), [
-				'data-disallow-non-digit' => true,
-				'data-disallow-space' => true,
-				'maxlength' => 10,
-				'minlength' => 10,
-				'required' => true,
-			] )
+			. $this->text(
+				'phone',
+				__( 'Phone*', 'wpmyads' ),
+				array(
+					'data-disallow-non-digit' => true,
+					'data-disallow-space'     => true,
+					'maxlength'               => 10,
+					'minlength'               => 10,
+					'required'                => true,
+				)
+			)
 			. $this->separator()
 			. $this->heading( __( 'Media', 'wpmyads' ) )
 			. $this->uppy( $this->uploadElementId, __( 'Images*', 'wpmyads' ) )
 			. $this->separator()
 			. $this->heading( __( 'Ad Information', 'wpmyads' ) )
-			. $this->text( 'title', __( 'Title*', 'wpmyads' ), [
-				'required' => true,
-			] )
-			. $this->select( 'location', __( 'Location*', 'wpmyads' ), $locations, __( 'Choose...', 'wpmyads' ), [
-				'data-use-select2' => true,
-				'required' => true,
-			] )
-			. $this->select( 'category', __( 'Category*', 'wpmyads' ), $categories, __( 'Choose...', 'wpmyads' ), [
-				'required' => true,
-				'data-controls' => $this->formElementId . '-specifications',
-				'data-use-select2' => true,
-			] )
-			. $this->select( 'specifications', __( 'Specifications*', 'wpmyads' ), $specifications, null, [
-				'data-use-select2' => true,
-				'data-group-by' => 'specification',
-				// 'required' => true,
-				'multiple' => true,
-			] )
-			. $this->textarea( 'description', __( 'Description*', 'wpmyads' ), [
-				'data-disallow-excessive-line-breaks' => true,
-				'minlength' => 50,
-				'required' => true,
-			] )
+			. $this->text(
+				'title',
+				__( 'Title*', 'wpmyads' ),
+				array(
+					'required' => true,
+				)
+			)
+			. $this->select(
+				'location',
+				__( 'Location*', 'wpmyads' ),
+				$locations,
+				__( 'Choose...', 'wpmyads' ),
+				array(
+					'data-use-select2' => true,
+					'required'         => true,
+				)
+			)
+			. $this->select(
+				'category',
+				__( 'Category*', 'wpmyads' ),
+				$categories,
+				__( 'Choose...', 'wpmyads' ),
+				array(
+					'required'         => true,
+					'data-controls'    => $this->formElementId . '-specifications',
+					'data-use-select2' => true,
+				)
+			)
+			. $this->select(
+				'specifications',
+				__( 'Specifications*', 'wpmyads' ),
+				$specifications,
+				null,
+				array(
+					'data-use-select2' => true,
+					'data-group-by'    => 'specification',
+					// 'required' => true,
+					'multiple'         => true,
+				)
+			)
+			. $this->textarea(
+				'description',
+				__( 'Description*', 'wpmyads' ),
+				array(
+					'data-disallow-excessive-line-breaks' => true,
+					'minlength'                           => 50,
+					'required'                            => true,
+				)
+			)
 			. $this->separator()
 			. $this->salt( 'salt' )
 			. $this->hidden( 'action', $this->ajaxActionForAdSubmission, true )
@@ -373,24 +438,24 @@ Class Form {
 		return apply_filters( 'pl_classifieds_form_separator_format', '<hr>' );
 	}
 
-	private function text( $name, $title, $args = [] ) {
+	private function text( $name, $title, $args = array() ) {
 		return $this->input( $name, $title, 'text', $args );
 	}
 
-	private function email( $name, $title, $args = [] ) {
+	private function email( $name, $title, $args = array() ) {
 		return $this->input( $name, $title, 'email', $args );
 	}
 
 	private function args2HtmlParameters( $args ) {
-		$output = [];
+		$output = array();
 		foreach ( $args as $k => $v ) {
 			$output[] = sprintf( '%1$s="%2$s"', $k, esc_html( $v ) );
 		}
 		return implode( ' ', $output );
 	}
 
-	private function input( $name, $title, $type = 'text', $args = [] ) {
-		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
+	private function input( $name, $title, $type = 'text', $args = array() ) {
+		$name   = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_input_format', '<p><label for="%1$s">%2$s<br><input type="%3$s" id="%1$s" name="%1$s" %4$s/></label></p>' );
 		return sprintf( $format, $name, $title, $type, $this->args2HtmlParameters( $args ) );
 	}
@@ -398,8 +463,7 @@ Class Form {
 	private function hidden( $name, $value, $raw = false ) {
 		$name = $raw
 			? $name
-			: sprintf( '%1$s-%2$s', $this->formElementId, $name )
-		;
+			: sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		return sprintf( '<input type="hidden" id="%1$s" name="%1$s" value="%2$s" />', $name, $value );
 	}
 
@@ -408,29 +472,33 @@ Class Form {
 	}
 
 	private function textarea( $name, $title, $args ) {
-		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
+		$name   = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_textarea_format', '<p><label for="%1$s">%2$s<br><textarea id="%1$s" name="%1$s" cols="40" rows="5" %3$s></textarea></label></p>' );
 		return sprintf( $format, $name, $title, $this->args2HtmlParameters( $args ) );
 	}
 
 	private function wpEditor( $name, $title ) {
-		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
+		$name   = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_wpeditor_format', '<p><label for="%1$s">%2$s<br>%3$s</label></p>' );
 		ob_start();
-		wp_editor( '', $name, [
-			'media_buttons' => false,
-			'quicktags' => false,
-			'teeny' => true,
-			'textarea_rows' => 6,
-		] );
+		wp_editor(
+			'',
+			$name,
+			array(
+				'media_buttons' => false,
+				'quicktags'     => false,
+				'teeny'         => true,
+				'textarea_rows' => 6,
+			)
+		);
 		$editor = ob_get_clean();
 		return sprintf( $format, $name, $title, $editor );
 	}
 
-	private function select( $name, $title, $options, $emptyOptionText = null, $args = [] ) {
+	private function select( $name, $title, $options, $emptyOptionText = null, $args = array() ) {
 		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
-		$id = $name;
-		if ( $args[ 'multiple' ] ?? false ) {
+		$id   = $name;
+		if ( $args['multiple'] ?? false ) {
 			$name .= '[]';
 		}
 
@@ -438,28 +506,32 @@ Class Form {
 
 		$options_html = is_null( $emptyOptionText ) ? '' : '<option value="">' . $emptyOptionText . '</option>';
 
-		array_walk( $options, function( $value, $index ) use( &$options_html ) {
-			$name = is_array( $value ) ? $value[ 'name' ] : $value;
-			$slug = is_array( $value ) ? $value[ 'slug' ] : '';
-			$data = '';
-			if ( is_array( $value ) && array_key_exists( 'options', $value ) && is_array( $value[ 'options' ] ) ) {
-				foreach ( $value[ 'options' ] as $option_name => $option_value ) {
-					if ( is_numeric( $option_name ) ) {
-						continue;
+		array_walk(
+			$options,
+			function( $value, $index ) use ( &$options_html ) {
+				$name = is_array( $value ) ? $value['name'] : $value;
+				$slug = is_array( $value ) ? $value['slug'] : '';
+				$data = '';
+				if ( is_array( $value ) && array_key_exists( 'options', $value ) && is_array( $value['options'] ) ) {
+					foreach ( $value['options'] as $option_name => $option_value ) {
+						if ( is_numeric( $option_name ) ) {
+							continue;
+						}
+						$data .= sprintf( ' data-%1$s="%2$s"', $option_name, substr( md5( (string) $option_value ), 0, 7 ) );
 					}
-					$data .= sprintf( ' data-%1$s="%2$s"', $option_name, substr( md5( ( string ) $option_value ), 0, 7 ) );
 				}
+				$options_html .= sprintf(
+					"\n" . '<option value="%1$s" data-slug="%2$s"%3$s>%4$s</option>',
+					$index,
+					substr( md5( urldecode( $slug ) ), 0, 7 ),
+					$data,
+					$name
+				);
 			}
-			$options_html .= sprintf( "\n" . '<option value="%1$s" data-slug="%2$s"%3$s>%4$s</option>'
-				, $index
-				, substr( md5( urldecode( $slug ) ), 0, 7 )
-				, $data
-				, $name
-			);
-		} );
+		);
 
 		return sprintf( $format, $name, $id, $title, $options_html, $this->args2HtmlParameters( $args ) );
-	} 
+	}
 
 	private function uppy( $name, $title ) {
 		$format = apply_filters( 'pl_classifieds_form_uppy_format', '<div><label for="%1$s">%2$s<br><div id="%1$s"></div></label></div>' );
@@ -467,7 +539,7 @@ Class Form {
 	}
 
 	private function submit( $name, $title ) {
-		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
+		$name   = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$format = apply_filters( 'pl_classifieds_form_submit_format', '<p><input type="submit" id="%1$s" value="%2$s" /></p>' );
 		return apply_filters( 'pl_classifieds_form_input', sprintf( $format, $name, $title ), $name, $title );
 	}
@@ -481,12 +553,15 @@ Class Form {
 
 		static $level = 0;
 
-		$terms = get_terms( $taxonomy, [
-			'hide_empty' => false,
-			'order' => 'ASC',
-			'orderby' => 'name',
-			'parent' => $parent,
-		] );
+		$terms = get_terms(
+			$taxonomy,
+			array(
+				'hide_empty' => false,
+				'order'      => 'ASC',
+				'orderby'    => 'name',
+				'parent'     => $parent,
+			)
+		);
 
 		if ( ! $name_cb ) {
 			$name_cb = function( $term ) {
@@ -495,15 +570,18 @@ Class Form {
 		}
 
 		foreach ( $terms  as $term ) {
-			$ret[ $term->term_id ] = [
-				'name' => trim( str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term ) ),
-				'slug' => $term->slug,
-				'options' => get_option( 'taxonomy_term_' . $term->term_id ) ?? [],
-			];
-			$child_terms = get_terms( $taxonomy, [
-				'hide_empty' => false,
-				'parent' => $term->term_id,
-			] );
+			$ret[ $term->term_id ] = array(
+				'name'    => trim( str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term ) ),
+				'slug'    => $term->slug,
+				'options' => get_option( 'taxonomy_term_' . $term->term_id ) ?? array(),
+			);
+			$child_terms           = get_terms(
+				$taxonomy,
+				array(
+					'hide_empty' => false,
+					'parent'     => $term->term_id,
+				)
+			);
 			if ( $child_terms ) {
 				$level++;
 				$this->getHierarchicalTerms( $taxonomy, $ret, $term->term_id, $name_cb );
