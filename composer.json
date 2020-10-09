@@ -10,7 +10,7 @@
     "autoload": {
         "files": [
             "vendor/cmb2/cmb2/init.php",
-            "src/form.php"
+            "src/class-form.php"
         ]
     },
     "require": {
@@ -21,10 +21,12 @@
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "wptrt/wpthemereview": "^0.2.1",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "phpdocumentor/phpdocumentor": "^2.9"
     },
     "scripts": {
         "lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-        "lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor ."
+        "lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
+        "docs": "phpdoc run -d src -t docs"
     }
 }

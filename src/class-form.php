@@ -1,13 +1,36 @@
 <?php
+/**
+ * The main form class.
+ *
+ * @package Plugible\WPMyAds
+ */
 
-namespace Plugible\Classifieds;
+namespace WPMyAds;
 
+/**
+ * The main form class.
+ */
 class Form {
 
-	private $ajaxActionForAdSubmission;
+	/**
+	 * Ajax action for ad submission.
+	 *
+	 * @var string
+	 */
+	private $action_ad_submission;
 
-	private $ajaxActionForImageUpload;
+	/**
+	 * Ajax action for image upload.
+	 *
+	 * @var string
+	 */
+	private $action_image_upload;
 
+	/**
+	 * Enable debugging.
+	 *
+	 * @var boolean
+	 */
 	private $dubug = false;
 
 	private $shortcode;
@@ -29,8 +52,8 @@ class Form {
 		$this->debug                     = (bool) constant( 'WP_DEBUG' );
 		$this->plugin                    = $plugin;
 		$this->settingsObjectName        = $plugin->plugin_slug;
-		$this->ajaxActionForAdSubmission = $plugin->plugin_slug . '-action-submit-ad';
-		$this->ajaxActionForImageUpload  = $plugin->plugin_slug . '-action-upload-image';
+		$this->action_ad_submission = $plugin->plugin_slug . '-action-submit-ad';
+		$this->action_image_upload  = $plugin->plugin_slug . '-action-upload-image';
 		$this->formElementId             = $plugin->plugin_slug . '-form';
 		$this->uploadElementId           = sprintf( '%1$s-%2$s', $this->formElementId, $this->uploadElementSuffix );
 		$this->shortcode                 = $plugin->plugin_slug . '-form';
@@ -43,10 +66,10 @@ class Form {
 		/**
 		 * Ajax.
 		 */
-		add_action( 'wp_ajax_' . $this->ajaxActionForAdSubmission, array( $this, 'ajaxAdSubmission' ) );
-		add_action( 'wp_ajax_' . $this->ajaxActionForImageUpload, array( $this, 'ajaxImageUpload' ) );
-		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForAdSubmission, array( $this, 'ajaxAdSubmission' ) );
-		add_action( 'wp_ajax_nopriv_' . $this->ajaxActionForImageUpload, array( $this, 'ajaxImageUpload' ) );
+		add_action( 'wp_ajax_' . $this->action_ad_submission, array( $this, 'ajaxAdSubmission' ) );
+		add_action( 'wp_ajax_' . $this->action_image_upload, array( $this, 'ajaxImageUpload' ) );
+		add_action( 'wp_ajax_nopriv_' . $this->action_ad_submission, array( $this, 'ajaxAdSubmission' ) );
+		add_action( 'wp_ajax_nopriv_' . $this->action_image_upload, array( $this, 'ajaxImageUpload' ) );
 
 		/**
 		 * Localize.
@@ -64,7 +87,7 @@ class Form {
 			$args['l10n'] ?? array(),
 			array(
 				'form' => array(
-					'ajaxActionForImageUpload' => $this->ajaxActionForImageUpload,
+					'action_image_upload' => $this->action_image_upload,
 					'debug'                    => $this->debug,
 					'endpoint'                 => admin_url( 'admin-ajax.php' ),
 					'formElementId'            => $this->formElementId,
@@ -424,7 +447,7 @@ class Form {
 			)
 			. $this->separator()
 			. $this->salt( 'salt' )
-			. $this->hidden( 'action', $this->ajaxActionForAdSubmission, true )
+			. $this->hidden( 'action', $this->action_ad_submission, true )
 			. $this->submit( 'submit', __( 'Submit', 'wpmyads' ) )
 		);
 	}
@@ -573,7 +596,7 @@ class Form {
 			$ret[ $term->term_id ] = array(
 				'name'    => trim( str_repeat( '&mdash;', $level ) . ' ' . $name_cb( $term ) ),
 				'slug'    => $term->slug,
-				'options' => get_option( 'taxonomy_term_' . $term->term_id ) ?? array(),
+				'options' => get_option( 'taxonomy_term_' . $term->term_id, array() ),
 			);
 			$child_terms           = get_terms(
 				$taxonomy,
