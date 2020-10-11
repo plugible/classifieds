@@ -12,7 +12,7 @@ add_shortcode( 'plcl_ads', function( $atts, $content, $shortcode_tag ) {
 		'categories'     => '',
 		'locations'      => '',
 		'specifications' => '',
-	], $atts, 'plcl_list' );
+	], $atts, 'plcl_ads' );
 	ksort( $atts );
 
 	/**
