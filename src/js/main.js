@@ -21,9 +21,17 @@
 	/**
 	 * Gallery.
 	 */
-	const $gallery = $( `.${appSettings.objectName}_gallery_enhanced` );
+	const $gallery = $( `.${appSettings.objectName}_gallery` );
 	if ( $gallery.length ) {
 		( async () => await import(/* webpackChunkName: "gallery" */ './gallery.js' ))();
+	}
+
+	/**
+	 * Gallery Enhanced.
+	 */
+	const $galleryEnhanced = $( `.${appSettings.objectName}_gallery_enhanced` );
+	if ( $gallery.length ) {
+		( async () => await import(/* webpackChunkName: "gallery-enhanced" */ './gallery-enhanced.js' ))();
 	}
 
 	/**
