@@ -263,12 +263,14 @@ add_action( 'cmb2_save_field_' . 'images', function( $updated, $action, $field )
 	/**
 	 * Add added.
 	 */
-	foreach ( $attachments_new as $attachment_new_id ) {
-		if ( ! array_key_exists( ( int ) $attachment_new_id, $attachments_old ) ) {
-			wp_update_post( [
-				'ID' => $attachment_new_id,
-				'post_parent' => $post_id,
-			] );
+	if ( $attachments_new ) {
+		foreach ( $attachments_new as $attachment_new_id ) {
+			if ( ! array_key_exists( ( int ) $attachment_new_id, $attachments_old ) ) {
+				wp_update_post( [
+					'ID' => $attachment_new_id,
+					'post_parent' => $post_id,
+				] );
+			}
 		}
 	}
 }, 10, 4 );

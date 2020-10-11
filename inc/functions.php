@@ -105,13 +105,11 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 		],
 	], $args );
 
-	$images = get_posts( [ 
-		'post_type' => 'attachment',
-		'post_mime_type' => 'image',
-		'numberposts' => $number,
-		'post_status' => null,
-		'post_parent' => $post_id,
-	] );
+	$tmp = ( array ) get_post_meta( $post_id, 'images', true );
+	$images = [];
+	foreach ( $tmp as $id => $url ) {
+		$images[] = get_post( $id );
+	}
 
 	if ( ! $images ) {
 		return;
