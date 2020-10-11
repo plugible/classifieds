@@ -1,6 +1,6 @@
 <?php global $post; ?>
 
-<?php plcl_classified_gallery( $post->ID, 1 ); ?>
+<?php plcl_classified_gallery( $post->ID ); ?>
 
 <?php echo wpautop( $post->post_content ); ?>
 
