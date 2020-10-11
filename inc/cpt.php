@@ -264,7 +264,7 @@ add_action( 'cmb2_save_field_' . 'images', function( $updated, $action, $field )
 	 * Add added.
 	 */
 	if ( $attachments_new ) {
-		foreach ( $attachments_new as $attachment_new_id ) {
+		foreach ( $attachments_new as $attachment_new_id => $url ) {
 			if ( ! array_key_exists( ( int ) $attachment_new_id, $attachments_old ) ) {
 				wp_update_post( [
 					'ID' => $attachment_new_id,
