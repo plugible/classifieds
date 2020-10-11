@@ -6,7 +6,7 @@ add_action( 'pre_get_posts', function( $query ) {
 		return $query;
 	}
 
-	$filters = [ 
+	$filters_taxonomies = [ 
 		'locations' => 'pl_classified_location',
 		'specifications' => 'pl_classified_specification',
 	];
@@ -26,7 +26,7 @@ add_action( 'pre_get_posts', function( $query ) {
 	}
 
 	$tax_query = [];
-	foreach ( $filters as $key => $taxonomy ) {
+	foreach ( $filters_taxonomies as $key => $taxonomy ) {
 		/**
 		 * Pass `$_REQUEST[ 'filters' ][ $key ]` through:
 		 * - array_explode
@@ -95,11 +95,118 @@ add_action( 'pre_get_posts', function( $query ) {
 	return $query;
 }, PHP_INT_MIN );
 
-add_action( 'get_the_archive_description', function() {
-	add_action( 'loop_start', function() {
-		plcl_load_template( 'filters.php' );
+/**
+ * Inject the filters above the category title.
+ */
+add_action( 'get_the_archive_title', function() {
+	if ( ! is_tax( 'pl_classified_category' ) ) {
+		return;
+	}
+
+	global $post;
+	global $wp_taxonomies;
+
+	$category = get_queried_object();
+	$filters_taxonomies = [
+		'locations' => 'pl_classified_location',
+		'specifications' => 'pl_classified_specification',
+	];
+
+	$filters = [];
+
+	foreach ( $filters_taxonomies as $key => $taxonomy ) {
+
+		$terms = get_terms( [
+			'taxonomy' => $taxonomy,
+			'hide_empty' => false,
+		] );
+		if ( ! $terms ) {
+			continue;
+		}
+		switch ( $key ) {
+			case 'specifications':
+				/**
+				 * Add options.
+				 */
+				array_walk( $terms, function( &$s ) use ( $terms ) {
+					$s->enabled = in_array( $s->slug, $terms );
+					$s->options = get_option( 'taxonomy_term_' . $s->term_id );
+				} );
+				/**
+				 * Filter out other categories.
+				 */
+				$terms = array_filter( $terms, function( $term ) use ( $category ) {
+					return ( $term->options[ 'scope' ] ?? '' ) === $category->slug;
+				} );
+				/**
+				 * Group
+				 */
+				$groups = [];
+				foreach ( $terms as $term ) {
+					$groups [ $term->options[ 'specification' ] ][] = $term;
+				}
+				/**
+				 * Add all filter details.
+				 */
+				foreach ( $groups as $group => $group_specs ) {
+					$options = [];
+					foreach ( $group_specs as $spec ) {
+						$options[ $spec->slug ] = $spec->options[ 'value' ];
+					}
+					$filters[] = array(
+						'key'     => $key,
+						'title'   => $group,
+						'options' => $options,
+					);
+				}
+				break;
+			default:
+				$options = [];
+				foreach ( $terms as $term ) {
+					$options[ $term->slug ] = $term->name;
+				}
+				$filters[] = array(
+					'key'     => $key,
+					'title'   => $wp_taxonomies[ $taxonomy ]->labels->all_items,
+					'options' => $options,
+				);
+				break;
+		}
+	}
+
+	add_action( 'loop_start', function() use ( $category, $filters ) {
+		plcl_load_template( 'filters.php', array(
+			'category' => $category,
+			'filters'  => $filters,
+		) );
 	} );
 } );
+
+/**
+ * Add options.
+ */
+add_filter( sprintf( '%s::enqueue-asset', wpmyads()->plugin_slug ), function( $args, $path ) {
+	if ( 'dist/js/main.bundle.js' !== $path ) {
+		return $args;
+	}
+
+	$args['l10n'] = array_merge_recursive(
+		$args['l10n'] ?? array(),
+		array(
+			'filters' => array(
+				'filtersElementId' => wpmyads()->plugin_slug . '-filters',
+				'perLine'          => array(
+					'(max-width: 575px)'                         => 1,
+					'(min-width: 576px) and (max-width: 767px)'  => 2,
+					'(min-width: 768px) and (max-width: 991px)'  => 3,
+					'(min-width: 992px) and (max-width: 1199px)' => 4,
+					'(min-width: 1200px)'                        => 6,
+				),
+			),
+		)
+	);
+	return $args;
+}, 10, 2 );
 
 /**
  * Override 404.

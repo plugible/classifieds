@@ -23,6 +23,11 @@ function plcl_load_template( $template, $data = [], $return = false ) {
 	$output = ob_get_clean();
 
 	/**
+	 * Filter.
+	 */
+	$output = apply_filters( 'plcl_template_output', $output, $template, $data );
+
+	/**
 	 * Done.
 	 */
 	if ( $return ) {

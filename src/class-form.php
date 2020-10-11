@@ -83,7 +83,7 @@ class Form {
 			return $args;
 		}
 
-		$args['l10n'] = array_merge(
+		$args['l10n'] = array_merge_recursive(
 			$args['l10n'] ?? array(),
 			array(
 				'form' => array(
