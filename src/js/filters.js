@@ -11,7 +11,8 @@
 		cssRules.push( `
 			@media ${media} {
 				${filtersSelector} > div > div {
-					max-width: ${width}%; min-width: ${width}%;
+					max-width: ${width}%;
+					min-width: ${width}%;
 				}
 			}
 		` );
