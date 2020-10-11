@@ -246,9 +246,9 @@ add_action( 'cmb2_save_field_' . 'images', function( $updated, $action, $field )
 
 	$attachments_new = $field->get_data();
 	$attachments_old = get_posts( [
-		'post_type' => 'attachment',
+		'post_type'   => 'attachment',
 		'post_parent' => $post_id,
-		'fields' => 'ids',
+		'fields'      => 'ids',
 	] );
 
 	/**
@@ -267,7 +267,7 @@ add_action( 'cmb2_save_field_' . 'images', function( $updated, $action, $field )
 		foreach ( $attachments_new as $attachment_new_id => $url ) {
 			if ( ! array_key_exists( ( int ) $attachment_new_id, $attachments_old ) ) {
 				wp_update_post( [
-					'ID' => $attachment_new_id,
+					'ID'          => $attachment_new_id,
 					'post_parent' => $post_id,
 				] );
 			}
