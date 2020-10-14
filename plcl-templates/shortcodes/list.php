@@ -11,6 +11,11 @@ $ads = ! empty( $data[ 'ads' ] ) ? $data[ 'ads' ] : [];
 $hash = ! empty( $data[ 'hash' ] ) ? $data[ 'hash' ] : '';
 
 /**
+ * Prepare gallery's number of items.
+ */
+$gallery_number_of_items = $data[ 'gallery_number_of_items' ] ?? 2;
+
+/**
  * Display Ads.
  */
 if( ! $ads ) {
@@ -21,7 +26,10 @@ if( ! $ads ) {
 <table class="<?php echo apply_filters( 'plcl_table_class', '' ); ?>" id="<?php echo $data[ 'hash' ] ?>">
 	<?php
 	foreach ( $ads as $ad ) {
-		plcl_load_template( 'shortcodes/list-item.php', $ad );
+		plcl_load_template( 'shortcodes/list-item.php', [
+			'ad'                      => $ad,
+			'gallery_number_of_items' => $gallery_number_of_items,
+		] );
 	}
 	?>
 </table>

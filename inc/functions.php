@@ -94,40 +94,50 @@ function plcl_classified_image_count( $post_id ) {
 	] ) );
 }
 
-function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
+function plcl_classified_gallery( int $post_id, int $number = -1, array $args = [] ) {
 
+	if ( $number < 1 ) {
+		$number = -1;
+	}
+
+	/**
+	 * Merge $args with the defaults.
+	 */
 	$args = array_merge( [
 		'enhanced' => true,
 		'linked' => false,
 		'size' => [
-			120,
-			120,
+			150,
+			150,
 		],
 	], $args );
 
-	$tmp = array_slice( ( array ) get_post_meta( $post_id, 'images', true ), 0, $number, true );
-	$images = [];
-	foreach ( $tmp as $id => $url ) {
+	$images                 = [];
+	$all_images             = get_post_meta( $post_id, 'images', true );
+	$first_images           = ( $number >= 1 ) ? array_slice( ( array ) $all_images, 0, $number, true ) : $all_images;
+	$remaining_images_count = 0;
+	foreach ( $first_images as $id => $url ) {
 		$images[] = get_post( $id );
 	}
-
 	if ( ! $images ) {
 		return;
 	}
+	if ( $number >= 1 && count( $all_images ) > $number ) {
+		$remaining_images_count = count( $all_images ) - $number;
+	}
 
-	$permalink = get_permalink( $post_id );
 	$classes = [ sprintf( '%s_gallery', wpmyads()->plugin_slug ) ];
 	if ( $args[ 'enhanced' ] ) {
 		$classes[] = sprintf( '%s_gallery_enhanced', wpmyads()->plugin_slug );
 	}
 
 	?>
-	<div class="<?php echo implode( ' ', $classes ); ?>">
+	<div class="<?php echo implode( ' ', $classes ); ?>" data-remaining-images-count="<?php echo $remaining_images_count; ?>">
 		<?php foreach ( $images as $image ) { ?>
 			<div data-src="<?php echo wp_get_attachment_url( $image->ID ) ?>">
 
 				<?php if ( $args[ 'linked' ] ) { ?>
-					<a href="<?php echo $permalink; ?>"><?php wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
+					<a href="<?php echo get_permalink( $post_id ); ?>"><?php wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
 				<?php } ?>
 
 				<?php echo wp_get_attachment_image( $image->ID, $args[ 'size' ] ) ?>
@@ -135,14 +145,27 @@ function plcl_classified_gallery( $post_id, $number = -1, $args = [] ) {
 				<?php if ( $args[ 'linked' ] ) { ?>
 					</a>
 				<?php } ?>
+
 			</div>
 		<?php } ?>
 	</div>
 	<?php
 }
 
-function plcl_classified_specs( $post_id ) {
-	$specifications = wp_get_post_terms( $post_id, 'pl_classified_specification' );
+/**
+ * Show ad specifications.
+ *
+ * @param int $post_id The ad post id.
+ * @param int $number  The number of rows to show.
+ */
+function plcl_classified_specs( $post_id, $number = PHP_INT_MAX ) {
+
+
+	if ( $number < 1 ) {
+		$number = PHP_INT_MAX;
+	}
+
+	$specifications = wp_get_post_terms( $post_id, 'pl_classified_specification', [ 'orderby' => 'name'] );
 	if ( ! $specifications ) {
 		return;
 	}
@@ -150,20 +173,60 @@ function plcl_classified_specs( $post_id ) {
 	?>
 	<table class="table">
 		<tbody>
-			<?php foreach ( $specifications as $specification ) {
+			<?php
+			$i         = 0;
+			$remaining = 0;
+			foreach ( $specifications as $specification ) {
+
+				$i++;
+
+				/**
+				 * Only show `$number` first rows.
+				 */
+				if ( $number < $i ) {
+					$remaining++;
+					continue;
+				}
+
+				/**
+				 * Get specification
+				 */
 				$meta = get_option( 'taxonomy_term_' . $specification->term_id );
 				if ( false
 					|| ! array_key_exists( 'specification', $meta  )
 					|| ! array_key_exists( 'value', $meta  )
-				){
+				) {
 					continue;
 				}
+
+				/**
+				 * Display specification.
+				 */
 				?>
 				<tr>
 					<th scope="row"><?php echo $meta[ 'specification' ]; ?></th>
 					<td><?php echo $meta[ 'value' ]; ?></td>
 				</tr>
-			<?php } ?>
+				<?php
+			}
+
+			/**
+			 * Display "Show more".
+			 */
+			if ( $remaining ) {
+				?>
+				<tr>
+					<td colspan="2"><a href="<?php the_permalink( $post_id ) ?>"><?php echo _nx(
+						sprintf( '+%d more specification', $remaining ),
+						sprintf( '+%d more specifications', $remaining ),
+						$remaining,
+						'x'
+					);?></a></td>
+				</tr>
+				<?php
+			}
+
+			?>
 		</tbody>
 	</table>
 	<?php
@@ -180,11 +243,11 @@ function plcl_classified_terms( $post_id, $taxonomy, $format = 'linear' ) {
 			// Nothing.
 			break;
 		default:
-			$tmp = [];
+			$first_images = [];
 			foreach ( $terms as $term ) {
-				$tmp[] = $term->name;
+				$first_images[] = $term->name;
 			}
-			echo implode( __( ', ', 'classifieds-theme-by-plugible' ),  $tmp );
+			echo implode( __( ', ', 'classifieds-theme-by-plugible' ),  $first_images );
 			break;
 	}
 }

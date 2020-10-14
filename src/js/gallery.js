@@ -1,61 +1,72 @@
-(async function () {
-	const $ = window.jQuery;
+( async function () {
+
+	const $           = window.jQuery;
 	const appSettings = window[ require( './settings.js' ).settingsObjectName ];
 
-	await import(/* webpackChunkName: "lightgallery.all" */ 'lightgallery.js/dist/css/lightgallery.min.css' );
-	await import(/* webpackChunkName: "lightgallery.all" */ 'lightgallery.js' );
-	await import(/* webpackChunkName: "lightgallery.all" */ 'lg-fullscreen.js' );
-	await import(/* webpackChunkName: "lightgallery.all" */ 'lg-thumbnail.js' );
-	await import(/* webpackChunkName: "lightgallery.all" */ 'lg-video.js' );
-	await import(/* webpackChunkName: "lightgallery.all" */ 'lg-zoom.js' );
+	const $galleries  = $( `.${appSettings.objectName}_gallery` );
 
-	const $gallery = $( `.${appSettings.objectName}_gallery_enhanced` );
+	/**
+	 * Converts text to data URL.
+	 * @param  string text   Text.
+	 * @param  string width  Image width.
+	 * @param  string height Image height.
+	 * @return string        Image data URL.
+	 */
+	const text2pngURL = ( text, width, height ) => {
+		/*
+		 *Create SVG and prepare it for drawing in 2d.
+		 */
+		var canvas = $( `<canvas width="${width}" height="${height}">` ).get( 0 );
+		var context = canvas.getContext('2d');
 
-	$gallery.each( function() {
-		lightGallery( this, {
-			download: false,
-			hideBarsDelay: 3000,
-			mode: 'lg-fade',
-			thumbnail: true,
-		} );
+		/**
+		 * Draw Background.
+		 */
+		context.fillStyle = '#444';
+		context.fillRect( 0, 0, width, height );
+
+		/**
+		 * Draw Text.
+		 */
+		context.textAlign = 'center';
+		context.fillStyle = '#FFF';
+		context.font      = `normal ${ width / 3 }px Sans`;
+		context.fillText( text
+			, width / 2
+			, height * 2 / 3
+		);
+
+		/**
+		 * Return data URL.
+		 */
+		return canvas.toDataURL( 'image/png' );
+	};
+
+	/**
+	 * Add remaining image count.
+	 */
+	$galleries.each( function() {
+		const $this     = $( this );
+		const remaining = $this.data( 'remaining-images-count' );
+		if ( ! remaining ) {
+			return;
+		}
+		const url    = $( 'a', $this).first().attr( 'href' );
+		const width  = $( 'img', $this).first().width()
+		const height = $( 'img', $this).first().height()
+		const src    = text2pngURL( `+${remaining}`, width, height );
+
+		if ( url ) {
+			$this.append( $( `<div class="remaining-images-count"><a href="${url}"><img src="${src}"></a></div>` ) );
+		} else {
+			$this.append( $( `<div class="remaining-images-count"><img src="${src}"></div>` ) );
+		}
 	} );
 
 	$( 'html > head').append( `<style>
-		.${appSettings.objectName}_gallery_enhanced > div {
-			cursor: pointer;
-		}
-		.lg  {
-			background: black;
-			border-width: 10px;
-			border-color: rgba( 255, 255, 255, 0.25);
-			border-style: solid;
-		}
-		.lg-outer {
-			z-index: 100000;
-		}
-		html[dir=rtl] .lg-icon {
-			float: left;
-		}
-		html[dir=rtl] .lg-toggle-thumb {
-			left: 20px;
-			right: initial;
-		}
-		html[dir=rtl] .lg-thumb-item {
-			float: right;
-		}
-		html[dir=rtl] #lg-counter {
-			padding-left: 0;
-			padding-right: 20px;
-		}
-		html[dir=rtl] .lg-actions .lg-prev {
-			right: 20px;
-			left: initial;
-			transform: rotateY( 180deg );
-		}
-		html[dir=rtl] .lg-actions .lg-next {
-			right: initial;
-			left: 20px;
-			transform: rotateY( 180deg );
+		.${appSettings.objectName}_gallery > div {
+			display: inline-block;
+			margin-bottom: .5rem;
 		}
 	</style>` );
-} )();
+}() );

@@ -1,9 +1,17 @@
-<?php global $post; ?>
+<?php
+
+global $post;
+$phone = apply_filters( 'plcl_phone', get_post_meta( $post->ID, 'phone', true ) );
+
+?>
 
 <?php plcl_classified_gallery( $post->ID ); ?>
 
-<h2><?php _e( 'Description' ); ?></h2>
 <?php echo wpautop( $post->post_content ); ?>
 
-<h2><?php _e( 'Specs' ); ?></h2>
+<h2><?php _e( 'Specifications' ); ?></h2>
 <?php plcl_classified_specs( $post->ID ); ?>
+
+<h2><?php _e( 'Contact Information' ); ?></h2>
+
+<p><?php printf( '☎ %s', $phone ); ?></p>
