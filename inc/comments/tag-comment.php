@@ -27,7 +27,11 @@ add_action( 'pl_classified_loaded', function() {
 		global $post;
 		$name = plcl_get_param( 'discussion' );
 		$value = $_REQUEST[ $name ] ?? '';
-		printf( '<input name="%1$s" value="%2$s">', $name, $value );
+		printf( '<input type="%1$s" name="%2$s" value="%3$s">'
+			, constant( 'WP_DEBUG' ) ? 'text' : 'hidden'
+			, $name
+			, $value
+		);
 	} );
 } );
 

@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
+if ( ! constant( 'WP_DEBUG' ) ) {
 	return;
 }
 
