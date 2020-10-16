@@ -145,6 +145,7 @@ add_shortcode( 'plcl_ads', function( $atts, $content, $shortcode_tag ) {
 			'post_status'    => 'publish',
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
+			'tax_query'      => $tax_query,
 		] ) ) / $atts[ 'ads_per_page' ] );
 	}
 
