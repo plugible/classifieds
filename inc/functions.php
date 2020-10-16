@@ -113,7 +113,7 @@ function plcl_classified_gallery( int $post_id, int $number = -1, array $args = 
 	], $args );
 
 	$images                 = [];
-	$all_images             = get_post_meta( $post_id, 'images', true );
+	$all_images             = ( array ) get_post_meta( $post_id, 'images', true );
 	$first_images           = ( $number >= 1 ) ? array_slice( ( array ) $all_images, 0, $number, true ) : $all_images;
 	$remaining_images_count = 0;
 	foreach ( $first_images as $id => $url ) {
