@@ -386,7 +386,7 @@ class Form {
 				array(
 					'data-disallow-non-digit' => true,
 					'data-disallow-space'     => true,
-					'maxlength'               => 10,
+					'maxlength'               => 15,
 					'minlength'               => 10,
 					'required'                => true,
 				)
