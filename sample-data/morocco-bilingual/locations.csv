@@ -1,13 +1,19 @@
 name,slug,language,original
+,,,
 Agadir,agadir,fr,
 أكادير,أكادير,ar,agadir
+,,,
 Casablanca,casablanca,fr,
 الدار البيضاء,الدار البيضاء,ar,casablanca
+,,,
 Rabat,rabat,fr,
 الرباط,الرباط,ar,rabat
+,,,
 Fès,fès,fr,
 فاس,فاس,ar,fès
+,,,
 Meknès,meknès,fr,
 مكناس,مكناس,ar,meknès
+,,,
 Marrakech,marrakech,fr,
 مراكش,مراكش,ar,marrakech

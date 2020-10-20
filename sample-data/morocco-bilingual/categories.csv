@@ -1,5 +1,23 @@
-name,language,original
-Voitures,fr,
-سيارات,ar,voitures
-Immobilier,fr,
-عقارات,ar,immobilier
+name,language,parent,original
+,,,
+               Véhicules,fr,,
+                Voitures,fr,vehicules,
+                   Motos,fr,vehicules,
+                   Vélos,fr,vehicules,
+Véhicules Professionnels,fr,vehicules,
+   Pièces pour Véhicules,fr,vehicules,
+,,,
+             عربات,ar,     ,vehicules
+            سيارات,ar,عربات,voitures
+      دراجات نارية,ar,عربات,motos
+            دراجات,ar,عربات,velos
+       عربات مهنية,ar,عربات,vehicules-professionnels
+قطع الغيار للعربات,ar,عربات,pieces-pour-vehicules
+,,,
+  Immobilier,fr,,
+Appartements,fr,immobilier,
+      Villas,fr,immobilier,
+,,,
+ عقار,ar,    ,immobilier
+  شقق,ar,عقار,appartements
+فيلات,ar,عقار,villas
