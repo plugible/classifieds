@@ -1,0 +1,253 @@
+name,specification,value,scope,language,original
+,,,,,
+voitures-carburant-électricité,voitures,Carburant,Électricité,fr,
+voitures-carburant-essence    ,voitures,Carburant,Essence    ,fr,
+voitures-carburant-gasoil     ,voitures,Carburant,Gasoil     ,fr,
+voitures-carburant-hybride    ,voitures,Carburant,Hybride    ,fr,
+,,,,,
+سيارات-وقود-كهرباء,وقود,كهرباء,سيارات,ar,voitures-carburant-électricité
+سيارات-وقود-بنزين ,وقود,بنزين ,سيارات,ar,voitures-carburant-essence
+سيارات-وقود-ديزل  ,وقود,ديزل  ,سيارات,ar,voitures-carburant-gasoil
+سيارات-وقود-هجين  ,وقود,هجين  ,سيارات,ar,voitures-carburant-hybride
+,,,,,
+voitures-kilométrage-0            ,Kilométrage,      0 km          ,voitures,fr,
+voitures-kilométrage-000001-050000,Kilométrage,      1 à 50 000 km ,voitures,fr,
+voitures-kilométrage-050001-100000,Kilométrage, 50 001 à 100 000 km,voitures,fr,
+voitures-kilométrage-100001-150000,Kilométrage,100 001 à 150 000 km,voitures,fr,
+voitures-kilométrage-150001-200000,Kilométrage,150 001 à 200 000 km,voitures,fr,
+voitures-kilométrage-200001-∞     ,Kilométrage,200 001 km ou plus  ,voitures,fr,
+,,,,,
+سيارات-مسافة-0            ,مسافة,      0 كم            ,سيارات,ar,voitures-kilométrage-0
+سيارات-مسافة-000001-050000,مسافة,      1 إلى 50 000 كم ,سيارات,ar,voitures-kilométrage-000001-050000
+سيارات-مسافة-050001-100000,مسافة, 50 001 إلى 100 000 كم,سيارات,ar,voitures-kilométrage-050001-100000
+سيارات-مسافة-100001-150000,مسافة,100 001 إلى 150 000 كم,سيارات,ar,voitures-kilométrage-100001-150000
+سيارات-مسافة-150001-200000,مسافة,150 001 إلى 200 000 كم,سيارات,ar,voitures-kilométrage-150001-200000
+سيارات-مسافة-200001-∞     ,مسافة,200 001 كم أو أكثر    ,سيارات,ar,voitures-kilométrage-200001-∞
+,,,,,
+voitures-marque-citroën   ,Marque,Citroën   ,voitures,fr,
+voitures-marque-dacia     ,Marque,Dacia     ,voitures,fr,
+voitures-marque-fiat      ,Marque,Fiat      ,voitures,fr,
+voitures-marque-ford      ,Marque,Ford      ,voitures,fr,
+voitures-marque-hyundai   ,Marque,Hyundai   ,voitures,fr,
+voitures-marque-nissan    ,Marque,Nissan    ,voitures,fr,
+voitures-marque-peugeot   ,Marque,Peugeot   ,voitures,fr,
+voitures-marque-renault   ,Marque,Renault   ,voitures,fr,
+voitures-marque-toyota    ,Marque,Toyota    ,voitures,fr,
+voitures-marque-volkswagen,Marque,Volkswagen,voitures,fr,
+,,,,,
+سيارات-علامة-سيتروين  ,علامة تجارية,سيتروين  ,سيارات,ar,voitures-marque-citroën
+سيارات-علامة-داسيا    ,علامة تجارية,داسيا    ,سيارات,ar,voitures-marque-dacia
+سيارات-علامة-فيات     ,علامة تجارية,فيات     ,سيارات,ar,voitures-marque-fiat
+سيارات-علامة-فورد     ,علامة تجارية,فورد     ,سيارات,ar,voitures-marque-ford
+سيارات-علامة-هيونداي  ,علامة تجارية,هيونداي  ,سيارات,ar,voitures-marque-hyundai
+سيارات-علامة-نيسان    ,علامة تجارية,نيسان    ,سيارات,ar,voitures-marque-nissan
+سيارات-علامة-بيجو     ,علامة تجارية,بيجو     ,سيارات,ar,voitures-marque-peugeot
+سيارات-علامة-رينو     ,علامة تجارية,رينو     ,سيارات,ar,voitures-marque-renault
+سيارات-علامة-تويوتا   ,علامة تجارية,تويوتا   ,سيارات,ar,voitures-marque-toyota
+سيارات-علامة-فولكسفاغن,علامة تجارية,فولكسفاغن,سيارات,ar,voitures-marque-volkswagen
+,,,,,
+voitures-année-1999-0000,Année,1999 ou avant,voitures,fr,
+voitures-année-2000     ,Année,2000         ,voitures,fr,
+voitures-année-2001     ,Année,2001         ,voitures,fr,
+voitures-année-2002     ,Année,2002         ,voitures,fr,
+voitures-année-2003     ,Année,2003         ,voitures,fr,
+voitures-année-2004     ,Année,2004         ,voitures,fr,
+voitures-année-2005     ,Année,2005         ,voitures,fr,
+voitures-année-2006     ,Année,2006         ,voitures,fr,
+voitures-année-2007     ,Année,2007         ,voitures,fr,
+voitures-année-2008     ,Année,2008         ,voitures,fr,
+voitures-année-2009     ,Année,2009         ,voitures,fr,
+voitures-année-2010     ,Année,2010         ,voitures,fr,
+voitures-année-2011     ,Année,2011         ,voitures,fr,
+voitures-année-2012     ,Année,2012         ,voitures,fr,
+voitures-année-2013     ,Année,2013         ,voitures,fr,
+voitures-année-2014     ,Année,2014         ,voitures,fr,
+voitures-année-2015     ,Année,2015         ,voitures,fr,
+voitures-année-2016     ,Année,2016         ,voitures,fr,
+voitures-année-2017     ,Année,2017         ,voitures,fr,
+voitures-année-2018     ,Année,2018         ,voitures,fr,
+voitures-année-2019     ,Année,2019         ,voitures,fr,
+voitures-année-2020     ,Année,2020         ,voitures,fr,
+,,,,,
+سيارات-سنة-1999-0000,سنة,1999 أو قبل,سيارات,ar,voitures-année-1999-0000
+سيارات-سنة-2000     ,سنة,2000       ,سيارات,ar,voitures-année-2000
+سيارات-سنة-2001     ,سنة,2001       ,سيارات,ar,voitures-année-2001
+سيارات-سنة-2002     ,سنة,2002       ,سيارات,ar,voitures-année-2002
+سيارات-سنة-2003     ,سنة,2003       ,سيارات,ar,voitures-année-2003
+سيارات-سنة-2004     ,سنة,2004       ,سيارات,ar,voitures-année-2004
+سيارات-سنة-2005     ,سنة,2005       ,سيارات,ar,voitures-année-2005
+سيارات-سنة-2006     ,سنة,2006       ,سيارات,ar,voitures-année-2006
+سيارات-سنة-2007     ,سنة,2007       ,سيارات,ar,voitures-année-2007
+سيارات-سنة-2008     ,سنة,2008       ,سيارات,ar,voitures-année-2008
+سيارات-سنة-2009     ,سنة,2009       ,سيارات,ar,voitures-année-2009
+سيارات-سنة-2010     ,سنة,2010       ,سيارات,ar,voitures-année-2010
+سيارات-سنة-2011     ,سنة,2011       ,سيارات,ar,voitures-année-2011
+سيارات-سنة-2012     ,سنة,2012       ,سيارات,ar,voitures-année-2012
+سيارات-سنة-2013     ,سنة,2013       ,سيارات,ar,voitures-année-2013
+سيارات-سنة-2014     ,سنة,2014       ,سيارات,ar,voitures-année-2014
+سيارات-سنة-2015     ,سنة,2015       ,سيارات,ar,voitures-année-2015
+سيارات-سنة-2016     ,سنة,2016       ,سيارات,ar,voitures-année-2016
+سيارات-سنة-2017     ,سنة,2017       ,سيارات,ar,voitures-année-2017
+سيارات-سنة-2018     ,سنة,2018       ,سيارات,ar,voitures-année-2018
+سيارات-سنة-2019     ,سنة,2019       ,سيارات,ar,voitures-année-2019
+سيارات-سنة-2020     ,سنة,2020       ,سيارات,ar,voitures-année-2020
+,,,,,
+voitures-prix-0000001-0020000,Prix,   20 000 DH ou moins   ,voitures,fr,
+voitures-prix-0020001-0040000,Prix,   20 001 à 40 000 DH   ,voitures,fr,
+voitures-prix-0040001-0060000,Prix,   40 001 à 60 000 DH   ,voitures,fr,
+voitures-prix-0060001-0060000,Prix,   60 001 à 80 000 DH   ,voitures,fr,
+voitures-prix-0080001-0100000,Prix,   80 001 à 100 000 DH  ,voitures,fr,
+voitures-prix-0100001-0150000,Prix,  100 001 à 150 000 DH  ,voitures,fr,
+voitures-prix-0150001-0200000,Prix,  150 001 à 200 000 DH  ,voitures,fr,
+voitures-prix-0200001-0250000,Prix,  200 001 à 250 000 DH  ,voitures,fr,
+voitures-prix-0250001-0300000,Prix,  250 001 à 300 000 DH  ,voitures,fr,
+voitures-prix-0300001-0350000,Prix,  300 001 à 350 000 DH  ,voitures,fr,
+voitures-prix-0350001-0400000,Prix,  350 001 à 400 000 DH  ,voitures,fr,
+voitures-prix-0400001-0450000,Prix,  400 001 à 450 000 DH  ,voitures,fr,
+voitures-prix-0450001-0500000,Prix,  450 001 à 500 000 DH  ,voitures,fr,
+voitures-prix-0500001-1000000,Prix,  500 001 à 1 000 000 DH,voitures,fr,
+voitures-prix-1000001-2000000,Prix,1 000 001 à 2 000 000 DH,voitures,fr,
+voitures-prix-2000001-∞      ,Prix,2 000 001 DH ou plus    ,voitures,fr,
+,,,,,
+سيارات-ثمن-0000001-0020000,ثمن,   20 000 د.م. أو أقل       ,سيارات,ar,voitures-prix-0000001-0020000
+سيارات-ثمن-0020001-0040000,ثمن,   20 001 إلى 40 000 د.م.   ,سيارات,ar,voitures-prix-0020001-0040000 
+سيارات-ثمن-0040001-0060000,ثمن,   40 000 إلى 60 000 د.م.   ,سيارات,ar,voitures-prix-0040001-0060000 
+سيارات-ثمن-0060001-0060000,ثمن,   60 001 إلى 80 000 د.م.   ,سيارات,ar,voitures-prix-0060001-0060000 
+سيارات-ثمن-0080001-0100000,ثمن,   80 001 إلى 100 000 د.م.  ,سيارات,ar,voitures-prix-0080001-0100000 
+سيارات-ثمن-0100001-0150000,ثمن,  100 001 إلى 150 000 د.م.  ,سيارات,ar,voitures-prix-0100001-0150000 
+سيارات-ثمن-0150001-0200000,ثمن,  150 001 إلى 200 000 د.م.  ,سيارات,ar,voitures-prix-0150001-0200000 
+سيارات-ثمن-0200001-0250000,ثمن,  200 001 إلى 250 000 د.م.  ,سيارات,ar,voitures-prix-0200001-0250000 
+سيارات-ثمن-0250001-0300000,ثمن,  250 001 إلى 300 000 د.م.  ,سيارات,ar,voitures-prix-0250001-0300000 
+سيارات-ثمن-0300001-0350000,ثمن,  300 001 إلى 350 000 د.م.  ,سيارات,ar,voitures-prix-0300001-0350000 
+سيارات-ثمن-0350001-0400000,ثمن,  350 001 إلى 400 000 د.م.  ,سيارات,ar,voitures-prix-0350001-0400000 
+سيارات-ثمن-0400001-0450000,ثمن,  400 001 إلى 450 000 د.م.  ,سيارات,ar,voitures-prix-0400001-0450000 
+سيارات-ثمن-0450001-0500000,ثمن,  450 001 إلى 500 000 د.م.  ,سيارات,ar,voitures-prix-0450001-0500000 
+سيارات-ثمن-0500001-1000000,ثمن,  500 001 إلى 1 000 000 د.م.,سيارات,ar,voitures-prix-0500001-1000000 
+سيارات-ثمن-1000001-2000000,ثمن,1 000 000 إلى 2 000 000 د.م.,سيارات,ar,voitures-prix-1000001-2000000 
+سيارات-ثمن-2000001-∞      ,ثمن,2 000 000 د.م. أو أكثر      ,سيارات,ar,voitures-prix-2000001-∞ 
+,,,,,
+voitures-couleur-argent,Couleur,Argent,voitures,fr,
+voitures-couleur-blanc ,Couleur,Blanc ,voitures,fr,
+voitures-couleur-bleu  ,Couleur,Bleu  ,voitures,fr,
+voitures-couleur-gris  ,Couleur,Gris  ,voitures,fr,
+voitures-couleur-jaune ,Couleur,Jaune ,voitures,fr,
+voitures-couleur-marron,Couleur,Marron,voitures,fr,
+voitures-couleur-orange,Couleur,Orange,voitures,fr,
+voitures-couleur-noir  ,Couleur,Noir  ,voitures,fr,
+voitures-couleur-rouge ,Couleur,Rouge ,voitures,fr,
+voitures-couleur-vert  ,Couleur,Vert  ,voitures,fr,
+,,,,,
+سيارات-لون-فضي    ,لون,فضي    ,سيارات,ar,voitures-couleur-argent
+سيارات-لون-أبيض   ,لون,أبيض   ,سيارات,ar,voitures-couleur-blanc
+سيارات-لون-أزرق   ,لون,أزرق   ,سيارات,ar,voitures-couleur-bleu
+سيارات-لون-رمادي  ,لون,رمادي  ,سيارات,ar,voitures-couleur-gris
+سيارات-لون-أصفر   ,لون,أصفر   ,سيارات,ar,voitures-couleur-jaune
+سيارات-لون-بني    ,لون,بني    ,سيارات,ar,voitures-couleur-marron
+سيارات-لون-أسود   ,لون,أسود   ,سيارات,ar,voitures-couleur-noir
+سيارات-لون-برتقالي,لون,برتقالي,سيارات,ar,voitures-couleur-orange
+سيارات-لون-أحمر   ,لون,أحمر   ,سيارات,ar,voitures-couleur-rouge
+سيارات-لون-أخضر   ,لون,أخضر   ,سيارات,ar,voitures-couleur-vert
+,,,,,
+immobilier-type-appartement,Type,Appartement,immobilier,fr,
+immobilier-type-bureau     ,Type,Bureau     ,immobilier,fr,
+immobilier-type-ferme      ,Type,Ferme      ,immobilier,fr,
+immobilier-type-magasin    ,Type,Magasin    ,immobilier,fr,
+immobilier-type-maison     ,Type,Maison     ,immobilier,fr,
+immobilier-type-riad       ,Type,Riad       ,immobilier,fr,
+immobilier-type-terrain    ,Type,Terrain    ,immobilier,fr,
+immobilier-type-villa      ,Type,Villa      ,immobilier,fr,
+,,,,,
+عقارات-صنف-شقة  ,صنف,شقة  ,عقارات,ar,immobilier-type-appartement
+عقارات-صنف-مكتب ,صنف,مكتب ,عقارات,ar,immobilier-type-bureau
+عقارات-صنف-مزرعة,صنف,مزرعة,عقارات,ar,immobilier-type-ferme
+عقارات-صنف-محل  ,صنف,محل  ,عقارات,ar,immobilier-type-magasin
+عقارات-صنف-دار  ,صنف,دار  ,عقارات,ar,immobilier-type-maison
+عقارات-صنف-رياض ,صنف,رياض ,عقارات,ar,immobilier-type-riad
+عقارات-صنف-أرض  ,صنف,أرض  ,عقارات,ar,immobilier-type-terrain
+عقارات-صنف-فيلا ,صنف,فيلا ,عقارات,ar,immobilier-type-villa
+,,,,,
+immobilier-superficie-0000001-0000050,Superficie,    50 m² ou moins,immobilier,fr,
+immobilier-superficie-0000051-0000100,Superficie,    51 à 100 m²   ,immobilier,fr,
+immobilier-superficie-0000101-0000200,Superficie,   101 à 200 m²   ,immobilier,fr,
+immobilier-superficie-0000201-0000500,Superficie,   201 à 500 m²   ,immobilier,fr,
+immobilier-superficie-0000501-0001000,Superficie,   501 à 1000 m²  ,immobilier,fr,
+immobilier-superficie-0001001-0002000,Superficie, 1 001 à 2 000 m² ,immobilier,fr,
+immobilier-superficie-0002001-0005000,Superficie, 2 001 à 5 000 m² ,immobilier,fr, 
+immobilier-superficie-0005001-0010000,Superficie, 5 001 à 10 000 m²,immobilier,fr,
+immobilier-superficie-0010001-0020000,Superficie,  "1,1 à 2 ha"    ,immobilier,fr,
+immobilier-superficie-0020001-0050000,Superficie,  "2,1 à 5 ha"    ,immobilier,fr,
+immobilier-superficie-0050001-0100000,Superficie,  "5,1 à 10 ha"   ,immobilier,fr,
+immobilier-superficie-0100001-0200000,Superficie, "10,1 à 20 ha"   ,immobilier,fr,
+immobilier-superficie-0200001-0500000,Superficie, "20,1 à 50 ha"   ,immobilier,fr,
+immobilier-superficie-0500001-1000000,Superficie, "50,1 à 100 ha"  ,immobilier,fr,
+immobilier-superficie-1000001-∞      ,Superficie,"100,1 ha ou plus",immobilier,fr,
+,,,,,
+عقار-مساحة-0000001-0000050,مساحة,    50 م² أو أقل    ,عقارات,ar,immobilier-superficie-0000001-0000050
+عقار-مساحة-0000051-0000100,مساحة,    51 إلى 100 م²   ,عقارات,ar,immobilier-superficie-0000051-0000100
+عقار-مساحة-0000101-0000200,مساحة,   101 إلى 200 م²   ,عقارات,ar,immobilier-superficie-0000101-0000200
+عقار-مساحة-0000201-0000500,مساحة,   201 إلى 500 م²   ,عقارات,ar,immobilier-superficie-0000201-0000500
+عقار-مساحة-0000501-0001000,مساحة,   501 إلى 1000 م²  ,عقارات,ar,immobilier-superficie-0000501-0001000
+عقار-مساحة-0001001-0002000,مساحة, 1 001 إلى 2 000 م² ,عقارات,ar,immobilier-superficie-0001001-0002000
+عقار-مساحة-0002001-0005000,مساحة, 2 001 إلى 5 000 م² ,عقارات,ar,immobilier-superficie-0002001-0005000 
+عقار-مساحة-0005001-0010000,مساحة, 5 001 إلى 10 000 م²,عقارات,ar,immobilier-superficie-0005001-0010000
+عقار-مساحة-0010001-0020000,مساحة,   1.1 إلى 2 ha     ,عقارات,ar,immobilier-superficie-0010001-0020000
+عقار-مساحة-0020001-0050000,مساحة,   2.1 إلى 5 ha     ,عقارات,ar,immobilier-superficie-0020001-0050000
+عقار-مساحة-0050001-0100000,مساحة,   5.1 إلى 10 ha    ,عقارات,ar,immobilier-superficie-0050001-0100000
+عقار-مساحة-0100001-0200000,مساحة,  10.1 إلى 20 ha    ,عقارات,ar,immobilier-superficie-0100001-0200000
+عقار-مساحة-0200001-0500000,مساحة,  20.1 إلى 50 ha    ,عقارات,ar,immobilier-superficie-0200001-0500000
+عقار-مساحة-0500001-1000000,مساحة,  50.1 إلى 100 ha   ,عقارات,ar,immobilier-superficie-0500001-1000000
+عقار-مساحة-1000001-∞      ,مساحة, 100.1 ha أو أكثر   ,عقارات,ar,immobilier-superficie-1000001-∞
+,,,,,
+immobilier-objectif-vente   ,Objectif,Vente   ,immobilier,fr,
+immobilier-objectif-location,Objectif,Location,immobilier,fr,
+,,,,,
+عقارات-هدف-بيع ,هدف,بيع ,عقارات,ar,immobilier-objectif-vente
+عقارات-هدف-كراء,هدف,كراء,عقارات,ar,immobilier-objectif-location
+,,,,,
+immobilier-prix-0000000001-0000000100,Prix,          100 DH ou moins       ,immobilier,fr,
+immobilier-prix-0000000101-0000000200,Prix,          101 à 200 DH          ,immobilier,fr,
+immobilier-prix-0000000201-0000000500,Prix,          201 à 500 DH          ,immobilier,fr,
+immobilier-prix-0000000501-0000001000,Prix,          501 à 1 000 DH        ,immobilier,fr,
+immobilier-prix-0000001001-0000002000,Prix,        1 001 à 2 000 DH        ,immobilier,fr,
+immobilier-prix-0000002001-0000005000,Prix,        2 001 à 5 000 DH        ,immobilier,fr,
+immobilier-prix-0000005001-0000010000,Prix,        5 001 à 10 000 DH       ,immobilier,fr,
+immobilier-prix-0000010001-0000020000,Prix,       10 001 à 20 000 DH       ,immobilier,fr,
+immobilier-prix-0000020001-0000050000,Prix,       20 001 à 50 000 DH       ,immobilier,fr,
+immobilier-prix-0000050001-0000100000,Prix,       50 001 à 100 000 DH      ,immobilier,fr,
+immobilier-prix-0000100001-0000200000,Prix,      100 001 à 200 000 DH      ,immobilier,fr,
+immobilier-prix-0000200001-0000500000,Prix,      200 001 à 500 000 DH      ,immobilier,fr,
+immobilier-prix-0000500001-0001000000,Prix,      500 001 à 1 000 000 DH    ,immobilier,fr,
+immobilier-prix-0001000001-0002000000,Prix,    1 000 001 à 2 000 000 DH    ,immobilier,fr,
+immobilier-prix-0002000001-0005000000,Prix,    2 000 001 à 5 000 000 DH    ,immobilier,fr,
+immobilier-prix-0005000001-0010000000,Prix,    5 000 001 à 10 000 000 DH   ,immobilier,fr,
+immobilier-prix-0010000001-0020000000,Prix,   10 000 001 à 20 000 000 DH   ,immobilier,fr,
+immobilier-prix-0020000001-0050000000,Prix,   20 000 001 à 50 000 000 DH   ,immobilier,fr,
+immobilier-prix-0050000001-0100000000,Prix,   50 000 001 à 100 000 000 DH  ,immobilier,fr,
+immobilier-prix-0100000001-0200000000,Prix,  100 000 001 à 200 000 000 DH  ,immobilier,fr,
+immobilier-prix-0200000001-0500000000,Prix,  200 000 001 à 500 000 000 DH  ,immobilier,fr,
+immobilier-prix-0500000001-1000000000,Prix,  500 000 001 à 1 000 000 000 DH,immobilier,fr,
+immobilier-prix-1000000001-∞         ,Prix,1 000 000 001 DH ou plus        ,immobilier,fr,
+,,,,,
+عقارات-ثمن-0000000001-0000000100,ثمن,          100 د.م. أو أقل           ,عقارات,ar,immobilier-prix-0000000001-0000000100
+عقارات-ثمن-0000000101-0000000200,ثمن,          101 إلى 200 د.م.          ,عقارات,ar,immobilier-prix-0000000101-0000000200
+عقارات-ثمن-0000000201-0000000500,ثمن,          201 إلى 500 د.م.          ,عقارات,ar,immobilier-prix-0000000201-0000000500
+عقارات-ثمن-0000000501-0000001000,ثمن,          501 إلى 1٬000 د.م.        ,عقارات,ar,immobilier-prix-0000000501-0000001000
+عقارات-ثمن-0000001001-0000002000,ثمن,        1٬001 إلى 2٬000 د.م.        ,عقارات,ar,immobilier-prix-0000001001-0000002000
+عقارات-ثمن-0000002001-0000005000,ثمن,        2٬001 إلى 5٬000 د.م.        ,عقارات,ar,immobilier-prix-0000002001-0000005000
+عقارات-ثمن-0000005001-0000010000,ثمن,        5٬001 إلى 10٬000 د.م.       ,عقارات,ar,immobilier-prix-0000005001-0000010000
+عقارات-ثمن-0000010001-0000020000,ثمن,       10٬001 إلى 20٬000 د.م.       ,عقارات,ar,immobilier-prix-0000010001-0000020000
+عقارات-ثمن-0000020001-0000050000,ثمن,       20٬001 إلى 50٬000 د.م.       ,عقارات,ar,immobilier-prix-0000020001-0000050000
+عقارات-ثمن-0000050001-0000100000,ثمن,       50٬001 إلى 100٬000 د.م.      ,عقارات,ar,immobilier-prix-0000050001-0000100000
+عقارات-ثمن-0000100001-0000200000,ثمن,      100٬001 إلى 200٬000 د.م.      ,عقارات,ar,immobilier-prix-0000100001-0000200000
+عقارات-ثمن-0000200001-0000500000,ثمن,      200٬001 إلى 500٬000 د.م.      ,عقارات,ar,immobilier-prix-0000200001-0000500000
+عقارات-ثمن-0000500001-0001000000,ثمن,      500٬001 إلى 1٬000٬000 د.م.    ,عقارات,ar,immobilier-prix-0000500001-0001000000
+عقارات-ثمن-0001000001-0002000000,ثمن,    1٬000٬001 إلى 2٬000٬000 د.م.    ,عقارات,ar,immobilier-prix-0001000001-0002000000
+عقارات-ثمن-0002000001-0005000000,ثمن,    2٬000٬001 إلى 5٬000٬000 د.م.    ,عقارات,ar,immobilier-prix-0002000001-0005000000
+عقارات-ثمن-0005000001-0010000000,ثمن,    5٬000٬001 إلى 10٬000٬000 د.م.   ,عقارات,ar,immobilier-prix-0005000001-0010000000
+عقارات-ثمن-0010000001-0020000000,ثمن,   10٬000٬001 إلى 20٬000٬000 د.م.   ,عقارات,ar,immobilier-prix-0010000001-0020000000
+عقارات-ثمن-0020000001-0050000000,ثمن,   20٬000٬001 إلى 50٬000٬000 د.م.   ,عقارات,ar,immobilier-prix-0020000001-0050000000
+عقارات-ثمن-0050000001-0100000000,ثمن,   50٬000٬001 إلى 100٬000٬000 د.م.  ,عقارات,ar,immobilier-prix-0050000001-0100000000
+عقارات-ثمن-0100000001-0200000000,ثمن,  100٬000٬001 إلى 200٬000٬000 د.م.  ,عقارات,ar,immobilier-prix-0100000001-0200000000
+عقارات-ثمن-0200000001-0500000000,ثمن,  200٬000٬001 إلى 500٬000٬000 د.م.  ,عقارات,ar,immobilier-prix-0200000001-0500000000
+عقارات-ثمن-0500000001-1000000000,ثمن,  500٬000٬001 إلى 1٬000٬000٬000 د.م.,عقارات,ar,immobilier-prix-0500000001-1000000000
+عقارات-ثمن-1000000001-∞         ,ثمن,1٬000٬000٬001 د.م. أو أكثر          ,عقارات,ar,immobilier-prix-1000000001-∞

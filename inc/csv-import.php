@@ -97,11 +97,24 @@ function plcl_register_taxonomy_importer( $args ) {
 					}
 
 					/**
+					 * Prepare the term parent.
+					 */
+					if ( 1
+						&& ! empty( $row[ 'parent' ] )
+						&& $parent_term = get_term_by( 'slug', $row[ 'parent' ], $taxonomy )
+					) {
+						$row[ 'parent' ] = $parent_term->term_id;
+					} else {
+						$row[ 'parent' ] = 0;
+					}
+
+					/**
 					 * Create or update term.
 					 */
 					add_filter( $taxonomy . '_posted_term_meta', $add_term_meta_func );
 					$term = wp_insert_term( $row[ 'name' ], $taxonomy, [
 						'slug' => $row[ 'slug' ],
+						'parent' => $row[ 'parent' ],
 					] );
 					if ( ! is_wp_error(  $term ) ) {
 						$term_id = $term[ 'term_id' ];
