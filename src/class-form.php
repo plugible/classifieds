@@ -75,6 +75,31 @@ class Form {
 		 * Localize.
 		 */
 		add_filter( sprintf( '%s::enqueue-asset', wpmyads()->plugin_slug ), array( $this, 'localize' ), 10, 2 );
+
+		/**
+		 * Use all children for scopeed selects.
+		 */
+		add_filter( 'plcl_option_to_data', array( $this, 'optionToData' ), 10, 3 );
+	}
+
+	/**
+	 * Use all children for scopeed selects.
+	 *
+	 * Use all children as comma separated value.
+	 */
+	public function optionToData( $data, $option_name, $option_value ) {
+		if ( 'scope' !== $option_name ) {
+			return $data;
+		}
+
+		$option_values = [ substr( md5( $option_value ), 0, 7 ) ];
+		$children_ids  = get_term_children( get_term_by( 'slug', $option_value, 'pl_classified_category' )->term_id ?? 0, 'pl_classified_category' );
+
+
+		foreach ( $children_ids as $child_id ) {
+			$option_values[] = substr( md5( get_term( $child_id, 'pl_classified_category' )->slug ), 0, 7 );
+		}
+		return sprintf( 'data-%1$s="%2$s"', $option_name, implode( ',', $option_values ) );
 	}
 
 	public function localize( $args, $path ) {
@@ -534,20 +559,25 @@ class Form {
 			function( $value, $index ) use ( &$options_html ) {
 				$name = is_array( $value ) ? $value['name'] : $value;
 				$slug = is_array( $value ) ? $value['slug'] : '';
-				$data = '';
+				$data = [];
 				if ( is_array( $value ) && array_key_exists( 'options', $value ) && is_array( $value['options'] ) ) {
 					foreach ( $value['options'] as $option_name => $option_value ) {
 						if ( is_numeric( $option_name ) ) {
 							continue;
 						}
-						$data .= sprintf( ' data-%1$s="%2$s"', $option_name, substr( md5( (string) $option_value ), 0, 7 ) );
+						$data[] = apply_filters(
+							'plcl_option_to_data',
+							sprintf( 'data-%1$s="%2$s"', $option_name, substr( md5( (string) $option_value ), 0, 7 ) ),
+							$option_name,
+							$option_value
+						);
 					}
 				}
 				$options_html .= sprintf(
-					"\n" . '<option value="%1$s" data-slug="%2$s"%3$s>%4$s</option>',
+					"\n" . '<option value="%1$s" data-slug="%2$s" %3$s>%4$s</option>',
 					$index,
 					substr( md5( urldecode( $slug ) ), 0, 7 ),
-					$data,
+					implode( ' ', $data),
 					$name
 				);
 			}
