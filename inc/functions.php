@@ -272,6 +272,17 @@ function plcl_breadcrumbs( $open, $close ) {
 		$filters = $_REQUEST[ 'filters' ] ?? [];
 
 		/**
+		 * Ancestors.
+		 */
+		$category_ancestors  = get_ancestors( plcl_get_the_category()->term_id, 'pl_classified_category', 'taxonomy' );
+		array_walk( $category_ancestors, function( $ancestor_id  ) use ( &$paths ) {
+			$paths[] = [
+				'text' => get_term( $ancestor_id )->name,
+				'url'  => get_term_link( $ancestor_id, 'pl_classified_category' ),
+			];
+		} );
+
+		/**
 		 * Page 1.
 		 */
 		$paths[] = [
