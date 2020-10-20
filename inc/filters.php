@@ -105,7 +105,18 @@ add_action( 'get_the_archive_title', function() {
 	global $post;
 	global $wp_taxonomies;
 
-	$category = get_queried_object();
+	/**
+	 * Prepare category.
+	 *
+	 * - Add the ancestors property.
+	 */
+	$category            = get_queried_object();
+	$category->ancestors = [];
+	$category_ancestors  = get_ancestors( $category->term_id, 'pl_classified_category', 'taxonomy' );
+	array_walk( $category_ancestors, function( $ancestor_id  ) use ( $category ) {
+		$category->ancestors[] = get_term( $ancestor_id );
+	} );
+
 	$filters_taxonomies = [
 		'locations' => 'pl_classified_location',
 		'specifications' => 'pl_classified_specification',
@@ -132,10 +143,25 @@ add_action( 'get_the_archive_title', function() {
 					$s->options = get_option( 'taxonomy_term_' . $s->term_id );
 				} );
 				/**
-				 * Filter out other categories.
+				 * Filter out other scpefications.
 				 */
 				$terms = array_filter( $terms, function( $term ) use ( $category ) {
-					return ( $term->options[ 'scope' ] ?? '' ) === $category->slug;
+					/**
+					 * Keep the specification that has the category slug as the scope.
+					 */
+					if ( ( $term->options[ 'scope' ] ?? '' ) === $category->slug ) {
+						return true;
+					}
+					/**
+					 * Keep the specification if one of its ancestor has the category slug as the scope.
+					 */
+					if ( in_array( $term->options[ 'scope' ], wp_list_pluck( $category->ancestors, 'slug', 'term_id' ), true ) ) {
+						return true;
+					}
+					/**
+					 * Filter out.
+					 */
+					return false;
 				} );
 				/**
 				 * Group
