@@ -83,7 +83,6 @@ add_action( 'pre_get_posts', function( $query ) {
 					];
 					break;
 			}
-
 		}
 	}
 
