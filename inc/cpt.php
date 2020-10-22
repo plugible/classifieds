@@ -48,6 +48,12 @@ add_action( 'init', function() {
 				<?php
 			}
 		} , 10, 2 );
+		add_filter( "manage_edit-{$taxonomy}_sortable_columns", function ( $columns ) use ( $fields ) {
+			foreach ( $fields as $name => $label ) {
+				$columns[ $name ] = $name;
+			}
+			return $columns;
+		} );
 
 		/**
 		 * Save fields.
@@ -119,6 +125,9 @@ add_action( 'init', function() {
 		'rewrite' => [
 			'slug' => 'classifieds-category',
 		],
+	] );
+	$register_taxonomy_fields( 'pl_classified_category', [
+		'order' => __( 'Order', 'wpmyads' ),
 	] );
 
 	/**
