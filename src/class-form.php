@@ -83,23 +83,30 @@ class Form {
 	}
 
 	/**
-	 * Use all children for scopeed selects.
+	 * Handle scoped selects.
 	 *
-	 * Use all children as comma separated value.
+	 * - Handle multiple scopes (pipe separated)
+	 * - Show all scopes including children as comma separated values.
 	 */
 	public function optionToData( $data, $option_name, $option_value ) {
 		if ( 'scope' !== $option_name ) {
 			return $data;
 		}
 
-		$option_values = [ substr( md5( $option_value ), 0, 7 ) ];
-		$children_ids  = get_term_children( get_term_by( 'slug', $option_value, 'pl_classified_category' )->term_id ?? 0, 'pl_classified_category' );
+		$scopes = explode( '|', $option_value );
 
-
-		foreach ( $children_ids as $child_id ) {
-			$option_values[] = substr( md5( get_term( $child_id, 'pl_classified_category' )->slug ), 0, 7 );
+		foreach ( $scopes as $scope ) {
+			$children_ids  = get_term_children( get_term_by( 'slug', $scope, 'pl_classified_category' )->term_id ?? 0, 'pl_classified_category' );
+			foreach ( $children_ids as $child_id ) {
+				$scopes[] = get_term( $child_id, 'pl_classified_category' )->slug;
+			}
 		}
-		return sprintf( 'data-%1$s="%2$s"', $option_name, implode( ',', $option_values ) );
+
+		$scopes_hashed = array_map( function( $v ) {
+			return substr( md5( $v ), 0, 7 );
+		}, $scopes );
+
+		return sprintf( 'data-%1$s="%2$s"', $option_name, implode( ',', $scopes_hashed ) );
 	}
 
 	public function localize( $args, $path ) {
