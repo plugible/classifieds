@@ -67,11 +67,12 @@ function plcl_register_taxonomy_importer( $args ) {
 				 * Import terms.
 				 */
 				set_time_limit(0);
-				$num_created = 0;
-				$num_updated = 0;
-				$num_ignored = 0;
+				$num_created     = 0;
+				$num_updated     = 0;
+				$num_ignored     = 0;
+				$previous        = [];
+				$locked_previous = [];
 				foreach ( $rows as $row ) {
-
 					/**
 					 * Adds options to term
 					 */
@@ -83,6 +84,28 @@ function plcl_register_taxonomy_importer( $args ) {
 						}
 						return $posted_term_meta;
 					};
+
+					/**
+					 * Populate from previous.
+					 *
+					 * - `{{{name}}}` for previous.
+					 * - `{{key}}` for locked previous.
+					 */
+					$lock_previous = false;
+					foreach ( $row as $column => $value ) {
+						if ( preg_match( '/^{{{.+}}}$/', $value ) ) {
+							$key_from_value = substr( $value, 3, -3 );
+							if ( ! empty( $previous[ $key_from_value ] ) ) {
+								$row[ $column ] = $previous[ $key_from_value ];
+							}
+						} else if ( preg_match( '/^{{.+}}$/', $value ) ) {
+							$key_from_value = substr( $value, 2, -2 );
+							if ( ! empty( $locked_previous[ $key_from_value ] ) ) {
+								$row[ $column ] = $locked_previous[ $key_from_value ];
+								$lock_previous  = true;
+							}
+						}
+					}
 
 					/**
 					 * Verify required columns, name or slug, with fallback to name.
@@ -101,7 +124,7 @@ function plcl_register_taxonomy_importer( $args ) {
 					 */
 					if ( 1
 						&& ! empty( $row[ 'parent' ] )
-						&& $parent_term = get_term_by( 'slug', $row[ 'parent' ], $taxonomy )
+						&& $parent_term = get_term_by( 'slug', strtolower( sanitize_title( $row[ 'parent' ] ) ), $taxonomy )
 					) {
 						$row[ 'parent' ] = $parent_term->term_id;
 					} else {
@@ -109,20 +132,28 @@ function plcl_register_taxonomy_importer( $args ) {
 					}
 
 					/**
-					 * Create or update term.
+					 * Update or create term.
 					 */
-					add_filter( $taxonomy . '_posted_term_meta', $add_term_meta_func );
-					$term = wp_insert_term( $row[ 'name' ], $taxonomy, [
-						'slug' => $row[ 'slug' ],
+					$args = [
 						'parent' => $row[ 'parent' ],
-					] );
-					if ( ! is_wp_error(  $term ) ) {
-						$term_id = $term[ 'term_id' ];
-						$num_created++; 
-					} else if ( in_array( 'term_exists', $term->get_error_codes() ) ) {
-						$term_id = $term->get_error_data( 'term_exists' );
-						wp_update_term( $term_id, $taxonomy );
+						'slug'   => strtolower( sanitize_title( $row[ 'slug' ] ) ),
+					];
+					$slug_matches = get_terms( array(
+						'taxonomy'   => $taxonomy,
+						'slug'       => $row[ 'slug' ],
+						'hide_empty' => false,
+					) );
+					add_filter( $taxonomy . '_posted_term_meta', $add_term_meta_func );
+					if ( $slug_matches ) {
+						$term_id = $slug_matches[0]->term_id;
+						$term = wp_update_term( $term_id, $taxonomy, $args );
 						$num_updated++; 
+					} else {
+						$term = wp_insert_term( $row[ 'name' ], $taxonomy, $args );
+						if ( ! is_wp_error(  $term ) ) {
+							$term_id = $term[ 'term_id' ];
+							$num_created++; 
+						}
 					}
 					remove_filter( $taxonomy . '_posted_term_meta', $add_term_meta_func );
 
@@ -134,11 +165,14 @@ function plcl_register_taxonomy_importer( $args ) {
 							return;
 						}
 						$tax = substr( $column, 2 );
-						if ( sanitize_user( $tax, true ) !== $tax ) {
+						if ( sanitize_title( $tax, true ) !== $tax ) {
 							return;
 						}
 						$new_term = get_term_by( 'name', $value, $tax );
-						if ( ! is_wp_error( $new_term ) ) {
+						if ( ! $new_term ) {
+							$new_term = get_term_by( 'slug', $value, $tax );
+						}
+						if ( $new_term ) {
 							wp_set_object_terms( $term_id, $new_term->term_id, $tax );
 						}
 					} );
@@ -172,6 +206,14 @@ function plcl_register_taxonomy_importer( $args ) {
 					 * Done importing row.
 					 */
 					do_action( 'plcl_imported_specification', $term_id, $row );
+
+					/**
+					 * Fill previous.
+					 */
+					$previous = $row;
+					if ( ! $lock_previous ) {
+						$locked_previous = $row;
+					}
 				}
 
 				/**
