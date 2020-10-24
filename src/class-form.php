@@ -82,6 +82,14 @@ class Form {
 		add_filter( 'plcl_option_to_data', array( $this, 'optionToData' ), 10, 3 );
 	}
 
+	function prepopulate( $field, $default = null ) {
+		$value = isset( $_REQUEST[ $this->formElementId . '-' . $field ] )
+			? $_REQUEST[ $this->formElementId . '-' . $field ]
+			: ( $default ? $default : '' )
+		;
+		return apply_filters( 'pl_prepopulate', $value, $field, $default );
+	}
+
 	/**
 	 * Handle scoped selects.
 	 *
@@ -395,9 +403,7 @@ class Form {
 				__( 'Name*', 'wpmyads' ),
 				array(
 					'required' => true,
-					'value'    => is_user_logged_in()
-						? wp_get_current_user()->data->display_name
-						: '',
+					'value'    => $this->prepopulate( 'name', is_user_logged_in() ? wp_get_current_user()->data->display_name : null ),
 				)
 			)
 			. ( ! is_user_logged_in()
@@ -408,6 +414,7 @@ class Form {
 						'data-disallow-space' => true,
 						'email'               => true,
 						'required'            => true,
+						'value'    => $this->prepopulate( 'email' ),
 					)
 				)
 				: ''
@@ -421,6 +428,7 @@ class Form {
 					'maxlength'               => 15,
 					'minlength'               => 10,
 					'required'                => true,
+					'value'                   => $this->prepopulate( 'phone' ),
 				)
 			)
 			. $this->separator()
@@ -433,13 +441,14 @@ class Form {
 				__( 'Title*', 'wpmyads' ),
 				array(
 					'required' => true,
+					'value'    => $this->prepopulate( 'title' ),
 				)
 			)
 			. $this->select(
 				'location',
 				__( 'Location*', 'wpmyads' ),
 				$locations,
-				__( 'Choose...', 'wpmyads' ),
+				__( 'Choose', 'wpmyads' ) . '&hellip;',
 				array(
 					'data-use-select2' => true,
 					'required'         => true,
@@ -449,7 +458,7 @@ class Form {
 				'category',
 				__( 'Category*', 'wpmyads' ),
 				$categories,
-				__( 'Choose...', 'wpmyads' ),
+				__( 'Choose', 'wpmyads' ) . '&hellip;',
 				array(
 					'required'         => true,
 					'data-controls'    => $this->formElementId . '-specifications',
@@ -464,7 +473,7 @@ class Form {
 				array(
 					'data-use-select2' => true,
 					'data-group-by'    => 'specification',
-					// 'required' => true,
+					// 'required'         => true,
 					'multiple'         => true,
 				)
 			)
@@ -473,7 +482,8 @@ class Form {
 				__( 'Description*', 'wpmyads' ),
 				array(
 					'data-disallow-excessive-line-breaks' => true,
-					'minlength'                           => 50,
+					'minlength'                           => 20,
+					'maxlength'                           => 20000,
 					'required'                            => true,
 				)
 			)
