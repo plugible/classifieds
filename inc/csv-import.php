@@ -86,6 +86,11 @@ function plcl_register_taxonomy_importer( $args ) {
 					};
 
 					/**
+					 * Trim.
+					 */
+					$row = array_map( 'trim', $row );
+
+					/**
 					 * Populate from previous.
 					 *
 					 * - `{{{name}}}` for previous.
@@ -122,13 +127,13 @@ function plcl_register_taxonomy_importer( $args ) {
 					/**
 					 * Prepare the term parent.
 					 */
-					if ( 1
-						&& ! empty( $row[ 'parent' ] )
-						&& $parent_term = get_term_by( 'slug', strtolower( sanitize_title( $row[ 'parent' ] ) ), $taxonomy )
-					) {
-						$row[ 'parent' ] = $parent_term->term_id;
-					} else {
-						$row[ 'parent' ] = 0;
+					if ( ! empty( $row[ 'parent' ] ) ) {
+						foreach ( explode( '|', 'slug|name' ) as $by ) {
+							if ( $parent_term = get_term_by( $by, strtolower( sanitize_title( $row[ 'parent' ] ) ), $taxonomy ) ) {
+								$row[ 'parent' ] = $parent_term->term_id;
+								break;
+							}
+						}
 					}
 
 					/**
@@ -138,17 +143,35 @@ function plcl_register_taxonomy_importer( $args ) {
 						'parent' => $row[ 'parent' ],
 						'slug'   => strtolower( sanitize_title( $row[ 'slug' ] ) ),
 					];
+					/**
+					 * Existing term with same slug.
+					 */
 					$slug_matches = get_terms( array(
 						'taxonomy'   => $taxonomy,
 						'slug'       => $row[ 'slug' ],
 						'hide_empty' => false,
 					) );
+					/**
+					 * Existing term with same name and parent.
+					 */
+					$name_matches = get_terms( array(
+						'taxonomy'   => $taxonomy,
+						'name'       => $row[ 'name' ],
+						'hide_empty' => false,
+						'parent'     => $row[ 'parent' ],
+					) );
 					add_filter( $taxonomy . '_posted_term_meta', $add_term_meta_func );
-					if ( $slug_matches ) {
-						$term_id = $slug_matches[0]->term_id;
+					if ( $slug_matches || $name_matches ) {
+						/**
+						 * Update existing.
+						 */
+						$term_id = array_merge( $name_matches, $slug_matches )[0]->term_id;
 						$term = wp_update_term( $term_id, $taxonomy, $args );
 						$num_updated++; 
 					} else {
+						/**
+						 * Create new.
+						 */
 						$term = wp_insert_term( $row[ 'name' ], $taxonomy, $args );
 						if ( ! is_wp_error(  $term ) ) {
 							$term_id = $term[ 'term_id' ];
