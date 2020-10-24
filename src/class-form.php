@@ -85,9 +85,13 @@ class Form {
 	function prepopulate( $field, $default = null ) {
 		$value = isset( $_REQUEST[ $this->formElementId . '-' . $field ] )
 			? $_REQUEST[ $this->formElementId . '-' . $field ]
-			: ( $default ? $default : '' )
+			: ( isset( $default ) ? $default : '' )
 		;
 		return apply_filters( 'pl_prepopulate', $value, $field, $default );
+	}
+
+	function prepopulateSelect( $field, $default = [] ) {
+		return $this->prepopulate( $field, [] );
 	}
 
 	/**
@@ -448,6 +452,7 @@ class Form {
 				'location',
 				__( 'Location*', 'wpmyads' ),
 				$locations,
+				$this->prepopulateSelect( 'location' ),
 				__( 'Choose', 'wpmyads' ) . '&hellip;',
 				array(
 					'data-use-select2' => true,
@@ -458,6 +463,7 @@ class Form {
 				'category',
 				__( 'Category*', 'wpmyads' ),
 				$categories,
+				$this->prepopulateSelect( 'category' ),
 				__( 'Choose', 'wpmyads' ) . '&hellip;',
 				array(
 					'required'         => true,
@@ -469,6 +475,7 @@ class Form {
 				'specifications',
 				__( 'Specifications*', 'wpmyads' ),
 				$specifications,
+				$this->prepopulateSelect( 'specifications' ),
 				null,
 				array(
 					'data-use-select2' => true,
@@ -560,7 +567,7 @@ class Form {
 		return sprintf( $format, $name, $title, $editor );
 	}
 
-	private function select( $name, $title, $options, $emptyOptionText = null, $args = array() ) {
+	private function select( $name, $title, $options, $selected = [], $emptyOptionText = null, $args = array() ) {
 		$name = sprintf( '%1$s-%2$s', $this->formElementId, $name );
 		$id   = $name;
 		if ( $args['multiple'] ?? false ) {
@@ -573,7 +580,7 @@ class Form {
 
 		array_walk(
 			$options,
-			function( $value, $index ) use ( &$options_html ) {
+			function( $value, $index ) use ( &$options_html, $selected ) {
 				$name = is_array( $value ) ? $value['name'] : $value;
 				$slug = is_array( $value ) ? $value['slug'] : '';
 				$data = [];
@@ -591,10 +598,11 @@ class Form {
 					}
 				}
 				$options_html .= sprintf(
-					"\n" . '<option value="%1$s" data-slug="%2$s" %3$s>%4$s</option>',
+					"\n" . '<option value="%1$s" data-slug="%2$s" %3$s %4$s>%5$s</option>',
 					$index,
 					substr( md5( urldecode( $slug ) ), 0, 7 ),
 					implode( ' ', $data),
+					in_array( $index, $selected, false ) ? 'selected="selected"' : '',
 					$name
 				);
 			}
