@@ -1,5 +1,46 @@
 <?php
 
+/**
+ * Register taxonomy importers.
+ */
+add_action( 'admin_init', function() {
+
+	/**
+	 * Register categories importer.
+	 */
+	plcl_register_taxonomy_importer( [
+		'taxonomy'    => 'pl_classified_category',
+		'name'        => __( 'Classifieds Categories', 'wpmyads' ),
+		'options'     => [],
+		'success'     => __( 'All done.', 'wpmyads' ). ' ' . __( 'Go to <a href="%s">categories</a>.', 'wpmyads' ),
+	] );
+
+	/**
+	 * Register specifications importer.
+	 */
+	plcl_register_taxonomy_importer( [
+		'taxonomy'    => 'pl_classified_specification',
+		'name'        => __( 'Classifieds Specifications', 'wpmyads' ),
+		'options'     => [
+			'scope',
+			'specification',
+			'value',
+		],
+		'success'     => __( 'All done.', 'wpmyads' ). ' ' . __( 'Go to <a href="%s">specifications</a>.', 'wpmyads' ),
+	] );
+
+	/**
+	 * Register locations importer.
+	 */
+	plcl_register_taxonomy_importer( [
+		'taxonomy'    => 'pl_classified_location',
+		'name'        => __( 'Classifieds Locations', 'wpmyads' ),
+		'options'     => [],
+		'success'     => __( 'All done.', 'wpmyads' ). ' ' . __( 'Go to <a href="%s">locations</a>.', 'wpmyads' ),
+	] );
+} );
+
+
 function plcl_register_taxonomy_importer( $args ) {
 
 	/**
