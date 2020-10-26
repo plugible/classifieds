@@ -315,16 +315,38 @@ function plcl_breadcrumbs( $open, $close ) {
 	 * Add classified.
 	 */
 	if ( is_singular( 'pl_classified' ) ) {
+
+		/**
+		 * Categories.
+		 */
 		if ( plcl_get_the_category() ) {
+			/**
+			 * Category Ancestors.
+			 */
+			$category_ancestors  = get_ancestors( plcl_get_the_category()->term_id, 'pl_classified_category', 'taxonomy' );
+			array_walk( $category_ancestors, function( $ancestor_id  ) use ( &$paths ) {
+				$paths[] = [
+					'text' => get_term( $ancestor_id )->name,
+					'url'  => get_term_link( $ancestor_id, 'pl_classified_category' ),
+				];
+			} );
+
+			/**
+			 * Category.
+			 */
 			$paths[] = [
 				'text' => plcl_get_the_category()->name,
 				'url'  => plcl_get_the_category_url(),
 			];
-			$paths[] = [
-				'text' => get_the_title(),
-				'url'  => get_the_permalink(),
-			];
 		}
+
+		/**
+		 * Ad.
+		 */
+		$paths[] = [
+			'text' => get_the_title(),
+			'url'  => get_the_permalink(),
+		];
 	}
 
 	/**
