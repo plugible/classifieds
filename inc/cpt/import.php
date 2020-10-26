@@ -175,6 +175,8 @@ function plcl_register_taxonomy_importer( $args ) {
 								break;
 							}
 						}
+					} else {
+						$row[ 'parent' ] = 0;
 					}
 
 					/**
