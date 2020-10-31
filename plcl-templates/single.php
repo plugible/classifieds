@@ -14,4 +14,7 @@ $phone = apply_filters( 'plcl_phone', get_post_meta( $post->ID, 'phone', true ) 
 
 <h2><?php _e( 'Contact Information' ); ?></h2>
 
-<p><?php printf( '☎ %s', $phone ); ?></p>
+<p>
+	📍 <?php plcl_classified_terms( $post->ID, 'pl_classified_location' ); ?>
+	<?php printf( '☎ %s', $phone ); ?>
+</p>

@@ -1,22 +1,22 @@
-<?php global $post; ?>
-
-<?php plcl_classified_gallery( $post->ID, 2, [
-	'enhanced' => false,
-	'linked'   => true,
-] ); ?>
-
 <?php
 
-echo wpautop( 
-	$post->post_excerpt 
-		? $post->post_excerpt
-		: wp_trim_words( $post->post_content, 11, false )
-	. sprintf( '<a href="%1$s">&hellip;%2$s</a>'
-		, get_permalink( $post )
-		, __( 'Continue Reading' )
-	)
-);	
+global $post; 
+
+$gallery_args = [
+	'enhanced' => false,
+	'linked'   => true,
+	'size'     => [
+		72,
+		72,
+	],
+];
 
 ?>
+
+<p>📍 <?php plcl_classified_terms( $post->ID, 'pl_classified_location' ); ?></p>
+
+<?php plcl_classified_gallery( $post->ID, 2, $gallery_args ); ?>
+
+<?php plcl_classified_excerpt(); ?>
 
 <?php plcl_classified_specs( $post->ID, 2 ); ?>

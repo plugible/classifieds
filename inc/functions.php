@@ -153,6 +153,47 @@ function plcl_classified_gallery( int $post_id, int $number = -1, array $args = 
 }
 
 /**
+ * Show classified excerpt.
+ *
+ * Show excerpt of first `$length words`.
+ *
+ * @param  int  $post_id  Post ID. If null, the global $post object will be used.
+ * @param  int  $length   The excerpt length.
+ */
+function plcl_classified_excerpt( $post_id = null , $length = 32 ) {
+
+	/**
+	 * Get the post.
+	 */
+	if ( ! $post_id ) {
+		global $post;
+	} else {
+		$post = get_post( $post_id );
+	}
+	if ( ! $post ) {
+		return;
+	}
+
+	/**
+	 * Prepare excerpt.
+	 */
+	$excerpt = wpautop( 
+		$post->post_excerpt 
+			? $post->post_excerpt
+			: wp_trim_words( $post->post_content, $length, false )
+		. sprintf( '<a href="%1$s">&hellip;%2$s</a>'
+			, get_permalink( $post )
+			, __( 'Continue Reading' )
+		)
+	);
+
+	/**
+	 * Done!
+	 */
+	echo $excerpt;
+}
+
+/**
  * Show ad specifications.
  *
  * @param int $post_id The ad post id.
@@ -252,7 +293,7 @@ function plcl_classified_terms( $post_id, $taxonomy, $format = 'linear' ) {
 	}
 }
 
-function plcl_breadcrumbs( $open, $close ) {
+function plcl_breadcrumbs( $open = '', $close = '' ) {
 	$paths = [];
 
 	/**
@@ -362,7 +403,7 @@ function plcl_breadcrumbs( $open, $close ) {
 	echo $close;
 }
 
-function plcl_get_breadcrumbs( $open, $close ) {
+function plcl_get_breadcrumbs( $open = '', $close = '' ) {
 	ob_start();
 	plcl_breadcrumbs( $open, $close );
 	return ob_get_clean();
