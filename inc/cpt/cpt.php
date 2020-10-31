@@ -122,6 +122,7 @@ add_action( 'init', function() {
 					'name' => __( 'Locations', 'wpmyads' ),
 				],
 				'show_admin_column' => true,
+				'show_in_nav_menus' => false,
 				'publicly_queryable' => false,
 				'hierarchical' => true,
 				'rewrite' => [
@@ -162,6 +163,7 @@ add_action( 'init', function() {
 					'name' => __( 'Specifications', 'wpmyads' ),
 				],
 				'show_admin_column' => true,
+				'show_in_nav_menus' => false,
 				'publicly_queryable' => false,
 			] ,
 			'fields'     => [
