@@ -82,11 +82,41 @@ class Form {
 		add_filter( 'plcl_option_to_data', array( $this, 'optionToData' ), 10, 3 );
 	}
 
+	/**
+	 * Get the prepopulation value for a field.
+	 *
+	 * The function fill look for the value from the query string using `$field` appended to the accepted prefixes as a key.
+	 *
+	 * @param  string $field   The field name.
+	 * @param  string $default The default value.
+	 * @return string          The prepopulation value.
+	 */
 	function prepopulate( $field, $default = null ) {
-		$value = isset( $_REQUEST[ $this->formElementId . '-' . $field ] )
-			? $_REQUEST[ $this->formElementId . '-' . $field ]
-			: ( isset( $default ) ? $default : '' )
-		;
+
+		/**
+		 * Accepted prefixes sorted by priority.
+		 */
+		$prefixes = apply_filters( 'pl_prepopulate_prefixes', [
+			$this->formElementId . '-',
+			'_',
+		] );
+
+		/**
+		 * Start with the default value.
+		 */
+		$value = isset( $default ) ? $default : '';
+
+		/**
+		 * Maybe override the default value.
+		 */
+		foreach ( $prefixes as $prefix ) {
+			$qs_key = $prefix . $field;
+			if ( isset( $_REQUEST[ $qs_key ] ) ) {
+				$value = $_REQUEST[ $qs_key ];
+				break;
+			}
+		}
+
 		return apply_filters( 'pl_prepopulate', $value, $field, $default );
 	}
 
