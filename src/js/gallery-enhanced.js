@@ -6,7 +6,6 @@
 	await import( /* webpackChunkName: "lightgallery.all" */ 'lightgallery.js' );
 	await import( /* webpackChunkName: "lightgallery.all" */ 'lg-fullscreen.js' );
 	await import( /* webpackChunkName: "lightgallery.all" */ 'lg-thumbnail.js' );
-	await import( /* webpackChunkName: "lightgallery.all" */ 'lg-video.js' );
 	await import( /* webpackChunkName: "lightgallery.all" */ 'lg-zoom.js' );
 
 	const $gallery = $( `.${appSettings.objectName}_gallery_enhanced` );
