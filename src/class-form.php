@@ -503,14 +503,13 @@ class Form {
 			)
 			. $this->select(
 				'specifications',
-				__( 'Specifications*', 'wpmyads' ),
+				__( 'Specifications', 'wpmyads' ),
 				$specifications,
 				$this->prepopulateSelect( 'specifications' ),
 				null,
 				array(
 					'data-use-select2' => true,
 					'data-group-by'    => 'specification',
-					// 'required'         => true,
 					'multiple'         => true,
 				)
 			)
