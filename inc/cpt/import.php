@@ -115,6 +115,11 @@ function plcl_register_taxonomy_importer( $args ) {
 				$locked_previous = [];
 				foreach ( $rows as $row ) {
 					/**
+					 * Trim.
+					 */
+					$row = array_map( 'trim', $row );
+
+					/**
 					 * Adds options to term
 					 */
 					$add_term_meta_func = function( $posted_term_meta ) use ( $row, $options ) {
@@ -125,11 +130,6 @@ function plcl_register_taxonomy_importer( $args ) {
 						}
 						return $posted_term_meta;
 					};
-
-					/**
-					 * Trim.
-					 */
-					$row = array_map( 'trim', $row );
 
 					/**
 					 * Populate from previous.
