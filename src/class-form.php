@@ -467,7 +467,7 @@ class Form {
 			)
 			. $this->separator()
 			. $this->heading( __( 'Media', 'wpmyads' ) )
-			. $this->uppy( $this->uploadElementId, __( 'Images*', 'wpmyads' ) )
+			. $this->uppy( $this->uploadElementId, __( 'Images', 'wpmyads' ) )
 			. $this->separator()
 			. $this->heading( __( 'Ad Information', 'wpmyads' ) )
 			. $this->text(
