@@ -221,8 +221,8 @@ add_filter( sprintf( '%s::enqueue-asset', wpmyads()->plugin_slug ), function( $a
 			'filters' => array(
 				'filtersElementId' => wpmyads()->plugin_slug . '-filters',
 				'perLine'          => array(
-					'(max-width: 575px)'                         => 1,
-					'(min-width: 576px) and (max-width: 767px)'  => 2,
+					'(max-width: 575px)'                         => 2,
+					'(min-width: 576px) and (max-width: 767px)'  => 3,
 					'(min-width: 768px) and (max-width: 991px)'  => 3,
 					'(min-width: 992px) and (max-width: 1199px)' => 4,
 					'(min-width: 1200px)'                        => 6,
