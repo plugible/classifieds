@@ -4,8 +4,8 @@
  * Ad attached images column.
  */
 add_action( 'manage_pl_classified_posts_custom_column', function( $column_name, $post_id ) {
-	$w = 32;
-	$h = 32;
+	$w = 50;
+	$h = 50;
 	if ( 'images' == $column_name ) {
 		$attachments = get_children( [
 			'post_mime_type' => 'image',
