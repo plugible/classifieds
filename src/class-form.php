@@ -138,16 +138,52 @@ class Form {
 		$scopes = explode( '|', $option_value );
 
 		foreach ( $scopes as $scope ) {
+			/**
+			 * Excluding when the scope starts with `-`.
+			 */
+			$exclude = false;
+			if ( '-' === $scope[0] ) {
+				$scope = substr( $scope, 1 );
+				$exclude = true;
+			}
+			/**
+			 * Add children
+			 */
 			$children_ids  = get_term_children( get_term_by( 'slug', $scope, 'pl_classified_category' )->term_id ?? 0, 'pl_classified_category' );
 			foreach ( $children_ids as $child_id ) {
-				$scopes[] = get_term( $child_id, 'pl_classified_category' )->slug;
+				$scopes[] = ( $exclude ? '-' : '' ) . get_term( $child_id, 'pl_classified_category' )->slug;
 			}
 		}
 
 		$scopes_hashed = array_map( function( $v ) {
-			return substr( md5( $v ), 0, 7 );
-		}, $scopes );
+			/**
+			 * Handle strings with special meanings.
+			 */
+			$special_values = [
+				'*' => '',
+			];
+			if ( array_key_exists( $v, $special_values ) ) {
+				return $special_values[$v];
+			}
 
+
+			$return = '';
+			/**
+			 * Handle minutes sign.
+			 */
+			if ( '-' === $v[0] ) {
+				$return .= '-';
+				$v = substr( $v, 1 );
+			}
+			/**
+			 * Hash.
+			 */
+			$return .= substr( md5( $v ), 0, 7 );
+			/**
+			 * Done
+			 */
+			return $return;
+		}, $scopes );
 		return sprintf( 'data-%1$s="%2$s"', $option_name, implode( ',', $scopes_hashed ) );
 	}
 

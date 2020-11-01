@@ -189,7 +189,9 @@
 			// Enable all options then disable invalid.
 			$( 'option', $controlled )
 				.data( 'disabled-by-scope', false )
-				.filter( `[value!=""]:not([data-scope*=${slug}])` )
+				.filter( `[value!=""]` )                                        // No value.
+				.filter( `[data-scope!=""]` )                                   // Not empty scope.
+				.filter( `:not([data-scope*=${slug}]),[data-scope*=-${slug}]` ) // Not this scope <OR> This scope if excluded.
 				.data( 'disabled-by-scope', true )
 			;
 
