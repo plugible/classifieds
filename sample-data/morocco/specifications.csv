@@ -1,0 +1,155 @@
+name,specification,value,scope
+,,,
+carburant-électricité,Carburant,Électricité,v|-velos
+carburant-essence    ,Carburant,Essence    ,v|-velos
+carburant-gasoil     ,Carburant,Gasoil     ,v|-velos
+carburant-hybride    ,Carburant,Hybride    ,v|-velos
+,,,
+kilométrage-0            ,Kilométrage,      0 km          ,v|-velos
+kilométrage-000001-050000,Kilométrage,      1 à 50 000 km ,v|-velos
+kilométrage-050001-100000,Kilométrage, 50 001 à 100 000 km,v|-velos
+kilométrage-100001-150000,Kilométrage,100 001 à 150 000 km,v|-velos
+kilométrage-150001-200000,Kilométrage,150 001 à 200 000 km,v|-velos
+kilométrage-200001-250000,Kilométrage,200 001 à 250 000 km,v|-velos
+kilométrage-250001-300000,Kilométrage,250 001 à 300 000 km,v|-velos
+kilométrage-300001-∞     ,Kilométrage,300 001 km ou plus  ,v|-velos
+,,,
+marque-citroën   ,Marque,Citroën   ,v|-velos
+marque-dacia     ,Marque,Dacia     ,v|-velos
+marque-fiat      ,Marque,Fiat      ,v|-velos
+marque-ford      ,Marque,Ford      ,v|-velos
+marque-hyundai   ,Marque,Hyundai   ,v|-velos
+marque-nissan    ,Marque,Nissan    ,v|-velos
+marque-peugeot   ,Marque,Peugeot   ,v|-velos
+marque-renault   ,Marque,Renault   ,v|-velos
+marque-toyota    ,Marque,Toyota    ,v|-velos
+marque-volkswagen,Marque,Volkswagen,v|-velos
+marque-acer      ,Marque,Acer      ,ordi-desktop|ordi-laptop
+marque-apple     ,Marque,Apple     ,ordi-desktop|ordi-laptop
+marque-asus      ,Marque,Asus      ,ordi-desktop|ordi-laptop
+marque-dell      ,Marque,Dell      ,ordi-desktop|ordi-laptop
+marque-hp        ,Marque,HP        ,ordi-desktop|ordi-laptop
+marque-lenovo    ,Marque,Lenovo    ,ordi-desktop|ordi-laptop
+,,,
+année-1999-0000,Année,1999 ou avant,v
+année-2000     ,Année,2000         ,v
+année-2001     ,Année,2001         ,v
+année-2002     ,Année,2002         ,v
+année-2003     ,Année,2003         ,v
+année-2004     ,Année,2004         ,v
+année-2005     ,Année,2005         ,v
+année-2006     ,Année,2006         ,v
+année-2007     ,Année,2007         ,v
+année-2008     ,Année,2008         ,v
+année-2009     ,Année,2009         ,v
+année-2010     ,Année,2010         ,v
+année-2011     ,Année,2011         ,v
+année-2012     ,Année,2012         ,v
+année-2013     ,Année,2013         ,v
+année-2014     ,Année,2014         ,v
+année-2015     ,Année,2015         ,v
+année-2016     ,Année,2016         ,v
+année-2017     ,Année,2017         ,v
+année-2018     ,Année,2018         ,v
+année-2019     ,Année,2019         ,v
+année-2020     ,Année,2020         ,v
+année-2021     ,Année,2021         ,v
+,,,
+prix-0000000001-0000000100,Prix,          100 DH ou moins       ,*
+prix-0000000101-0000000200,Prix,          101 à 200 DH          ,*
+prix-0000000201-0000000500,Prix,          201 à 500 DH          ,*
+prix-0000000501-0000001000,Prix,          501 à 1 000 DH        ,*
+prix-0000001001-0000002000,Prix,        1 001 à 2 000 DH        ,*
+prix-0000002001-0000005000,Prix,        2 001 à 5 000 DH        ,*
+prix-0000005001-0000010000,Prix,        5 001 à 10 000 DH       ,*
+prix-0000010001-0000020000,Prix,       10 001 à 20 000 DH       ,*
+prix-0000020001-0000050000,Prix,       20 001 à 50 000 DH       ,*
+prix-0000050001-0000100000,Prix,       50 001 à 100 000 DH      ,*
+prix-0000100001-0000200000,Prix,      100 001 à 200 000 DH      ,*
+prix-0000200001-0000500000,Prix,      200 001 à 500 000 DH      ,*
+prix-0000500001-0001000000,Prix,      500 001 à 1 000 000 DH    ,*
+prix-0001000001-0002000000,Prix,    1 000 001 à 2 000 000 DH    ,*
+prix-0002000001-0005000000,Prix,    2 000 001 à 5 000 000 DH    ,*
+prix-0005000001-0010000000,Prix,    5 000 001 à 10 000 000 DH   ,*
+prix-0010000001-0020000000,Prix,   10 000 001 à 20 000 000 DH   ,*
+prix-0020000001-0050000000,Prix,   20 000 001 à 50 000 000 DH   ,*
+prix-0050000001-0100000000,Prix,   50 000 001 à 100 000 000 DH  ,*
+prix-0100000001-0200000000,Prix,  100 000 001 à 200 000 000 DH  ,*
+prix-0200000001-0500000000,Prix,  200 000 001 à 500 000 000 DH  ,*
+prix-0500000001-1000000000,Prix,  500 000 001 à 1 000 000 000 DH,*
+prix-1000000001-2000000000,Prix,1 000 000 001 à 2 000 000 000 DH,*
+prix-2000000001-5000000000,Prix,2 000 000 001 à 5 000 000 000 DH,*
+prix-5000000001-∞         ,Prix,5 000 000 001 DH ou plus        ,*
+,,,
+couleur-argent,Couleur,Argent,v
+couleur-blanc ,Couleur,Blanc ,v
+couleur-bleu  ,Couleur,Bleu  ,v
+couleur-gris  ,Couleur,Gris  ,v
+couleur-jaune ,Couleur,Jaune ,v
+couleur-marron,Couleur,Marron,v
+couleur-orange,Couleur,Orange,v
+couleur-noir  ,Couleur,Noir  ,v
+couleur-rouge ,Couleur,Rouge ,v
+couleur-vert  ,Couleur,Vert  ,v
+,,,
+type-appartement,Type,Appartement,immo
+type-bureau     ,Type,Bureau     ,immo
+type-ferme      ,Type,Ferme      ,immo
+type-magasin    ,Type,Magasin    ,immo
+type-maison     ,Type,Maison     ,immo
+type-riad       ,Type,Riad       ,immo
+type-terrain    ,Type,Terrain    ,immo
+type-villa      ,Type,Villa      ,immo
+,,,
+superficie-0000001-0000050,Superficie,     50 m² ou moins,immo
+superficie-0000051-0000100,Superficie,     51 à 100 m²   ,immo
+superficie-0000101-0000200,Superficie,    101 à 200 m²   ,immo
+superficie-0000201-0000500,Superficie,    201 à 500 m²   ,immo
+superficie-0000501-0001000,Superficie,    501 à 1000 m²  ,immo
+superficie-0001001-0002000,Superficie,  1 001 à 2 000 m² ,immo
+superficie-0002001-0005000,Superficie,  2 001 à 5 000 m² ,immo 
+superficie-0005001-0010000,Superficie,  5 001 à 10 000 m²,immo
+superficie-0010001-0020000,Superficie,  "1,01 à 2 ha"    ,immo
+superficie-0020001-0050000,Superficie,  "2,01 à 5 ha"    ,immo
+superficie-0050001-0100000,Superficie,  "5,01 à 10 ha"   ,immo
+superficie-0100001-0200000,Superficie, "10,01 à 20 ha"   ,immo
+superficie-0200001-0500000,Superficie, "20,01 à 50 ha"   ,immo
+superficie-0500001-1000000,Superficie, "50,01 à 100 ha"  ,immo
+superficie-1000001-∞      ,Superficie,"100,1 ha ou plus" ,immo
+,,,
+objectif-vente   ,Objectif,Vente   ,immo
+objectif-location,Objectif,Location,immo
+,,,
+ram-000001-000004,RAM,      4 GB ou moins,pc-desktop|pc-laptop
+ram-000005-000008,RAM,      5 à 8 GB     ,pc-desktop|pc-laptop
+ram-000009-000016,RAM,      9 à 16 GB    ,pc-desktop|pc-laptop
+ram-000017-000032,RAM,     17 à 32 GB    ,pc-desktop|pc-laptop
+ram-000033-000064,RAM,     33 à 64 GB    ,pc-desktop|pc-laptop
+ram-000065-000128,RAM,     65 à 128 GB   ,pc-desktop|pc-laptop
+ram-000129-000256,RAM,    129 à 256 GB   ,pc-desktop|pc-laptop
+ram-000257-000512,RAM,    257 à 512 GB   ,pc-desktop|pc-laptop
+ram-000513-001024,RAM, 513 GB à 1 TB     ,pc-desktop|pc-laptop
+ram-001023-002048,RAM,"1,1 TB à 2 TB"    ,pc-desktop|pc-laptop
+,,,
+disque-dur-000001-000256,Disque Dur,   256 GB ou moins,pc-desktop|pc-laptop
+disque-dur-000257-000512,Disque Dur,   257 à 512 GB   ,pc-desktop|pc-laptop
+disque-dur-000513-001024,Disque Dur,513 GB à 1 TB     ,pc-desktop|pc-laptop
+disque-dur-001025-002048,Disque Dur, "1,01 à 2 TB"    ,pc-desktop|pc-laptop
+disque-dur-002049-004096,Disque Dur, "2,01 à 4 TB"    ,pc-desktop|pc-laptop
+disque-dur-004097-008192,Disque Dur, "4,01 à 8 TB"    ,pc-desktop|pc-laptop
+disque-dur-008193-016384,Disque Dur, "8,01 à 16 TB"   ,pc-desktop|pc-laptop
+disque-dur-016384-∞     ,Disque Dur, 16 TB ou plus    ,pc-desktop|pc-laptop
+,,,
+taille-ecran-001-099,Taille de l'Écran, "9,9 pouces ou moins",pc-desktop|pc-laptop
+taille-ecran-100-139,Taille de l'Écran,"10 à 13,9 pouces    ",pc-desktop|pc-laptop
+taille-ecran-140-169,Taille de l'Écran,"14 à 16,9 pouces    ",pc-desktop|pc-laptop
+taille-ecran-170-199,Taille de l'Écran,"17 à 19,9 pouces    ",pc-desktop|pc-laptop
+taille-ecran-200-∞  ,Taille de l'Écran, 20 pouces ou plus    ,pc-desktop|pc-laptop
+,,,
+imprimante
+chargeur
+routeur
+RAM
+processeur
+carte graphique
+logiciel

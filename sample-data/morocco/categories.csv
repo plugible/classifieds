@@ -1,0 +1,43 @@
+parent,slug,name
+,,
+,v,Véhicules
+v,,Motos
+v,,Pièces pour Véhicules
+v,,Vélos
+v,,Voitures
+v,,Véhicules Professionnels
+,,
+,immo,Immobilier
+immo,,Appartements
+immo,,Magasins et Bureaux
+immo,,Maisons
+immo,,Terrains Agricoles et Fermes
+immo,,Terrains Constructibles
+immo,,Villas et Riads
+,,
+,srv,Services
+srv,,Cours et Formations
+srv,,Covoiturage
+srv,,Ménage et Jardinage
+,,
+,mm,Multimédia
+mm,accessoires-ordi,Accessoires d'Ordinateur
+mm,ordi-desktop    ,Ordinateurs de Bureau
+mm,ordi-laptop     ,Ordinateurs Portables
+mm,pieces-ordi     ,Pièces d'Ordinateur
+,,
+,job,Emploi
+job,,Centres D'Appels
+job,,Freelance
+job,,Offre d'Emploi
+job,,Offre de Stage
+,,
+,maison,Pour la Maison
+maison,,Antiquités
+maison,,Électroménager
+maison,,Mobilier
+,,
+,etc,Autres
+etc,,Animaux
+etc,,Livres
+etc,,Perdus de Vue
