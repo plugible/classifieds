@@ -403,7 +403,7 @@ function plcl_breadcrumbs( $open = '', $close = '' ) {
 	echo $close;
 }
 
-function plcl_get_breadcrumbs( $open = '', $close = '' ) {
+function wpmyads_get_breadcrumbs( $open = '', $close = '' ) {
 	ob_start();
 	plcl_breadcrumbs( $open, $close );
 	return ob_get_clean();
